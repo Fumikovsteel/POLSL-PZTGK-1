@@ -1,0 +1,15 @@
+Podsumowanie spotkania 2015-03-19
+
+Zrobione:
+- repozytorium
+- research grafik
+- research dŸwiêków
+- dokumenty: propozycja tematu / wymagania
+- Trello board
+- Slack project
+- Unity Project
+- 1 akt scenariusza
+- szablon dokumentów
+
+Problemy:
+- dostêpnoœæ do callów
