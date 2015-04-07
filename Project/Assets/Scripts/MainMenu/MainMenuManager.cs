@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using UnityEditor;
 
 public class MainMenuManager : MonoBehaviour
 {
@@ -24,6 +25,21 @@ public class MainMenuManager : MonoBehaviour
     public void OnStartGameClicked()
     {
         Zelda._Common._SceneManager.ChangeScene(SceneManager.ESceneName.Game, null);
+    }
+
+    public void OnContinueGameClicked()
+    {
+        EditorUtility.DisplayDialog("Continue", "Continue last game", "OK");
+    }
+
+    public void OnCreditsClicked()
+    {
+        EditorUtility.DisplayDialog("Credits", "Credits", "OK");
+    }
+
+    public void OnQuitGameClicked()
+    {
+        EditorUtility.DisplayDialog("Exit", "Game exit", "OK");
     }
 
     #endregion
