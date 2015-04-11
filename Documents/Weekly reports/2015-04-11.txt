@@ -1,0 +1,12 @@
+Podsumowanie spotkania 2015-04-11
+
+Zrobione:
+- scenariusz
+- dokument architektury
+- poprawki w poprzednich dokumentach
+- ogólna architektura systemu
+- ruch postaci
+
+
+Problemy:
+- 
