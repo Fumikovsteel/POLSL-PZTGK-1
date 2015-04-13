@@ -11,12 +11,7 @@ public class CommonSingleton : MonoBehaviour
     public GameplayEvents _GameplayEvents;
     public ResourcesManager _ResourcesManager;
     public CamerasManager _CamerasManager;
-
-    #endregion
-    //////////////////////////////////////////////////////////////////////////////////
-    #region Fields
-
-    private static bool _ApplicationIsQuitting = false;
+    public ApplicationManager _ApplicationManager;
 
     #endregion
     //////////////////////////////////////////////////////////////////////////////////
@@ -31,9 +26,12 @@ public class CommonSingleton : MonoBehaviour
     //////////////////////////////////////////////////////////////////////////////////
     #region InsideMethods
 
+    /// <summary>
+    /// This event is executed here first (because of the script execution order) so here we set application quitting flag
+    /// </summary>
     private void OnApplicationQuit()
     {
-        _ApplicationIsQuitting = true;
+        ApplicationManager._ApplicationIsQuitting = true;
     }
 
     private void OnLevelWasLoaded()
@@ -47,11 +45,12 @@ public class CommonSingleton : MonoBehaviour
 
     public static bool CanAccess()
     {
-        return !_ApplicationIsQuitting;
+        return !ApplicationManager._ApplicationIsQuitting;
     }
 
     public void Init()
     {
+        _ApplicationManager = new ApplicationManager();
         _GameplayEvents = new GameplayEvents();
         _SceneManager = new SceneManager();
         _CamerasManager = new CamerasManager();
