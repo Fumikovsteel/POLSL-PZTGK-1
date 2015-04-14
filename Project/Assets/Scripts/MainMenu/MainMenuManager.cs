@@ -24,12 +24,18 @@ public class MainMenuManager : MonoBehaviour
 
     public void OnStartGameClicked()
     {
-        Zelda._Common._SceneManager.ChangeScene(SceneManager.ESceneName.Game, null);
+        GameInitLevelData gameInitLevelData = new GameInitLevelData();
+        gameInitLevelData.gameType = GameInitLevelData.EStartGameType.newGame;
+
+        Zelda._Common._SceneManager.ChangeScene(SceneManager.ESceneName.Game, gameInitLevelData);
     }
 
     public void OnContinueGameClicked()
     {
-        EditorUtility.DisplayDialog("Continue", "Continue last game", "OK");
+        GameInitLevelData gameInitLevelData = new GameInitLevelData();
+        gameInitLevelData.gameType = GameInitLevelData.EStartGameType.continueGame;
+
+        Zelda._Common._SceneManager.ChangeScene(SceneManager.ESceneName.Game, gameInitLevelData);
     }
 
     public void OnCreditsClicked()
@@ -39,7 +45,7 @@ public class MainMenuManager : MonoBehaviour
 
     public void OnQuitGameClicked()
     {
-        EditorUtility.DisplayDialog("Exit", "Game exit", "OK");
+        Zelda._Common._ApplicationManager.ExitApplication();
     }
 
     #endregion
