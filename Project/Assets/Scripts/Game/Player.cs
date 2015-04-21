@@ -13,8 +13,7 @@ public class Player : MonoBehaviour
 	private Vector2 currentAcceleration = Vector2.zero;
 	private bool isAcceleratingX = false;
 	private bool isAcceleratingY = false;
-
-
+	
 	private bool locked = false;
 	public bool _Locked
 	{
@@ -52,35 +51,31 @@ public class Player : MonoBehaviour
 			CalculateVelocity (inputData, acceleration, 1);
 		} else if(inputData.usedKeyType == InputManager.EKeyUseType.released) {
 
-			if(inputData.usedKey == KeyCode.D || inputData.usedKey == KeyCode.A) {
-				isAcceleratingX = false;
-				//currentAcceleration.x = -Mathf.Sign(playerRigidbody.velocity.x) * deceleration;
-				currentAcceleration.x = 0;
-			}
-
-			if(inputData.usedKey == KeyCode.S || inputData.usedKey == KeyCode.W) {
-				isAcceleratingY = false;
-				//currentAcceleration.y = -Mathf.Sign(playerRigidbody.velocity.y) * deceleration;
-				currentAcceleration.y = 0;
-			}
+			CalculateVelocity (inputData, acceleration, -1);
 		}
 	}
 
 	private void CalculateVelocity(InputManager.InputData inputData, float acceleration, int modifier) {
 		if (inputData.usedKey == KeyCode.W) {
+
 			isAcceleratingY = modifier > 0;
-			currentAcceleration.y = acceleration * modifier;
-		} else if (inputData.usedKey == KeyCode.S) {
+			currentAcceleration.y += acceleration * modifier;
+		} 
+		if (inputData.usedKey == KeyCode.S) {
+
 			isAcceleratingY = modifier > 0;
-			currentAcceleration.y = -acceleration * modifier;
+			currentAcceleration.y += -acceleration * modifier;
 		}
 
 		if (inputData.usedKey == KeyCode.D) {
+
 			isAcceleratingX = modifier > 0;
-			currentAcceleration.x = acceleration * modifier;
-		} else if (inputData.usedKey == KeyCode.A) {
+			currentAcceleration.x += acceleration * modifier;
+		}
+		if (inputData.usedKey == KeyCode.A) {
+
 			isAcceleratingX = modifier > 0;
-			currentAcceleration.x = -acceleration * modifier;
+			currentAcceleration.x += -acceleration * modifier;
 		}
 	}
 
@@ -93,28 +88,26 @@ public class Player : MonoBehaviour
 			playerVelocity = (playerVelocity / playerVelocity.magnitude) * maxSpeed;
 		}
 
-		playerRigidbody.velocity = playerVelocity;
+		float rotationX = 0.0f;
+		float rotationY = 0.0f;
 
-		//calculate deceleration
-		/*
-		if (!isAcceleratingX) {
-			if((currentAcceleration.x < 0.0f && playerVelocity.x < 0.0f) ||
-			   (currentAcceleration.x > 0.0f && playerVelocity.x > 0.0f)) {
-
-				currentAcceleration.x = 0.0f;
-				playerVelocity.x = 0.0f;
-			}
-		}	
-
-		if (!isAcceleratingY) {
-			if((currentAcceleration.y < 0.0f && playerVelocity.y < 0.0f) ||
-			   (currentAcceleration.y > 0.0f && playerVelocity.y > 0.0f)) {
-
-				currentAcceleration.y = 0.0f;
-				playerVelocity.y = 0.0f;
-			}
+		if (currentAcceleration.x > 0) {
+			rotationX = 90.0f;
+		} else if (currentAcceleration.x < 0) {
+			rotationX = -90.0f;
 		}
-		*/
+
+		if (currentAcceleration.y > 0) {
+			rotationY = Mathf.Sign (rotationX) * 180.0f;
+		} else if (currentAcceleration.y < 0) {
+			rotationY = 0.0f;
+		}
+
+		float divider = (currentAcceleration.x != 0.0f && currentAcceleration.y != 0.0f) ? 2.0f : 1.0f;
+		float rotationZ = (rotationX + rotationY) / divider;
+
+		Debug.Log (rotationZ);
+		transform.rotation = Quaternion.Euler (0.0f, 0.0f, rotationZ);
 
 		playerRigidbody.velocity = playerVelocity;
 	}
