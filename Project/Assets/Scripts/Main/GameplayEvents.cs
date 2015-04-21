@@ -8,6 +8,7 @@ public class GameplayEvents
     #region Properties
 
     public event Action _OnLevelWasLoaded = () => {};
+    public event Action _OnLevelWillChange = () => { };
 
     #endregion
     //////////////////////////////////////////////////////////////////////////////////
@@ -16,6 +17,11 @@ public class GameplayEvents
     public void RaiseOnLevelWasLoaded()
     {
         _OnLevelWasLoaded();
+    }
+
+    public void RaiseOnLevelWillChange()
+    {
+        _OnLevelWillChange();
     }
 
     #endregion

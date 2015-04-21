@@ -8,7 +8,7 @@ public class ResourcesManager
 
     public enum EPrefabName
     {
-        MainMenuManager, GameManager, GameMenuManager
+        MainMenuManager, GameManager, GameMenuManager, EnemiesManager
     }
 
     #endregion
@@ -20,7 +20,8 @@ public class ResourcesManager
     {
         GameObject prefab = (GameObject)Resources.Load("Prefabs/" + prefabName.ToString());
         GameObject instantiatedPrefab = MonoBehaviour.Instantiate(prefab);
-        instantiatedPrefab.transform.SetParent(newParent, false);
+        if (newParent != null)
+            instantiatedPrefab.transform.SetParentResetLocal(newParent);
         return instantiatedPrefab.GetComponent<T>();
     }
 

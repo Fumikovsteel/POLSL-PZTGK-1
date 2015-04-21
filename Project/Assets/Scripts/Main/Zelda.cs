@@ -80,7 +80,7 @@ public class Zelda
             {
                 if (commonState == ESingletonState.noState)
                 {
-                    common = (new GameObject("Zelda", typeof(CommonSingleton))).GetComponent<CommonSingleton>();
+                    common = new GameObject("Zelda", typeof(CommonSingleton), typeof(DontDestroyOnLoad)).GetComponent<CommonSingleton>();
                     commonState = ESingletonState.initialized;
                     common.Init();
                 }

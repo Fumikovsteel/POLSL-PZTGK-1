@@ -74,8 +74,9 @@ public class SceneManager
             return;
 
         Zelda._Common._InitLevelData = initLevelData;
-        Application.LoadLevel(targetScene.ToString());
         _FirstScene = false;
+        Zelda._Common._GameplayEvents.RaiseOnLevelWillChange();
+        Application.LoadLevel(targetScene.ToString());
     }
 
     /// <summary>

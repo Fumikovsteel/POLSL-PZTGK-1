@@ -12,15 +12,7 @@ public class CommonSingleton : MonoBehaviour
     public ResourcesManager _ResourcesManager;
     public CamerasManager _CamerasManager;
     public ApplicationManager _ApplicationManager;
-
-    #endregion
-    //////////////////////////////////////////////////////////////////////////////////
-    #region InitializationMethods
-
-    public CommonSingleton()
-    {
-        DontDestroyOnLoad(this);
-    }
+    public Transform _ManagersParent;
 
     #endregion
     //////////////////////////////////////////////////////////////////////////////////
@@ -50,6 +42,7 @@ public class CommonSingleton : MonoBehaviour
 
     public void Init()
     {
+        _ManagersParent = new GameObject("Managers parent", typeof(DontDestroyOnLoad)).transform;
         _ApplicationManager = new ApplicationManager();
         _GameplayEvents = new GameplayEvents();
         _SceneManager = new SceneManager();
