@@ -6,18 +6,25 @@ public class EnemiesManager : MonoBehaviour
     [SerializeField]
     private GameObject enemyPrefab;
 
-    public int numberOfEnemies = 5;
-    public Vector2 spawnWindow = new Vector2(5.0f, 5.0f);
+    private const string enemySpawnPointsParentName = "EnemySpawns";
+    private EnemySpawnPoint[] allSpawnPoints;
+
+    private void Awake()
+    {
+        GameObject enemySpawnPointsParent = GameObject.Find(enemySpawnPointsParentName);
+        if (enemySpawnPointsParent == null)
+            Debug.LogError("You need to have " + enemySpawnPointsParentName + " object on the scene!");
+        allSpawnPoints = enemySpawnPointsParent.GetComponentsInChildren<EnemySpawnPoint>();
+    }
 
     private void Start()
     {
         Transform enemiesParent = new GameObject("EnemiesParent").transform;
-        for (int i = 0; i < numberOfEnemies; i++)
+        for (int i = 0; i < allSpawnPoints.Length; i++)
         {
             GameObject instantiatedEnemy = (GameObject)Instantiate(enemyPrefab);
             instantiatedEnemy.transform.SetParent(enemiesParent, false);
-            instantiatedEnemy.transform.localPosition = new Vector3(UnityEngine.Random.Range(-spawnWindow.x, spawnWindow.x),
-                                                                    UnityEngine.Random.Range(-spawnWindow.y, spawnWindow.y), 0.0f);
+            instantiatedEnemy.transform.position = allSpawnPoints[i].transform.position;
         }
     }
 }
