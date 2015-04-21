@@ -19,6 +19,11 @@ public class Player : MonoBehaviour
 	{
 		get { return locked; }
 	}
+
+    public Vector3 _PlayerPosition
+    {
+        get { return transform.position; }
+    }
 	
 	#endregion
 	//////////////////////////////////////////////////////////////////////////////////
