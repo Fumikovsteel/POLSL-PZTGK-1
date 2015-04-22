@@ -1,0 +1,11 @@
+Podsumowanie spotkania 2015-04-17
+
+Zrobione:
+- dodano managera wrogów
+- menu gry
+- kilka zmian wizualnych
+- utworzono pierwsz¹ scenê gry
+
+
+Problemy:
+- b³¹d kamery przy obracaniu postaci
