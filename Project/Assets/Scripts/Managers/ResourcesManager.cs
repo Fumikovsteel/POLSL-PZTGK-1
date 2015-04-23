@@ -8,8 +8,14 @@ public class ResourcesManager
 
     public enum EPrefabName
     {
-        MainMenuManager, GameManager, GameMenuManager, EnemiesManager
+        MainMenuManager, GameManager, GameMenuManager, EnemiesManager, GameCamera
     }
+
+    #endregion
+    //////////////////////////////////////////////////////////////////////////////////
+    #region Fields
+
+    private const string prefabsPrefix = "Prefabs/";
 
     #endregion
     //////////////////////////////////////////////////////////////////////////////////
@@ -18,11 +24,16 @@ public class ResourcesManager
     public T GetAndInstantiatePrefab<T>(EPrefabName prefabName, Transform newParent)
         where T:Component
     {
-        GameObject prefab = (GameObject)Resources.Load("Prefabs/" + prefabName.ToString());
+        return InstantiatePrefab(prefabName, newParent).GetComponent<T>();
+    }
+
+    public GameObject InstantiatePrefab(EPrefabName prefabName, Transform newParent)
+    {
+        GameObject prefab = (GameObject)Resources.Load(prefabsPrefix + prefabName.ToString());
         GameObject instantiatedPrefab = MonoBehaviour.Instantiate(prefab);
         if (newParent != null)
             instantiatedPrefab.transform.SetParentResetLocal(newParent);
-        return instantiatedPrefab.GetComponent<T>();
+        return instantiatedPrefab;
     }
 
     #endregion

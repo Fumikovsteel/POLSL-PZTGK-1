@@ -24,18 +24,12 @@ public class MainMenuManager : MonoBehaviour
 
     public void OnStartGameClicked()
     {
-        GameInitLevelData gameInitLevelData = new GameInitLevelData();
-        gameInitLevelData.gameType = GameInitLevelData.EStartGameType.newGame;
-
-        Zelda._Common._SceneManager.ChangeScene(SceneManager.ESceneName.Game, gameInitLevelData);
+        Zelda._Common._SceneManager.ChangeScene(SceneManager.ESceneName.Game, new GameInitLevelData() { gameType = GameInitLevelData.EStartGameType.newGame });
     }
 
     public void OnContinueGameClicked()
     {
-        GameInitLevelData gameInitLevelData = new GameInitLevelData();
-        gameInitLevelData.gameType = GameInitLevelData.EStartGameType.continueGame;
-
-        Zelda._Common._SceneManager.ChangeScene(SceneManager.ESceneName.Game, gameInitLevelData);
+        Zelda._Common._SceneManager.ChangeScene(SceneManager.ESceneName.Game, new GameInitLevelData() { gameType = GameInitLevelData.EStartGameType.continueGame });
     }
 
     public void OnCreditsClicked()

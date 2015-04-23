@@ -13,16 +13,16 @@ public class DontDestroyOnLoad : MonoBehaviour
 
     private void Start()
     {
-        Zelda._Common._GameplayEvents._OnLevelWillChange += OnLevelWillChange;
+        Zelda._Common._GameplayEvents._OnSceneWillChange += OnSceneWillChange;
     }
 
     private void OnDestroy()
     {
         if (Zelda._Common)
-            Zelda._Common._GameplayEvents._OnLevelWillChange -= OnLevelWillChange;
+            Zelda._Common._GameplayEvents._OnSceneWillChange -= OnSceneWillChange;
     }
 
-    private void OnLevelWillChange()
+    private void OnSceneWillChange(SceneManager.ESceneName newScene)
     {
         if (_ShouldUnparentOnSceneChange)
         {

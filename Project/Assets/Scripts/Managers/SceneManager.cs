@@ -35,6 +35,7 @@ public class SceneManager
                 case ESceneName.MainMenu:
                     return Zelda.ESingletonName.mainMenu;
                 default:
+                    Debug.LogWarning("Given scene not supported!");
                     return Zelda.ESingletonName.empty;
             }
         }
@@ -44,14 +45,16 @@ public class SceneManager
     //////////////////////////////////////////////////////////////////////////////////
     #region InsideMethods
 
-    private void UpdateCurScene()
+    private ESceneName GetSceneEnum(string levelName)
     {
-        if (Enum.IsDefined(typeof(ESceneName), Application.loadedLevelName))
-            _CurScene = (ESceneName)Enum.Parse(typeof(ESceneName), Application.loadedLevelName);
+        if (Enum.IsDefined(typeof(ESceneName), levelName))
+            return (ESceneName)Enum.Parse(typeof(ESceneName), levelName);
+        else if (Enum.IsDefined(typeof(LevelsManager.ELevelName), levelName))
+            return ESceneName.Game;
         else
         {
             Debug.LogWarning("Current scene hasn't been registered!");
-            _CurScene = ESceneName.NotRegistered;
+            return ESceneName.NotRegistered;
         }
     }
 
@@ -61,7 +64,7 @@ public class SceneManager
 
     public SceneManager()
     {
-        UpdateCurScene();
+        _CurScene = GetSceneEnum(Application.loadedLevelName);
     }
 
     #endregion
@@ -75,8 +78,18 @@ public class SceneManager
 
         Zelda._Common._InitLevelData = initLevelData;
         _FirstScene = false;
-        Zelda._Common._GameplayEvents.RaiseOnLevelWillChange();
-        Application.LoadLevel(targetScene.ToString());
+
+        if (targetScene == ESceneName.Game)
+        {
+            LevelInitLevelData levelInitLevelData;
+            LevelsManager.ELevelName startLevel = Zelda._Common._LevelsManager._GetStartLevel((initLevelData as GameInitLevelData).gameType, out levelInitLevelData);
+            Zelda._Common._LevelsManager._ChangeLevel(startLevel, levelInitLevelData);
+        }
+        else
+        {
+            Zelda._Common._GameplayEvents.RaiseOnSceneWillChange(GetSceneEnum(targetScene.ToString()));
+            Application.LoadLevel(targetScene.ToString());
+        }
     }
 
     /// <summary>
@@ -86,9 +99,12 @@ public class SceneManager
     {
         if (_CurSceneSingleton != Zelda.ESingletonName.empty)
         {
-            Zelda.ChangeState(_CurSceneSingleton, Zelda.ESingletonState.noAccess);
-            UpdateCurScene();
-            Zelda.ChangeState(_CurSceneSingleton, Zelda.ESingletonState.forceInitialize);
+            if (_CurScene != GetSceneEnum(Application.loadedLevelName))
+            {
+                Zelda.ChangeState(_CurSceneSingleton, Zelda.ESingletonState.noAccess);
+                _CurScene = GetSceneEnum(Application.loadedLevelName);
+                Zelda.ChangeState(_CurSceneSingleton, Zelda.ESingletonState.forceInitialize);
+            }
         }
     }
 

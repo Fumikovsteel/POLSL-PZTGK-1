@@ -13,6 +13,13 @@ public class CommonSingleton : MonoBehaviour
     public CamerasManager _CamerasManager;
     public ApplicationManager _ApplicationManager;
     public Transform _ManagersParent;
+    public LevelsManager _LevelsManager;
+
+    #endregion
+    //////////////////////////////////////////////////////////////////////////////////
+    #region Fields
+
+    private DontDestroyOnLoad managersParentDontDestroy;
 
     #endregion
     //////////////////////////////////////////////////////////////////////////////////
@@ -31,6 +38,11 @@ public class CommonSingleton : MonoBehaviour
         Zelda._Common._GameplayEvents.RaiseOnLevelWasLoaded();
     }
 
+    private void OnSceneWillChange(SceneManager.ESceneName newScene)
+    {
+        managersParentDontDestroy._ShouldUnparentOnSceneChange = _SceneManager._CurScene != newScene ? true : false;
+    }
+
     #endregion
     //////////////////////////////////////////////////////////////////////////////////
     #region OutsideMethods
@@ -43,11 +55,16 @@ public class CommonSingleton : MonoBehaviour
     public void Init()
     {
         _ManagersParent = new GameObject("Managers parent", typeof(DontDestroyOnLoad)).transform;
+        managersParentDontDestroy = _ManagersParent.GetComponent<DontDestroyOnLoad>();
+
         _ApplicationManager = new ApplicationManager();
         _GameplayEvents = new GameplayEvents();
         _SceneManager = new SceneManager();
+        _LevelsManager = new LevelsManager();
         _CamerasManager = new CamerasManager();
         _ResourcesManager = new ResourcesManager();
+
+        _GameplayEvents._OnSceneWillChange += OnSceneWillChange;
     }
 
     #endregion

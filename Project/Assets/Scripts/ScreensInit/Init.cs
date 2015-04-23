@@ -24,11 +24,8 @@ public class Init : MonoBehaviour
         if (sceneSingleton != Zelda.ESingletonName.empty)
             Zelda.Init(sceneSingleton);
 
-        // In editor OnLevelWasLoaded isn't called when be launch first scene
-#if UNITY_EDITOR
         if (Zelda._Common._SceneManager._FirstScene)
             Zelda._Common._GameplayEvents.RaiseOnLevelWasLoaded();
-#endif
         Destroy(gameObject);
     }
 

@@ -7,19 +7,38 @@ public class EnemiesManager : MonoBehaviour
     private GameObject enemyPrefab;
 
     private const string enemySpawnPointsParentName = "EnemySpawns";
-    private EnemySpawnPoint[] allSpawnPoints;
+    private Transform enemiesParent;
 
     private void Awake()
+    {
+        enemiesParent = new GameObject("EnemiesParent", typeof(DontDestroyOnLoad)).transform;
+
+        Zelda._Common._GameplayEvents._OnSceneWillChange += OnSceneWillChange;
+        Zelda._Common._GameplayEvents._OnLevelWasLoaded += OnLevelWasLoaded;
+    }
+
+    private void OnDestroy()
+    {
+        if (Zelda._Common != null)
+        {
+            Zelda._Common._GameplayEvents._OnSceneWillChange -= OnSceneWillChange;
+            Zelda._Common._GameplayEvents._OnLevelWasLoaded -= OnLevelWasLoaded;
+        }
+    }
+
+    private void OnSceneWillChange(SceneManager.ESceneName newScene)
+    {
+        if (newScene != SceneManager.ESceneName.Game)
+            Destroy(enemiesParent.gameObject);
+    }
+
+    private void OnLevelWasLoaded()
     {
         GameObject enemySpawnPointsParent = GameObject.Find(enemySpawnPointsParentName);
         if (enemySpawnPointsParent == null)
             Debug.LogError("You need to have " + enemySpawnPointsParentName + " object on the scene!");
-        allSpawnPoints = enemySpawnPointsParent.GetComponentsInChildren<EnemySpawnPoint>();
-    }
+        EnemySpawnPoint[] allSpawnPoints = enemySpawnPointsParent.GetComponentsInChildren<EnemySpawnPoint>();
 
-    private void Start()
-    {
-        Transform enemiesParent = new GameObject("EnemiesParent").transform;
         for (int i = 0; i < allSpawnPoints.Length; i++)
         {
             GameObject instantiatedEnemy = (GameObject)Instantiate(enemyPrefab);

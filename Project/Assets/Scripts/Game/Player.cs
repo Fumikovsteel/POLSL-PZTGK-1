@@ -9,10 +9,12 @@ public class Player : MonoBehaviour
 	public float maxSpeed = 2f;
 	public float acceleration = 0.2f;
 
-	private Rigidbody2D playerRigidbody = null;
+    private Rigidbody playerRigidbody = null;
 	private Vector2 currentAcceleration = Vector2.zero;
 	private bool isAcceleratingX = false;
 	private bool isAcceleratingY = false;
+
+    private Transform gameCameraTransform;
 	
 	private bool locked = false;
 	public bool _Locked
@@ -37,17 +39,47 @@ public class Player : MonoBehaviour
 		new InputManager.KeyData() { keyCode = KeyCode.A, keyType = InputManager.EKeyUseType.pressedAndReleased },
 		new InputManager.KeyData() { keyCode = KeyCode.D, keyType = InputManager.EKeyUseType.pressedAndReleased });
 
-		playerRigidbody = this.GetComponent<Rigidbody2D> ();
+		playerRigidbody = this.GetComponent<Rigidbody> ();
+
+        Zelda._Common._GameplayEvents._OnSceneWillChange += OnLevelWillChange;
+        Zelda._Common._GameplayEvents._OnLevelWasLoaded += OnLevelWasLoaded;
 	}
+
+    public void Start()
+    {
+        gameCameraTransform = Zelda._Game._GameManager._GameCamera.transform;
+    }
 
 	public void Update() 
 	{
 		UpdateVelocity ();
+        gameCameraTransform.position = new Vector3(transform.position.x, transform.position.y, gameCameraTransform.position.z);
 	}
 	
 	#endregion
 	//////////////////////////////////////////////////////////////////////////////////
 	#region InsideMethods
+
+    private void OnLevelWillChange(SceneManager.ESceneName newScene)
+    {
+        // Because it has DontDestroyOnLoad
+        if (newScene != SceneManager.ESceneName.Game)
+            Destroy(gameObject);
+    }
+
+    private void OnLevelWasLoaded()
+    {
+        transform.position = PlayerSpawnPosition._GetSpawnPosition(Zelda._Game._LevelInitData._TargetSpawnPosition).transform.position;
+    }
+
+    private void OnDestroy()
+    {
+        if (Zelda._Common != null)
+        {
+            Zelda._Common._GameplayEvents._OnSceneWillChange -= OnLevelWillChange;
+            Zelda._Common._GameplayEvents._OnLevelWasLoaded -= OnLevelWasLoaded;
+        }
+    }
 	
 	private void OnInputUsed(InputManager.InputData inputData)
 	{
@@ -111,7 +143,6 @@ public class Player : MonoBehaviour
 		float divider = (currentAcceleration.x != 0.0f && currentAcceleration.y != 0.0f) ? 2.0f : 1.0f;
 		float rotationZ = (rotationX + rotationY) / divider;
 
-		Debug.Log (rotationZ);
 		transform.rotation = Quaternion.Euler (0.0f, 0.0f, rotationZ);
 
 		playerRigidbody.velocity = playerVelocity;
