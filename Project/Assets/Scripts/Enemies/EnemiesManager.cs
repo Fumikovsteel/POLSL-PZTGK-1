@@ -8,6 +8,7 @@ public class EnemiesManager : MonoBehaviour
 
     private const string enemySpawnPointsParentName = "EnemySpawns";
     private Transform enemiesParent;
+	ArrayList allSpawnPoints;
 
     private void Awake()
     {
@@ -26,6 +27,11 @@ public class EnemiesManager : MonoBehaviour
         }
     }
 
+	private void Update() 
+	{
+		SpawnEnemiesIfInRange ();
+	}
+
     private void OnSceneWillChange(SceneManager.ESceneName newScene)
     {
         if (newScene != SceneManager.ESceneName.Game)
@@ -34,16 +40,34 @@ public class EnemiesManager : MonoBehaviour
 
     private void OnLevelWasLoaded()
     {
-        GameObject enemySpawnPointsParent = GameObject.Find(enemySpawnPointsParentName);
-        if (enemySpawnPointsParent == null)
-            Debug.LogError("You need to have " + enemySpawnPointsParentName + " object on the scene!");
-        EnemySpawnPoint[] allSpawnPoints = enemySpawnPointsParent.GetComponentsInChildren<EnemySpawnPoint>();
-
-        for (int i = 0; i < allSpawnPoints.Length; i++)
-        {
-            GameObject instantiatedEnemy = (GameObject)Instantiate(enemyPrefab);
-            instantiatedEnemy.transform.SetParent(enemiesParent, false);
-            instantiatedEnemy.transform.position = allSpawnPoints[i].transform.position;
-        }
+		initSpawnPoints ();
     }
+
+	private void SpawnEnemiesIfInRange()
+	{
+		if (allSpawnPoints == null) {
+			initSpawnPoints();
+		}
+		Transform playerTransform = Zelda._Game._GameManager._Player.transform;
+		for (int i = 0; i < allSpawnPoints.Count; i++)
+		{
+			EnemySpawnPoint spawnPoint = (EnemySpawnPoint) allSpawnPoints[i];
+			var distance = Vector3.Distance(playerTransform.position, spawnPoint.transform.position);
+			if(distance<spawnPoint._SpawnRange)
+			{
+				GameObject instantiatedEnemy = (GameObject)Instantiate(enemyPrefab);
+				instantiatedEnemy.transform.SetParent(enemiesParent, false);
+				instantiatedEnemy.transform.position = spawnPoint.transform.position;
+				allSpawnPoints.RemoveAt(i);
+			}
+		}
+	}
+
+	private void initSpawnPoints() 
+	{
+		GameObject enemySpawnPointsParent = GameObject.Find(enemySpawnPointsParentName);
+		if (enemySpawnPointsParent == null)
+			Debug.LogError("You need to have " + enemySpawnPointsParentName + " object on the scene!");
+		allSpawnPoints = new ArrayList(enemySpawnPointsParent.GetComponentsInChildren<EnemySpawnPoint>());
+	}
 }
