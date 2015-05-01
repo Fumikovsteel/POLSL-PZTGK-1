@@ -39,6 +39,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8b1771ae236c9754c9b736e6c73ffba3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  gameMenuPrefab: {fileID: 151316, guid: 006db1d4d89ff154aa41833279131198, type: 2}
 --- !u!1001 &100100000
 Prefab:
   m_ObjectHideFlags: 1

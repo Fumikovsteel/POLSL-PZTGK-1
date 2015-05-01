@@ -16,12 +16,8 @@ public class Player : MonoBehaviour
 	private bool isAcceleratingY = false;
 
     private Transform gameCameraTransform;
-	
-	private bool locked = false;
-	public bool _Locked
-	{
-		get { return locked; }
-	}
+
+    public bool _Locked;
 
     public Vector3 _PlayerPosition
     {
@@ -49,6 +45,8 @@ public class Player : MonoBehaviour
 
         Zelda._Common._GameplayEvents._OnSceneWillChange += OnLevelWillChange;
         Zelda._Common._GameplayEvents._OnLocationChanged += OnLocationChanged;
+        Zelda._Common._GameplayEvents._OnGamePaused += OnGamePaused;
+        Zelda._Common._GameplayEvents._OnGameUnpaused += OnGameUnpaused;
 	}
 
     public void Start()
@@ -79,12 +77,24 @@ public class Player : MonoBehaviour
         transform.position = PlayerSpawnPosition._GetSpawnPosition(Zelda._Game._LocationInitData._TargetSpawnPosition, Zelda._Game._LocationInitData._TargetLocationName).transform.position;
     }
 
+    private void OnGamePaused()
+    {
+        _Locked = true;
+    }
+
+    private void OnGameUnpaused()
+    {
+        _Locked = false;
+    }
+
     private void OnDestroy()
     {
         if (Zelda._Common != null)
         {
             Zelda._Common._GameplayEvents._OnSceneWillChange -= OnLevelWillChange;
             Zelda._Common._GameplayEvents._OnLocationChanged -= OnLocationChanged;
+            Zelda._Common._GameplayEvents._OnGamePaused -= OnGamePaused;
+            Zelda._Common._GameplayEvents._OnGameUnpaused -= OnGameUnpaused;
         }
     }
 	
