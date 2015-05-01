@@ -26,6 +26,8 @@ public class Player : MonoBehaviour
     {
         get { return transform.position; }
     }
+
+	private float life = 100;
 	
 	#endregion
 	//////////////////////////////////////////////////////////////////////////////////
@@ -148,5 +150,16 @@ public class Player : MonoBehaviour
 		playerRigidbody.velocity = playerVelocity;
 	}
 	
+	#endregion
+
+	#region OutsideMethods
+
+	public void TakeLife(float amount) {
+		life -= amount;
+		if (life <= 0) {
+			Debug.Log("you are dead");
+		}
+	}
+
 	#endregion
 }

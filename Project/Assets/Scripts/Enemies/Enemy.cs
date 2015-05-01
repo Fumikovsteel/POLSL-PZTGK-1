@@ -4,6 +4,7 @@ using System.Collections;
 public class Enemy : MonoBehaviour {
 
 	public float speed = 3.0f;
+	public float moveToDistance;
 
 	private bool shouldMove = true;
 	private Rigidbody rb;
@@ -15,6 +16,13 @@ public class Enemy : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
+		Transform playerTransform = Zelda._Game._GameManager._Player.transform;
+		var distance = Vector3.Distance(playerTransform.position, transform.position);
+		if (distance >= moveToDistance) {
+			shouldMove = true;
+		} else {
+			shouldMove = false;
+		}
 		MoveTowardsPlayer ();
 	}
 
