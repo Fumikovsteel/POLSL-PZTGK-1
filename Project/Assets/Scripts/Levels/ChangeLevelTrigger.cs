@@ -10,6 +10,9 @@ public class ChangeLevelTrigger : MonoBehaviour
 
     private void OnTriggerEnter(Collider curCollider)
     {
-        Zelda._Common._LevelsManager._ChangeLevel(targetLevelName, new LevelInitLevelData(targetSpawnPosition));
+        if (Zelda._Common._LevelsManager._CurLevelName != targetLevelName)
+            Zelda._Common._LevelsManager._ChangeLevel(targetLevelName, new LevelInitLevelData(), new LocationInitLevelData(targetSpawnPosition));
+        else
+            Zelda._Common._LevelsManager._ChangeLocationOnLevel(new LocationInitLevelData(targetSpawnPosition));
     }
 }

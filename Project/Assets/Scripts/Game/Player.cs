@@ -44,7 +44,7 @@ public class Player : MonoBehaviour
 		playerRigidbody = this.GetComponent<Rigidbody> ();
 
         Zelda._Common._GameplayEvents._OnSceneWillChange += OnLevelWillChange;
-        Zelda._Common._GameplayEvents._OnLevelWasLoaded += OnLevelWasLoaded;
+        Zelda._Common._GameplayEvents._OnLocationChanged += OnLocationChanged;
 	}
 
     public void Start()
@@ -69,9 +69,9 @@ public class Player : MonoBehaviour
             Destroy(gameObject);
     }
 
-    private void OnLevelWasLoaded()
+    private void OnLocationChanged()
     {
-        transform.position = PlayerSpawnPosition._GetSpawnPosition(Zelda._Game._LevelInitData._TargetSpawnPosition).transform.position;
+        transform.position = PlayerSpawnPosition._GetSpawnPosition(Zelda._Game._LocationInitData._TargetSpawnPosition).transform.position;
     }
 
     private void OnDestroy()
@@ -79,7 +79,7 @@ public class Player : MonoBehaviour
         if (Zelda._Common != null)
         {
             Zelda._Common._GameplayEvents._OnSceneWillChange -= OnLevelWillChange;
-            Zelda._Common._GameplayEvents._OnLevelWasLoaded -= OnLevelWasLoaded;
+            Zelda._Common._GameplayEvents._OnLocationChanged -= OnLocationChanged;
         }
     }
 	

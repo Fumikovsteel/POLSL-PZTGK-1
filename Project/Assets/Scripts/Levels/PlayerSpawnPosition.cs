@@ -6,7 +6,7 @@ public class PlayerSpawnPosition : MonoBehaviour
 {
     public enum EPlayerSpawnPosition
     {
-        firstLevelSlotA, firstLevelSlotB, secondLevelSlotA, thirdLevelSlotA
+        firstLevelSlotA, firstLevelSlotB, firstLevelSlotC, secondLevelSlotA, thirdLevelSlotA
     }
 
     [SerializeField]

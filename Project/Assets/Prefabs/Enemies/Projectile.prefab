@@ -12,7 +12,7 @@ GameObject:
   - 212: {fileID: 21230662}
   - 135: {fileID: 13568284}
   - 114: {fileID: 11456704}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Projectile
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -57,6 +57,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 633396b3168b84f7aaef0ae9d9e86c44, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  dmg: 25
 --- !u!135 &13568284
 SphereCollider:
   m_ObjectHideFlags: 1
