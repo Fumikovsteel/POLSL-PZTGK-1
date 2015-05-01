@@ -1,5 +1,6 @@
 using UnityEngine;
 using System.Collections;
+using System;
 
 public class Player : MonoBehaviour
 {
@@ -27,7 +28,10 @@ public class Player : MonoBehaviour
         get { return transform.position; }
     }
 
-	private float life = 100;
+    private const int maxLife = 100;
+    private int life = maxLife;
+
+    public event Action<int, int> _OnHealthChanged = (x, y) => { };
 	
 	#endregion
 	//////////////////////////////////////////////////////////////////////////////////
@@ -50,6 +54,7 @@ public class Player : MonoBehaviour
     public void Start()
     {
         gameCameraTransform = Zelda._Game._GameManager._GameCamera.transform;
+        _OnHealthChanged(life, maxLife);
     }
 
 	public void Update() 
@@ -154,11 +159,12 @@ public class Player : MonoBehaviour
 
 	#region OutsideMethods
 
-	public void TakeLife(float amount) {
+	public void TakeLife(int amount) {
 		life -= amount;
 		if (life <= 0) {
 			Debug.Log("you are dead");
 		}
+        _OnHealthChanged(life, maxLife);
 	}
 
 	#endregion

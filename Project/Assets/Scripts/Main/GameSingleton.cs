@@ -10,6 +10,7 @@ public class GameSingleton
     public GameManager _GameManager;
     public GameMenuManager _GameMenuManager;
     public EnemiesManager _EnemiesManager;
+    public HUDManager _HUDManager;
     private GameInitLevelData initData = null;
     public GameInitLevelData _InitData
     {
@@ -103,6 +104,7 @@ public class GameSingleton
         _GameManager = Zelda._Common._ResourcesManager.GetAndInstantiatePrefab<GameManager>(ResourcesManager.EPrefabName.GameManager, Zelda._Common._ManagersParent);
         _GameMenuManager = Zelda._Common._ResourcesManager.GetAndInstantiatePrefab<GameMenuManager>(ResourcesManager.EPrefabName.GameMenuManager, Zelda._Common._ManagersParent);
         _EnemiesManager = Zelda._Common._ResourcesManager.GetAndInstantiatePrefab<EnemiesManager>(ResourcesManager.EPrefabName.EnemiesManager, Zelda._Common._ManagersParent);
+        _HUDManager = Zelda._Common._ResourcesManager.GetAndInstantiatePrefab<HUDManager>(ResourcesManager.EPrefabName.HUDManager, null);
     }
 
     #endregion
