@@ -71,7 +71,7 @@ public class Player : MonoBehaviour
 
     private void OnLocationChanged()
     {
-        transform.position = PlayerSpawnPosition._GetSpawnPosition(Zelda._Game._LocationInitData._TargetSpawnPosition).transform.position;
+        transform.position = PlayerSpawnPosition._GetSpawnPosition(Zelda._Game._LocationInitData._TargetSpawnPosition, Zelda._Game._LocationInitData._TargetLocationName).transform.position;
     }
 
     private void OnDestroy()

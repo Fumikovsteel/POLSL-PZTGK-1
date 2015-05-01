@@ -291,6 +291,10 @@ Prefab:
       propertyPath: targetSpawnPosition
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 11496212, guid: 6ba1630fa82246447a1c15ed3af0514a, type: 2}
+      propertyPath: targetLocationName
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 6ba1630fa82246447a1c15ed3af0514a, type: 2}
   m_IsPrefabParent: 0
@@ -368,7 +372,11 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 11402508, guid: 5480cbe6c3d77ea42921acf13fe71ed8, type: 2}
       propertyPath: playerSpawnPositionId
-      value: 3
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 11402508, guid: 5480cbe6c3d77ea42921acf13fe71ed8, type: 2}
+      propertyPath: locationName
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 5480cbe6c3d77ea42921acf13fe71ed8, type: 2}
@@ -428,8 +436,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f7ac3313dad45b149905c22ea86e0e7a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  levelInitData:
-    targetSpawnPosition: 3
 --- !u!1001 &1066356030
 Prefab:
   m_ObjectHideFlags: 0
@@ -471,6 +477,10 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 11496212, guid: 6ba1630fa82246447a1c15ed3af0514a, type: 2}
       propertyPath: targetLevelName
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 11496212, guid: 6ba1630fa82246447a1c15ed3af0514a, type: 2}
+      propertyPath: targetLocationName
       value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []

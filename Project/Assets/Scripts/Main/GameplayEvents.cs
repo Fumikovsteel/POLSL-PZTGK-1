@@ -10,7 +10,7 @@ public class GameplayEvents
     public event Action _OnLevelWasLoaded = () => { };
     public event Action<SceneManager.ESceneName> _OnSceneWillChange = (x) => { };
     public event Action<LevelsManager.ELevelName> _OnLevelWillChange = (x) => { };
-    public event Action _OnLocationWillChange = () => { };
+    public event Action<LevelsManager.ELocationName> _OnLocationWillChange = (x) => { };
     public event Action _OnLocationChanged = () => { };
 
     #endregion
@@ -32,9 +32,9 @@ public class GameplayEvents
         _OnLevelWillChange(newLevel);
     }
 
-    public void RaiseOnLocationWillChange()
+    public void RaiseOnLocationWillChange(LevelsManager.ELocationName newLocation)
     {
-        _OnLocationWillChange();
+        _OnLocationWillChange(newLocation);
     }
 
     public void RaiseOnLocationChanged()

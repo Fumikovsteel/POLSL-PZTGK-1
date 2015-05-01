@@ -9,6 +9,11 @@ public class LevelsManager
         none, FirstLevel, SecondLevel, ThirdLevel
     }
 
+    public enum ELocationName
+    {
+        none, MainLocation, FirstPlace, SecondPlace, ThirdPlace
+    }
+
     public LevelsManager()
     {
         Zelda._Common._GameplayEvents._OnLevelWasLoaded += OnLevelWasLoaded;
@@ -53,7 +58,7 @@ public class LevelsManager
         {
             case GameInitLevelData.EStartGameType.newGame:
                 initLevelData = new LevelInitLevelData();
-                initLocationData = new LocationInitLevelData(PlayerSpawnPosition.EPlayerSpawnPosition.firstLevelSlotA);
+                initLocationData = new LocationInitLevelData(PlayerSpawnPosition.EPlayerSpawnPosition.SpawnA, ELocationName.MainLocation);
                 return ELevelName.FirstLevel;
             case GameInitLevelData.EStartGameType.continueGame:
                 Debug.LogWarning("Not implemented yet!"); goto default;
@@ -74,13 +79,13 @@ public class LevelsManager
 
         Zelda._Common._GameplayEvents.RaiseOnLevelWillChange(targetLevel);
         Zelda._Common._GameplayEvents.RaiseOnSceneWillChange(SceneManager.ESceneName.Game);
-        Zelda._Common._GameplayEvents.RaiseOnLocationWillChange();
+        Zelda._Common._GameplayEvents.RaiseOnLocationWillChange(locationInitLevelData._TargetLocationName);
         Application.LoadLevel(targetLevel.ToString());
     }
 
     public void _ChangeLocationOnLevel(LocationInitLevelData locationInitData)
     {
-        Zelda._Common._GameplayEvents.RaiseOnLocationWillChange();
+        Zelda._Common._GameplayEvents.RaiseOnLocationWillChange(locationInitData._TargetLocationName);
         Zelda._Common.ChangeInitLevelData(locationInitData);
         Zelda._Common._GameplayEvents.RaiseOnLocationChanged();
     }

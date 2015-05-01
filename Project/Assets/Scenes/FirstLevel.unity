@@ -246,6 +246,10 @@ Prefab:
       propertyPath: playerSpawnPositionId
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 11402508, guid: 5480cbe6c3d77ea42921acf13fe71ed8, type: 2}
+      propertyPath: locationName
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 5480cbe6c3d77ea42921acf13fe71ed8, type: 2}
   m_IsPrefabParent: 0
@@ -410,11 +414,15 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 11496212, guid: 6ba1630fa82246447a1c15ed3af0514a, type: 2}
       propertyPath: targetSpawnPosition
-      value: 2
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 143566, guid: 6ba1630fa82246447a1c15ed3af0514a, type: 2}
       propertyPath: m_Layer
       value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 11496212, guid: 6ba1630fa82246447a1c15ed3af0514a, type: 2}
+      propertyPath: targetLocationName
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 6ba1630fa82246447a1c15ed3af0514a, type: 2}
@@ -679,7 +687,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 11496212, guid: 6ba1630fa82246447a1c15ed3af0514a, type: 2}
       propertyPath: targetSpawnPosition
-      value: 2
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 143566, guid: 6ba1630fa82246447a1c15ed3af0514a, type: 2}
       propertyPath: m_Name
@@ -688,6 +696,10 @@ Prefab:
     - target: {fileID: 143566, guid: 6ba1630fa82246447a1c15ed3af0514a, type: 2}
       propertyPath: m_Layer
       value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 11496212, guid: 6ba1630fa82246447a1c15ed3af0514a, type: 2}
+      propertyPath: targetLocationName
+      value: 2
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 6ba1630fa82246447a1c15ed3af0514a, type: 2}
@@ -815,6 +827,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   locationInitData:
     targetSpawnPosition: 1
+    targetLocationName: 0
 --- !u!1001 &656613528
 Prefab:
   m_ObjectHideFlags: 0
@@ -1151,6 +1164,10 @@ Prefab:
     - target: {fileID: 143566, guid: 6ba1630fa82246447a1c15ed3af0514a, type: 2}
       propertyPath: m_Layer
       value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 11496212, guid: 6ba1630fa82246447a1c15ed3af0514a, type: 2}
+      propertyPath: targetLocationName
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 6ba1630fa82246447a1c15ed3af0514a, type: 2}
@@ -1976,6 +1993,10 @@ Prefab:
       propertyPath: m_RootOrder
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 11402508, guid: 5480cbe6c3d77ea42921acf13fe71ed8, type: 2}
+      propertyPath: locationName
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 5480cbe6c3d77ea42921acf13fe71ed8, type: 2}
   m_IsPrefabParent: 0
@@ -2028,6 +2049,10 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 11402508, guid: 5480cbe6c3d77ea42921acf13fe71ed8, type: 2}
       propertyPath: playerSpawnPositionId
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 11402508, guid: 5480cbe6c3d77ea42921acf13fe71ed8, type: 2}
+      propertyPath: locationName
       value: 2
       objectReference: {fileID: 0}
     m_RemovedComponents: []

@@ -82,7 +82,7 @@ public class GameSingleton
         _LocationInitData = null;
     }
 
-    private void OnLocationWillChange()
+    private void OnLocationWillChange(LevelsManager.ELocationName locationName)
     {
         _LocationInitData = null;
     }
