@@ -10,6 +10,7 @@ public class RangedEnemy : MonoBehaviour {
 
 	private float timeElaspedSinceLastFire;
 	private float lastUpdate;
+	private Transform projectileParent; 
 
 	// Use this for initialization
 	void Start () {
@@ -37,6 +38,7 @@ public class RangedEnemy : MonoBehaviour {
 			Vector3 strikeVector = playerTransform.position - transform.position;
 			strikeVector.Normalize ();
 			rb.AddForce(strikeVector*shootForce);
+			rb.transform.SetParent(projectileParent,false);
 		}
 	}
 }

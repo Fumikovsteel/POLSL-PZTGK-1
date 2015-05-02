@@ -158,6 +158,7 @@ public class Player : MonoBehaviour
 		life -= amount;
 		if (life <= 0) {
 			Debug.Log("you are dead");
+			//TODO DEATH HANDLING
 		}
 	}
 

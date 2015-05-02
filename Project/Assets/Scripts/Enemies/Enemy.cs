@@ -27,13 +27,13 @@ public class Enemy : MonoBehaviour {
 	}
 
 	void OnCollisionEnter(Collision collision) {
-		if (collision.gameObject.GetComponent<Player> () != null) {
+		if(collision.gameObject.tag.Equals("Player")) {
 			shouldMove = false;
 		}
 	}
 
 	void OnCollisionExit(Collision collision) {
-		if (collision.gameObject.GetComponent<Player> () != null) {
+		if(collision.gameObject.tag.Equals("Player")) {
 			shouldMove = true;
 		}
 	}
