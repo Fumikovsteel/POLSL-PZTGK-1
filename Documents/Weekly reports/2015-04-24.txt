@@ -1,0 +1,5 @@
+Podsumowanie prac 2015-04-24
+
+Zrobione:
+- spawn pointy wrogów
+- mechanizm zmiany sceny

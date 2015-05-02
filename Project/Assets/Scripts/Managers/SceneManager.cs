@@ -76,14 +76,17 @@ public class SceneManager
         if (_CurScene == targetScene)
             return;
 
-        Zelda._Common._InitLevelData = initLevelData;
+        Zelda._Common.ClearInitLevelData();
+        Zelda._Common.ChangeInitLevelData(initLevelData);
+
         _FirstScene = false;
 
         if (targetScene == ESceneName.Game)
         {
             LevelInitLevelData levelInitLevelData;
-            LevelsManager.ELevelName startLevel = Zelda._Common._LevelsManager._GetStartLevel((initLevelData as GameInitLevelData).gameType, out levelInitLevelData);
-            Zelda._Common._LevelsManager._ChangeLevel(startLevel, levelInitLevelData);
+            LocationInitLevelData locationInitLevelData;
+            LevelsManager.ELevelName startLevel = Zelda._Common._LevelsManager._GetStartLevel((initLevelData as GameInitLevelData).gameType, out levelInitLevelData, out locationInitLevelData);
+            Zelda._Common._LevelsManager._ChangeLevel(startLevel, levelInitLevelData, locationInitLevelData);
         }
         else
         {

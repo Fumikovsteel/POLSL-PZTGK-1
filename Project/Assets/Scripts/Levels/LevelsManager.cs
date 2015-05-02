@@ -9,7 +9,30 @@ public class LevelsManager
         none, FirstLevel, SecondLevel, ThirdLevel
     }
 
-    private ELevelName _GetLevelEnum(string levelName)
+    public enum ELocationName
+    {
+        none, MainLocation, FirstPlace, SecondPlace, ThirdPlace
+    }
+
+    public LevelsManager()
+    {
+        Zelda._Common._GameplayEvents._OnLevelWasLoaded += OnLevelWasLoaded;
+    }
+
+    ~LevelsManager()
+    {
+        if (Zelda._Common != null)
+            Zelda._Common._GameplayEvents._OnLevelWasLoaded -= OnLevelWasLoaded;
+    }
+
+    private void OnLevelWasLoaded()
+    {
+        _CurLevelName = GetLevelEnum(Application.loadedLevelName);
+        if (Zelda._Common._SceneManager._CurScene == SceneManager.ESceneName.Game)
+            Zelda._Common._GameplayEvents.RaiseOnLocationChanged();
+    }
+
+    private ELevelName GetLevelEnum(string levelName)
     {
         if (Enum.IsDefined(typeof(ELevelName), levelName))
             return (ELevelName)Enum.Parse(typeof(ELevelName), levelName);
@@ -23,30 +46,47 @@ public class LevelsManager
         }
     }
 
-    public ELevelName _GetStartLevel(GameInitLevelData.EStartGameType startGameType, out LevelInitLevelData initLevelData)
+    public ELevelName _CurLevelName
+    {
+        get;
+        private set;
+    }
+
+    public ELevelName _GetStartLevel(GameInitLevelData.EStartGameType startGameType, out LevelInitLevelData initLevelData, out LocationInitLevelData initLocationData)
     {
         switch (startGameType)
         {
             case GameInitLevelData.EStartGameType.newGame:
-                initLevelData = new LevelInitLevelData(PlayerSpawnPosition.EPlayerSpawnPosition.firstLevelSlotA);
+                initLevelData = new LevelInitLevelData();
+                initLocationData = new LocationInitLevelData(PlayerSpawnPosition.EPlayerSpawnPosition.SpawnA, ELocationName.MainLocation);
                 return ELevelName.FirstLevel;
             case GameInitLevelData.EStartGameType.continueGame:
                 Debug.LogWarning("Not implemented yet!"); goto default;
             default:
                 initLevelData = null;
+                initLocationData = null;
                 return ELevelName.none;
         }
     }
 
-    public void _ChangeLevel(ELevelName targetLevel, IInitLevelData initLevelData)
+    public void _ChangeLevel(ELevelName targetLevel, LevelInitLevelData initLevelData, LocationInitLevelData locationInitLevelData)
     {
-        if (targetLevel == _GetLevelEnum(Application.loadedLevelName))
+        if (targetLevel == _CurLevelName)
             return;
 
-        Zelda._Common._InitLevelData = initLevelData;
+        Zelda._Common.ChangeInitLevelData(initLevelData);
+        Zelda._Common.ChangeInitLevelData(locationInitLevelData);
 
         Zelda._Common._GameplayEvents.RaiseOnLevelWillChange(targetLevel);
         Zelda._Common._GameplayEvents.RaiseOnSceneWillChange(SceneManager.ESceneName.Game);
+        Zelda._Common._GameplayEvents.RaiseOnLocationWillChange(locationInitLevelData._TargetLocationName);
         Application.LoadLevel(targetLevel.ToString());
+    }
+
+    public void _ChangeLocationOnLevel(LocationInitLevelData locationInitData)
+    {
+        Zelda._Common._GameplayEvents.RaiseOnLocationWillChange(locationInitData._TargetLocationName);
+        Zelda._Common.ChangeInitLevelData(locationInitData);
+        Zelda._Common._GameplayEvents.RaiseOnLocationChanged();
     }
 }

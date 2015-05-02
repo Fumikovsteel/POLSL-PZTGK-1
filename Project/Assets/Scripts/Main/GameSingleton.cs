@@ -10,15 +10,59 @@ public class GameSingleton
     public GameManager _GameManager;
     public GameMenuManager _GameMenuManager;
     public EnemiesManager _EnemiesManager;
-    public GameInitLevelData _InitData;
+    public HUDManager _HUDManager;
+    private GameInitLevelData initData = null;
+    public GameInitLevelData _InitData
+    {
+        get
+        {
+            if (initData == null)
+                initData = Zelda._Common.GetInitLevelData(typeof(GameInitLevelData).ToString()) as GameInitLevelData;
+            return initData;
+        }
+        private set { initData = value; }
+    }
     private LevelInitLevelData levelInitData = null;
     public LevelInitLevelData _LevelInitData
     {
         get
         {
             if (levelInitData == null)
-                levelInitData = Zelda._Common._InitLevelData as LevelInitLevelData;
+                levelInitData = Zelda._Common.GetInitLevelData(typeof(LevelInitLevelData).ToString()) as LevelInitLevelData;
             return levelInitData;
+        }
+        private set { levelInitData = value; }
+    }
+    private LocationInitLevelData locationInitData = null;
+    public LocationInitLevelData _LocationInitData
+    {
+        get
+        {
+            if (locationInitData == null)
+                locationInitData = Zelda._Common.GetInitLevelData(typeof(LocationInitLevelData).ToString()) as LocationInitLevelData;
+            return locationInitData;
+        }
+        private set { locationInitData = value; }
+    }
+
+    #endregion
+    //////////////////////////////////////////////////////////////////////////////////
+    #region InitializationMethods
+
+    public GameSingleton()
+    {
+        Zelda._Common._GameplayEvents._OnSceneWillChange += OnSceneWillChange;
+        Zelda._Common._GameplayEvents._OnLevelWillChange += OnLevelWillChange;
+        Zelda._Common._GameplayEvents._OnLocationWillChange += OnLocationWillChange;
+    }
+
+    ~GameSingleton()
+    {
+        if (Zelda._Common != null)
+        {
+            Zelda._Common._GameplayEvents._OnSceneWillChange -= OnSceneWillChange;
+            Zelda._Common._GameplayEvents._OnLevelWillChange -= OnLevelWillChange;
+            Zelda._Common._GameplayEvents._OnLocationWillChange -= OnLocationWillChange;
         }
     }
 
@@ -26,15 +70,22 @@ public class GameSingleton
     //////////////////////////////////////////////////////////////////////////////////
     #region InsideMethods
 
-    private void OnLevelWillChange(LevelsManager.ELevelName levelName)
+    private void OnSceneWillChange(SceneManager.ESceneName sceneName)
     {
-        levelInitData = Zelda._Common._InitLevelData as LevelInitLevelData;
+        _InitData = null;
+        _LevelInitData = null;
+        _LocationInitData = null;
     }
 
-    private void OnDestroy()
+    private void OnLevelWillChange(LevelsManager.ELevelName levelName)
     {
-        if (Zelda._Common != null)
-            Zelda._Common._GameplayEvents._OnLevelWillChange -= OnLevelWillChange;
+        _LevelInitData = null;
+        _LocationInitData = null;
+    }
+
+    private void OnLocationWillChange(LevelsManager.ELocationName locationName)
+    {
+        _LocationInitData = null;
     }
 
     #endregion
@@ -43,8 +94,6 @@ public class GameSingleton
 
     public void Init()
     {
-        _InitData = Zelda._Common._InitLevelData as GameInitLevelData;
-
         _InputManager = (new GameObject("InputManager", typeof(InputManager))).GetComponent<InputManager>();
         _InputManager.transform.SetParentResetLocal(Zelda._Common._ManagersParent);
 
@@ -55,8 +104,7 @@ public class GameSingleton
         _GameManager = Zelda._Common._ResourcesManager.GetAndInstantiatePrefab<GameManager>(ResourcesManager.EPrefabName.GameManager, Zelda._Common._ManagersParent);
         _GameMenuManager = Zelda._Common._ResourcesManager.GetAndInstantiatePrefab<GameMenuManager>(ResourcesManager.EPrefabName.GameMenuManager, Zelda._Common._ManagersParent);
         _EnemiesManager = Zelda._Common._ResourcesManager.GetAndInstantiatePrefab<EnemiesManager>(ResourcesManager.EPrefabName.EnemiesManager, Zelda._Common._ManagersParent);
-
-        Zelda._Common._GameplayEvents._OnLevelWillChange += OnLevelWillChange;
+        _HUDManager = Zelda._Common._ResourcesManager.GetAndInstantiatePrefab<HUDManager>(ResourcesManager.EPrefabName.HUDManager, null);
     }
 
     #endregion

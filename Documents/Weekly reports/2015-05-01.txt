@@ -1,0 +1,12 @@
+Podsumowanie spotkania 2015-05-01
+
+Zrobione:
+- ruch wrogów
+- dodano poziom 1
+- dodano zasoby poziomu 1
+- dodano wroga atakuj¹cego z dystansu
+- usprawniono mechanizm przesy³ania informacji miêdzy poziomami
+- dodanie prostegu HUDa
+- dodanie menu
+
+

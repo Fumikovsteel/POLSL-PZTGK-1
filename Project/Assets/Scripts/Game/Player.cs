@@ -1,5 +1,6 @@
 using UnityEngine;
 using System.Collections;
+using System;
 
 public class Player : MonoBehaviour
 {
@@ -15,19 +16,18 @@ public class Player : MonoBehaviour
 	private bool isAcceleratingY = false;
 
     private Transform gameCameraTransform;
-	
-	private bool locked = false;
-	public bool _Locked
-	{
-		get { return locked; }
-	}
+
+    public bool _Locked;
 
     public Vector3 _PlayerPosition
     {
         get { return transform.position; }
     }
 
-	private float life = 100;
+    private const int maxLife = 100;
+    private int life = maxLife;
+
+    public event Action<int, int> _OnHealthChanged = (x, y) => { };
 	
 	#endregion
 	//////////////////////////////////////////////////////////////////////////////////
@@ -44,12 +44,15 @@ public class Player : MonoBehaviour
 		playerRigidbody = this.GetComponent<Rigidbody> ();
 
         Zelda._Common._GameplayEvents._OnSceneWillChange += OnLevelWillChange;
-        Zelda._Common._GameplayEvents._OnLevelWasLoaded += OnLevelWasLoaded;
+        Zelda._Common._GameplayEvents._OnLocationChanged += OnLocationChanged;
+        Zelda._Common._GameplayEvents._OnGamePaused += OnGamePaused;
+        Zelda._Common._GameplayEvents._OnGameUnpaused += OnGameUnpaused;
 	}
 
     public void Start()
     {
         gameCameraTransform = Zelda._Game._GameManager._GameCamera.transform;
+        _OnHealthChanged(life, maxLife);
     }
 
 	public void Update() 
@@ -69,9 +72,19 @@ public class Player : MonoBehaviour
             Destroy(gameObject);
     }
 
-    private void OnLevelWasLoaded()
+    private void OnLocationChanged()
     {
-        transform.position = PlayerSpawnPosition._GetSpawnPosition(Zelda._Game._LevelInitData._TargetSpawnPosition).transform.position;
+        transform.position = PlayerSpawnPosition._GetSpawnPosition(Zelda._Game._LocationInitData._TargetSpawnPosition, Zelda._Game._LocationInitData._TargetLocationName).transform.position;
+    }
+
+    private void OnGamePaused()
+    {
+        _Locked = true;
+    }
+
+    private void OnGameUnpaused()
+    {
+        _Locked = false;
     }
 
     private void OnDestroy()
@@ -79,7 +92,9 @@ public class Player : MonoBehaviour
         if (Zelda._Common != null)
         {
             Zelda._Common._GameplayEvents._OnSceneWillChange -= OnLevelWillChange;
-            Zelda._Common._GameplayEvents._OnLevelWasLoaded -= OnLevelWasLoaded;
+            Zelda._Common._GameplayEvents._OnLocationChanged -= OnLocationChanged;
+            Zelda._Common._GameplayEvents._OnGamePaused -= OnGamePaused;
+            Zelda._Common._GameplayEvents._OnGameUnpaused -= OnGameUnpaused;
         }
     }
 	
@@ -154,12 +169,13 @@ public class Player : MonoBehaviour
 
 	#region OutsideMethods
 
-	public void TakeLife(float amount) {
+	public void TakeLife(int amount) {
 		life -= amount;
 		if (life <= 0) {
 			Debug.Log("you are dead");
 			//TODO DEATH HANDLING
 		}
+        _OnHealthChanged(life, maxLife);
 	}
 
 	#endregion
