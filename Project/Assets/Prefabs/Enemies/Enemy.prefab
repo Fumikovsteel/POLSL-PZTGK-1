@@ -13,7 +13,7 @@ GameObject:
   - 54: {fileID: 5447188}
   - 135: {fileID: 13570130}
   - 114: {fileID: 11464058}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Enemy
   m_TagString: Untagged
   m_Icon: {fileID: 0}

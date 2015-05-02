@@ -3,7 +3,7 @@ using System.Collections;
 
 public class Projectile : MonoBehaviour {
 
-	public float dmg = 25;
+	public int dmg = 25;
 	public float projectileLifetime_S = 5;
 
 	private static Transform projectileParent;

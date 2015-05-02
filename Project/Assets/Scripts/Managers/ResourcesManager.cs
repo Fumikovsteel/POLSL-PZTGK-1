@@ -8,7 +8,7 @@ public class ResourcesManager
 
     public enum EPrefabName
     {
-        MainMenuManager, GameManager, GameMenuManager, EnemiesManager, GameCamera
+        MainMenuManager, GameManager, GameMenuManager, EnemiesManager, GameCamera, HUDManager
     }
 
     #endregion

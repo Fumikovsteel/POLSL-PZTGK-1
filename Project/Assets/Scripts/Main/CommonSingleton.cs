@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
 public class CommonSingleton : MonoBehaviour
 {
@@ -7,7 +8,6 @@ public class CommonSingleton : MonoBehaviour
     #region Properties
 
     public SceneManager _SceneManager;
-    public IInitLevelData _InitLevelData;
     public GameplayEvents _GameplayEvents;
     public ResourcesManager _ResourcesManager;
     public CamerasManager _CamerasManager;
@@ -20,6 +20,7 @@ public class CommonSingleton : MonoBehaviour
     #region Fields
 
     private DontDestroyOnLoad managersParentDontDestroy;
+    public List<IInitLevelData> initLevelData = new List<IInitLevelData>();
 
     #endregion
     //////////////////////////////////////////////////////////////////////////////////
@@ -65,6 +66,40 @@ public class CommonSingleton : MonoBehaviour
         _ResourcesManager = new ResourcesManager();
 
         _GameplayEvents._OnSceneWillChange += OnSceneWillChange;
+    }
+
+    public void ClearInitLevelData()
+    {
+        initLevelData.Clear();
+    }
+
+    public void ChangeInitLevelData(IInitLevelData newData)
+    {
+        for (int i = 0; i < initLevelData.Count; i++)
+        {
+            // We change old init value to new one
+            if (initLevelData[i].GetType().ToString() == newData.GetType().ToString())
+            {
+                initLevelData[i] = newData;
+                return;
+            }
+        }
+        initLevelData.Add(newData);
+    }
+
+    public IInitLevelData GetInitLevelData(string initLevelDataTypeName)
+    {
+        foreach (IInitLevelData levelData in initLevelData)
+        {
+            if (levelData.GetType().ToString() == initLevelDataTypeName)
+                return levelData;
+        }
+        return null;
+    }
+
+    public int GetInitLevelDataCount()
+    {
+        return initLevelData.Count;
     }
 
     #endregion

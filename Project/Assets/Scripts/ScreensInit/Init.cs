@@ -17,8 +17,12 @@ public class Init : MonoBehaviour
         // We make sure that common singleton has been initialized
         Zelda.Init(Zelda.ESingletonName.common);
 #if UNITY_EDITOR
-        if (Zelda._Common._InitLevelData == null && GetComponent<IInitLevelComponent>() != null)
-            Zelda._Common._InitLevelData = GetComponent<IInitLevelComponent>()._GetInitLevelData;
+        if (Zelda._Common.GetInitLevelDataCount() <= 0)
+        {
+            IInitLevelComponent[] initComponents = GetComponents<IInitLevelComponent>();
+            foreach (IInitLevelComponent component in initComponents)
+                Zelda._Common.ChangeInitLevelData(component._GetInitLevelData);
+        }
 #endif
         Zelda.ESingletonName sceneSingleton = Zelda._Common._SceneManager._CurSceneSingleton;
         if (sceneSingleton != Zelda.ESingletonName.empty)
