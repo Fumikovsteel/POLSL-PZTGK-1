@@ -2,7 +2,7 @@
 using System.Collections;
 
 public class Projectile : MonoBehaviour {
-
+	
 	public int dmg = 25;
 	public float projectileLifetime_S = 5;
 
