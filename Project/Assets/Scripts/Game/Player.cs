@@ -11,13 +11,14 @@ public class Player : MonoBehaviour
 	public float acceleration = 0.2f;
 
     private Rigidbody playerRigidbody = null;
-	private Vector2 currentAcceleration = Vector2.zero;
-	private bool isAcceleratingX = false;
-	private bool isAcceleratingY = false;
+	private Vector3 currentAcceleration = Vector3.zero;
 
     private Transform gameCameraTransform;
 
     public bool _Locked;
+
+	public bool isInputXDirty = false;
+	public bool isInputYDirty = false;
 
     public Vector3 _PlayerPosition
     {
@@ -75,6 +76,16 @@ public class Player : MonoBehaviour
     private void OnLocationChanged()
     {
         transform.position = PlayerSpawnPosition._GetSpawnPosition(Zelda._Game._LocationInitData._TargetSpawnPosition, Zelda._Game._LocationInitData._TargetLocationName).transform.position;
+		playerRigidbody.velocity = Vector3.zero;
+
+		// dirty flags
+		if (currentAcceleration.x != 0) {
+			isInputXDirty = true;
+		}
+		if (currentAcceleration.y != 0) {
+			isInputYDirty = true;
+		}
+		currentAcceleration = Vector3.zero;
     }
 
     private void OnGamePaused()
@@ -103,66 +114,97 @@ public class Player : MonoBehaviour
 		if (inputData.usedKeyType == InputManager.EKeyUseType.pressed) {
 
 			CalculateVelocity (inputData, acceleration, 1);
-		} else if(inputData.usedKeyType == InputManager.EKeyUseType.released) {
+		}
+		else if(inputData.usedKeyType == InputManager.EKeyUseType.released) {
 
 			CalculateVelocity (inputData, acceleration, -1);
 		}
 	}
 
 	private void CalculateVelocity(InputManager.InputData inputData, float acceleration, int modifier) {
+		
 		if (inputData.usedKey == KeyCode.W) {
 
-			isAcceleratingY = modifier > 0;
 			currentAcceleration.y += acceleration * modifier;
+
+			if(isInputYDirty && modifier < 0) {
+				currentAcceleration.y = 0.0f;
+				isInputYDirty = false;
+			} else {
+				isInputYDirty = false;
+			}
 		} 
+
 		if (inputData.usedKey == KeyCode.S) {
 
-			isAcceleratingY = modifier > 0;
 			currentAcceleration.y += -acceleration * modifier;
-		}
 
+			if(isInputYDirty && modifier < 0) {
+				currentAcceleration.y = 0.0f;
+				isInputYDirty = false;
+			} else {
+				isInputYDirty = false;
+			}
+		}
+			
 		if (inputData.usedKey == KeyCode.D) {
 
-			isAcceleratingX = modifier > 0;
 			currentAcceleration.x += acceleration * modifier;
+
+			if(isInputXDirty && modifier < 0) {
+				currentAcceleration.x = 0.0f;
+				isInputXDirty = false;
+			} else {
+				isInputXDirty = false;
+			}
 		}
 		if (inputData.usedKey == KeyCode.A) {
 
-			isAcceleratingX = modifier > 0;
 			currentAcceleration.x += -acceleration * modifier;
+
+			if(isInputXDirty && modifier < 0) {
+				currentAcceleration.x = 0.0f;
+				isInputXDirty = false;
+			} else {
+				isInputXDirty = false;
+			}
 		}
 	}
 
 	private void UpdateVelocity() {
 	
-		Vector2 playerVelocity = playerRigidbody.velocity;
+		Vector3 playerVelocity = playerRigidbody.velocity;
 		playerVelocity += currentAcceleration;
 
 		if (playerVelocity.magnitude > maxSpeed) {
 			playerVelocity = (playerVelocity / playerVelocity.magnitude) * maxSpeed;
 		}
 
-		float rotationX = 0.0f;
-		float rotationY = 0.0f;
+		// we want to rotate only on user input
+		if (currentAcceleration.magnitude > 0.0f) {
 
-		if (currentAcceleration.x > 0) {
-			rotationX = 90.0f;
-		} else if (currentAcceleration.x < 0) {
-			rotationX = -90.0f;
+			float rotationX = 0.0f;
+			float rotationY = 0.0f;
+
+			if (currentAcceleration.x > 0) {
+				rotationX = 90.0f;
+			} else if (currentAcceleration.x < 0) {
+				rotationX = -90.0f;
+			}
+
+			if (currentAcceleration.y > 0) {
+				rotationY = Mathf.Sign (rotationX) * 180.0f;
+			} else if (currentAcceleration.y < 0) {
+				rotationY = 0.0f;
+			}
+
+			float divider = (currentAcceleration.x != 0.0f && currentAcceleration.y != 0.0f) ? 2.0f : 1.0f;
+			float rotationZ = (rotationX + rotationY) / divider;
+
+			transform.rotation = Quaternion.Euler (0.0f, 0.0f, rotationZ);
+
+			playerRigidbody.velocity = playerVelocity;
 		}
-
-		if (currentAcceleration.y > 0) {
-			rotationY = Mathf.Sign (rotationX) * 180.0f;
-		} else if (currentAcceleration.y < 0) {
-			rotationY = 0.0f;
-		}
-
-		float divider = (currentAcceleration.x != 0.0f && currentAcceleration.y != 0.0f) ? 2.0f : 1.0f;
-		float rotationZ = (rotationX + rotationY) / divider;
-
-		transform.rotation = Quaternion.Euler (0.0f, 0.0f, rotationZ);
-
-		playerRigidbody.velocity = playerVelocity;
 	}
 	
 	#endregion
