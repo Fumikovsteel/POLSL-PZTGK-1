@@ -19,6 +19,19 @@ public class ResourcesManager
 
     #endregion
     //////////////////////////////////////////////////////////////////////////////////
+    #region InsideMethods
+
+    public GameObject InstantiateObject(string path, Transform newParent)
+    {
+        GameObject prefab = (GameObject)Resources.Load(path);
+        GameObject instantiatedPrefab = MonoBehaviour.Instantiate(prefab);
+        if (newParent != null)
+            instantiatedPrefab.transform.SetParentResetLocal(newParent);
+        return instantiatedPrefab;
+    }
+
+    #endregion
+    //////////////////////////////////////////////////////////////////////////////////
     #region OutsideMethods
 
     public T GetAndInstantiatePrefab<T>(EPrefabName prefabName, Transform newParent)
@@ -29,11 +42,7 @@ public class ResourcesManager
 
     public GameObject InstantiatePrefab(EPrefabName prefabName, Transform newParent)
     {
-        GameObject prefab = (GameObject)Resources.Load(prefabsPrefix + prefabName.ToString());
-        GameObject instantiatedPrefab = MonoBehaviour.Instantiate(prefab);
-        if (newParent != null)
-            instantiatedPrefab.transform.SetParentResetLocal(newParent);
-        return instantiatedPrefab;
+        return InstantiateObject(prefabsPrefix + prefabName.ToString(), newParent);
     }
 
     #endregion

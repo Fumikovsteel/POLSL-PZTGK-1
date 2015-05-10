@@ -12,6 +12,7 @@ GameObject:
   - 114: {fileID: 11448660}
   - 54: {fileID: 5459008}
   - 135: {fileID: 13503500}
+  - 114: {fileID: 11420788}
   m_Layer: 10
   m_Name: Player
   m_TagString: Player
@@ -35,6 +36,22 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!1 &122122
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 4
+  m_Component:
+  - 4: {fileID: 456328}
+  - 212: {fileID: 21264136}
+  m_Layer: 0
+  m_Name: Sword
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
 --- !u!4 &444392
 Transform:
   m_ObjectHideFlags: 1
@@ -47,6 +64,18 @@ Transform:
   m_Children: []
   m_Father: {fileID: 483384}
   m_RootOrder: 0
+--- !u!4 &456328
+Transform:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 122122}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: .100000001}
+  m_LocalScale: {x: .5, y: .5, z: .5}
+  m_Children: []
+  m_Father: {fileID: 483384}
+  m_RootOrder: 1
 --- !u!4 &483384
 Transform:
   m_ObjectHideFlags: 1
@@ -58,6 +87,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 444392}
+  - {fileID: 456328}
   m_Father: {fileID: 0}
   m_RootOrder: 0
 --- !u!54 &5459008
@@ -75,6 +105,34 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 72
   m_CollisionDetection: 0
+--- !u!114 &11420788
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 106258}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e1740c83d62d45c45af82f62b3428d55, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  onCollectEvent:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 11495026}
+        m_MethodName: CollectSomeItem
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine, Version=0.0.0.0,
+            Culture=neutral, PublicKeyToken=null
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_TypeName: CollectorObject+OnCollectEvent, Assembly-CSharp, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
 --- !u!114 &11448660
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -101,6 +159,9 @@ MonoBehaviour:
   maxSpeed: 5
   acceleration: 1
   _Locked: 0
+  isInputXDirty: 0
+  isInputYDirty: 0
+  swordObject: {fileID: 122122}
 --- !u!135 &13503500
 SphereCollider:
   m_ObjectHideFlags: 1
@@ -139,6 +200,32 @@ SpriteRenderer:
   m_SortingOrder: 0
   m_Sprite: {fileID: 10913, guid: 0000000000000000f000000000000000, type: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
+--- !u!212 &21264136
+SpriteRenderer:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 122122}
+  m_Enabled: 1
+  m_CastShadows: 0
+  m_ReceiveShadows: 0
+  m_Materials:
+  - {fileID: 10754, guid: 0000000000000000e000000000000000, type: 0}
+  m_SubsetIndices: 
+  m_StaticBatchRoot: {fileID: 0}
+  m_UseLightProbes: 1
+  m_ReflectionProbeUsage: 1
+  m_ProbeAnchor: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_PreserveUVs: 0
+  m_ImportantGI: 0
+  m_AutoUVMaxDistance: .5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 0
+  m_SortingOrder: 0
+  m_Sprite: {fileID: 10911, guid: 0000000000000000f000000000000000, type: 0}
+  m_Color: {r: 0, g: 0, b: 0, a: 1}
 --- !u!1001 &100100000
 Prefab:
   m_ObjectHideFlags: 1

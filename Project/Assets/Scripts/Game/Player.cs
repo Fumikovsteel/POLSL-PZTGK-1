@@ -20,6 +20,9 @@ public class Player : MonoBehaviour
 	public bool isInputXDirty = false;
 	public bool isInputYDirty = false;
 
+    [SerializeField]
+    private GameObject swordObject;
+
     public Vector3 _PlayerPosition
     {
         get { return transform.position; }
@@ -29,6 +32,8 @@ public class Player : MonoBehaviour
     private int life = maxLife;
 
     public event Action<int, int> _OnHealthChanged = (x, y) => { };
+
+    private EquipmentManager equipmentManager;
 	
 	#endregion
 	//////////////////////////////////////////////////////////////////////////////////
@@ -48,6 +53,8 @@ public class Player : MonoBehaviour
         Zelda._Common._GameplayEvents._OnLocationChanged += OnLocationChanged;
         Zelda._Common._GameplayEvents._OnGamePaused += OnGamePaused;
         Zelda._Common._GameplayEvents._OnGameUnpaused += OnGameUnpaused;
+
+        equipmentManager = new EquipmentManager(transform);
 	}
 
     public void Start()
@@ -219,6 +226,34 @@ public class Player : MonoBehaviour
 		}
         _OnHealthChanged(life, maxLife);
 	}
+
+    public void UseHealthMixture(int extraHealth)
+    {
+        int prevLife = life;
+        life = Mathf.Clamp(life + extraHealth, 0, maxLife);
+        if (prevLife != life)
+            _OnHealthChanged(life, maxLife);
+    }
+
+    public void UseSpeedMixture(float extraSpeedValue, float boostTime)
+    {
+        // TODO!!!
+    }
+
+    public void StartMeleeAttackAnimation(float attackStrength)
+    {
+        // TODO!!!
+    }
+
+    public void CollectSomeItem(ICollectableObject collectableObject)
+    {
+        EquipmentItem equipmentItem = collectableObject as EquipmentItem;
+        if (equipmentItem != null)
+        {
+            if (equipmentManager._AddToEquipment(equipmentItem))
+                collectableObject._Collect();
+        }
+    }
 
 	#endregion
 }
