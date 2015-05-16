@@ -8,6 +8,7 @@ public class MainMenuManager : MonoBehaviour
     #region InspectorProperties
 
     public GameObject EventSystem;
+    private GameObject credits = null;
 
     #endregion
     //////////////////////////////////////////////////////////////////////////////////
@@ -34,7 +35,14 @@ public class MainMenuManager : MonoBehaviour
     
     public void OnCreditsClicked()
     {
-        Zelda._Common._ResourcesManager.InstantiatePrefab(ResourcesManager.EPrefabName.CreditsPanel, null);
+        if (credits)
+        {
+            credits.SetActive(true);
+        }
+        else
+        {
+            credits = Zelda._Common._ResourcesManager.InstantiatePrefab(ResourcesManager.EPrefabName.CreditsManager, null);
+        }
     }
 
     public void OnQuitGameClicked()
