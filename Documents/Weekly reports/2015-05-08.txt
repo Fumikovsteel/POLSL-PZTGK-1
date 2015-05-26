@@ -1,0 +1,6 @@
+Podsumowanie spotkania 2015-05-08
+
+Zrobione:
+- ruch wrogów (AI)
+- usprawnienie ruchu gracza
+- grafiki do menu
