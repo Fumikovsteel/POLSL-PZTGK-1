@@ -10,6 +10,11 @@ public class HUDManager : MonoBehaviour
     private RectTransform healthTransform;
 
     [SerializeField]
+    private GameObject messageBox;
+    [SerializeField]
+    private Text messageText;
+
+    [SerializeField]
     private GameObject sword1Image;
     [SerializeField]
     private GameObject sword2Image;
@@ -28,6 +33,7 @@ public class HUDManager : MonoBehaviour
         sword2Image.SetActive(false);
         shield2Image.SetActive(false);
         armor2Image.SetActive(false);
+        showMessagebox(false);
     }
 
     private void OnDestroy()
@@ -52,6 +58,12 @@ public class HUDManager : MonoBehaviour
             
             healthTransform.anchoredPosition = pos;
         }
+
+        if (life <= 0)
+        {
+            setMessage("You are dead!");
+            showMessagebox(true);
+        }
     }
 
     private void showAdvancedSword()
@@ -70,5 +82,15 @@ public class HUDManager : MonoBehaviour
     {
         armor1Image.SetActive(false);
         armor2Image.SetActive(true);
+    }
+
+    private void showMessagebox(bool value)
+    {
+        messageBox.SetActive(value);
+    }
+
+    private void setMessage(string text)
+    {
+        messageText.text = text;
     }
 }
