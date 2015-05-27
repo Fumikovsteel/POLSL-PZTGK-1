@@ -8,8 +8,7 @@ public class Enemy : MonoBehaviour {
 
 	private bool shouldMove = true;
 	private Rigidbody rb;
-
-	private bool isEnabled = true;
+	private Vector3 savedVelocity;
 
 	// Use this for initialization
 	void Start () {
@@ -21,7 +20,6 @@ public class Enemy : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		if (isEnabled) {
 			Transform playerTransform = Zelda._Game._GameManager._Player.transform;
 			var distance = Vector3.Distance (playerTransform.position, transform.position);
 			if (distance >= moveToDistance) {
@@ -30,7 +28,6 @@ public class Enemy : MonoBehaviour {
 				shouldMove = false;
 			}
 			MoveTowardsPlayer ();
-		}
 	}
 
 	void OnCollisionEnter(Collision collision) {
@@ -58,14 +55,19 @@ public class Enemy : MonoBehaviour {
 	}
 
 	public void  OnLocationChanged() {
-		isEnabled = !isEnabled;
+		enabled = !enabled;
 	}
-
+	
 	public void OnGamePaused() {
-		isEnabled = false;
+		savedVelocity = rb.velocity;
+		rb.isKinematic = true;
+		enabled = false;
 	}
-
+	
 	public void OnGameUnpaused() {
-		isEnabled = true;
+		rb.isKinematic = false;
+		rb.AddForce( savedVelocity, ForceMode.VelocityChange );
+		enabled = true;
 	}
+	
 }

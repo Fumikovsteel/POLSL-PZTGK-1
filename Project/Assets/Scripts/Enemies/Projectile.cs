@@ -52,11 +52,13 @@ public class Projectile : MonoBehaviour {
 	public void OnGamePaused() {
 		savedVelocity = rb.velocity;
 		rb.isKinematic = true;
+		enabled = false;
 	}
 	
 	public void OnGameUnpaused() {
 		rb.isKinematic = false;
 		rb.AddForce( savedVelocity, ForceMode.VelocityChange );
+		enabled = true;
 	}
 	
 }

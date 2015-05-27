@@ -11,8 +11,7 @@ public class RangedEnemy : MonoBehaviour {
 	private float timeElaspedSinceLastFire;
 	private float lastUpdate;
 	private Transform projectileParent; 
-
-	bool rangedEnemyEnabled = true;
+	
 	// Use this for initialization
 	void Start () {
 		timeElaspedSinceLastFire = fireCooldown_S;
@@ -24,7 +23,6 @@ public class RangedEnemy : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		if (rangedEnemyEnabled) {
 			float curTime = Time.time;
 			timeElaspedSinceLastFire += curTime - lastUpdate;
 			if (timeElaspedSinceLastFire >= fireCooldown_S) {
@@ -32,7 +30,6 @@ public class RangedEnemy : MonoBehaviour {
 				timeElaspedSinceLastFire = 0;
 			}
 			lastUpdate = curTime;
-		}
 	}
 
 	private void FireProjectile() {
@@ -49,14 +46,14 @@ public class RangedEnemy : MonoBehaviour {
 	}
 
 	public void  OnLocationChanged() {
-		rangedEnemyEnabled = !rangedEnemyEnabled;
+		enabled = !enabled;
 	}
 	
 	public void OnGamePaused() {
-		rangedEnemyEnabled = false;
+		enabled = false;
 	}
 	
 	public void OnGameUnpaused() {
-		rangedEnemyEnabled = true;
+		enabled = true;
 	}
 }
