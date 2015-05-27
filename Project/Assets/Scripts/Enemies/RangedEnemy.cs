@@ -36,11 +36,14 @@ public class RangedEnemy : MonoBehaviour {
 		Transform playerTransform = Zelda._Game._GameManager._Player.transform;
 		var distance = Vector3.Distance(playerTransform.position, transform.position);
 		if (distance < range) {
-			Rigidbody rb = ((GameObject) Instantiate(projectile, transform.position, transform.rotation)).GetComponent<Rigidbody>();
+			GameObject newProjectile = (GameObject) Instantiate(projectile, transform.position, transform.rotation);
+			Rigidbody rb = (newProjectile).GetComponent<Rigidbody>();
 			Physics.IgnoreCollision(GetComponent<Collider>(), rb.gameObject.GetComponent<Collider>());
 			Vector3 strikeVector = playerTransform.position - transform.position;
 			strikeVector.Normalize ();
 			rb.AddForce(strikeVector*shootForce);
+			float angle = Mathf.Atan2(strikeVector.y, strikeVector.x) * Mathf.Rad2Deg - 90;
+			newProjectile.transform.rotation = Quaternion.AngleAxis(angle, Vector3.forward);
 			rb.transform.SetParent(projectileParent,false);
 		}
 	}

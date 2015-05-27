@@ -9,9 +9,9 @@ GameObject:
   m_Component:
   - 4: {fileID: 499918}
   - 54: {fileID: 5456214}
-  - 212: {fileID: 21230662}
   - 135: {fileID: 13568284}
   - 114: {fileID: 11456704}
+  - 212: {fileID: 21270578}
   m_Layer: 11
   m_Name: Projectile
   m_TagString: Untagged
@@ -58,6 +58,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   dmg: 25
+  projectileLifetime_S: 5
 --- !u!135 &13568284
 SphereCollider:
   m_ObjectHideFlags: 1
@@ -70,7 +71,7 @@ SphereCollider:
   serializedVersion: 2
   m_Radius: .100000001
   m_Center: {x: 0, y: 0, z: 0}
---- !u!212 &21230662
+--- !u!212 &21270578
 SpriteRenderer:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -94,8 +95,8 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 10913, guid: 0000000000000000f000000000000000, type: 0}
-  m_Color: {r: 1, g: 0, b: 0, a: 1}
+  m_Sprite: {fileID: 21300000, guid: 54e8d63af283b450ca987cf39691204c, type: 3}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
 --- !u!1001 &100100000
 Prefab:
   m_ObjectHideFlags: 1
