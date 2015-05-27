@@ -9,21 +9,28 @@ public class Enemy : MonoBehaviour {
 	private bool shouldMove = true;
 	private Rigidbody rb;
 
+	private bool isEnabled = true;
+
 	// Use this for initialization
 	void Start () {
 		rb = GetComponent<Rigidbody> ();
+		Zelda._Common._GameplayEvents._OnLocationChanged += OnLocationChanged;
+		Zelda._Common._GameplayEvents._OnGamePaused += OnGamePaused;
+		Zelda._Common._GameplayEvents._OnGameUnpaused += OnGameUnpaused;
 	}
 	
 	// Update is called once per frame
 	void Update () {
-		Transform playerTransform = Zelda._Game._GameManager._Player.transform;
-		var distance = Vector3.Distance(playerTransform.position, transform.position);
-		if (distance >= moveToDistance) {
-			shouldMove = true;
-		} else {
-			shouldMove = false;
+		if (isEnabled) {
+			Transform playerTransform = Zelda._Game._GameManager._Player.transform;
+			var distance = Vector3.Distance (playerTransform.position, transform.position);
+			if (distance >= moveToDistance) {
+				shouldMove = true;
+			} else {
+				shouldMove = false;
+			}
+			MoveTowardsPlayer ();
 		}
-		MoveTowardsPlayer ();
 	}
 
 	void OnCollisionEnter(Collision collision) {
@@ -48,5 +55,17 @@ public class Enemy : MonoBehaviour {
 		} else {
 			rb.velocity = Vector3.zero;
 		}
+	}
+
+	public void  OnLocationChanged() {
+		isEnabled = !isEnabled;
+	}
+
+	public void OnGamePaused() {
+		isEnabled = false;
+	}
+
+	public void OnGameUnpaused() {
+		isEnabled = true;
 	}
 }

@@ -12,21 +12,27 @@ public class RangedEnemy : MonoBehaviour {
 	private float lastUpdate;
 	private Transform projectileParent; 
 
+	bool rangedEnemyEnabled = true;
 	// Use this for initialization
 	void Start () {
 		timeElaspedSinceLastFire = fireCooldown_S;
 		lastUpdate = Time.time;
+		Zelda._Common._GameplayEvents._OnLocationChanged += OnLocationChanged;
+		Zelda._Common._GameplayEvents._OnGamePaused += OnGamePaused;
+		Zelda._Common._GameplayEvents._OnGameUnpaused += OnGameUnpaused;
 	}
 	
 	// Update is called once per frame
 	void Update () {
-		float curTime = Time.time;
-		timeElaspedSinceLastFire += curTime - lastUpdate;
-		if (timeElaspedSinceLastFire >= fireCooldown_S) {
-			FireProjectile();
-			timeElaspedSinceLastFire = 0;
+		if (rangedEnemyEnabled) {
+			float curTime = Time.time;
+			timeElaspedSinceLastFire += curTime - lastUpdate;
+			if (timeElaspedSinceLastFire >= fireCooldown_S) {
+				FireProjectile ();
+				timeElaspedSinceLastFire = 0;
+			}
+			lastUpdate = curTime;
 		}
-		lastUpdate = curTime;
 	}
 
 	private void FireProjectile() {
@@ -40,5 +46,17 @@ public class RangedEnemy : MonoBehaviour {
 			rb.AddForce(strikeVector*shootForce);
 			rb.transform.SetParent(projectileParent,false);
 		}
+	}
+
+	public void  OnLocationChanged() {
+		rangedEnemyEnabled = !rangedEnemyEnabled;
+	}
+	
+	public void OnGamePaused() {
+		rangedEnemyEnabled = false;
+	}
+	
+	public void OnGameUnpaused() {
+		rangedEnemyEnabled = true;
 	}
 }
