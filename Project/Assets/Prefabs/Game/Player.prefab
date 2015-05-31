@@ -13,6 +13,7 @@ GameObject:
   - 54: {fileID: 5459008}
   - 135: {fileID: 13503500}
   - 114: {fileID: 11420788}
+  - 114: {fileID: 11453342}
   m_Layer: 10
   m_Name: Player
   m_TagString: Player
@@ -145,6 +146,20 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _ShouldUnparentOnSceneChange: 0
+--- !u!114 &11453342
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 106258}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1486dd2d50efb764d987b52cefb69899, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  VillageBGM: {fileID: 8300000, guid: 6e6ed1df1ccc75541b0e38127772fde2, type: 3}
+  ForestBGM: {fileID: 8300000, guid: ac5d2255edf9ddd43bc921a3d19b63d2, type: 3}
+  CatacombEntranceBGM: {fileID: 8300000, guid: e61c346a0be913243af5a3224ab6eb73, type: 3}
 --- !u!114 &11495026
 MonoBehaviour:
   m_ObjectHideFlags: 1
