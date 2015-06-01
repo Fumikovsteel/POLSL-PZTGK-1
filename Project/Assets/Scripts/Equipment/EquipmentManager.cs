@@ -89,11 +89,11 @@ public class EquipmentManager
     {
         List<Stock> allItemsInEquipment = new List<Stock>();
         if (shield != null)
-            allItemsInEquipment.Add(new Stock() { _EquipmentItem = shield, _Count = 1 };
+            allItemsInEquipment.Add(new Stock() { _EquipmentItem = shield, _Count = 1 });
         if (weapon != null)
-            allItemsInEquipment.Add(new Stock() { _EquipmentItem = weapon, _Count = 1 };
+            allItemsInEquipment.Add(new Stock() { _EquipmentItem = weapon, _Count = 1 });
         if (armor != null)
-            allItemsInEquipment.Add(new Stock() { _EquipmentItem = armor, _Count = 1 };
+            allItemsInEquipment.Add(new Stock() { _EquipmentItem = armor, _Count = 1 });
         foreach (KeyValuePair<EEquipmentItem, Stock> mixture in this.mixtures)
             allItemsInEquipment.Add(new Stock() { _EquipmentItem = mixture.Value._EquipmentItem, _Count = mixture.Value._Count });
         return allItemsInEquipment;
@@ -111,7 +111,7 @@ public class EquipmentManager
     {
         if (mixtures.ContainsKey(mixtureName))
         {
-            mixtures[mixtureName]._Mixture._Use(player);
+            (mixtures[mixtureName]._EquipmentItem as Mixture)._Use(player);
             mixtures[mixtureName]._Count--;
             if (mixtures[mixtureName]._Count <= 0)
                 mixtures.Remove(mixtureName);

@@ -1138,7 +1138,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   locationInitData:
-    targetSpawnPosition: 1
+    targetSpawnPosition: 0
     targetLocationName: 1
 --- !u!1001 &656613528
 Prefab:
