@@ -83,6 +83,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   collectableObject: {fileID: 179528}
+  itemSprite: {fileID: 21245364}
   extraHealth: 10
 --- !u!114 &11493946
 MonoBehaviour:

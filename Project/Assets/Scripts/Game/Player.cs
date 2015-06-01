@@ -28,6 +28,11 @@ public class Player : MonoBehaviour
         get { return transform.position; }
     }
 
+    /// <summary>
+    /// When player collect some item from map
+    /// </summary>
+    public event Action<EquipmentItems.EquipmentItem> _OnItemGathered;
+
     private const int maxLife = 100;
     private int life = maxLife;
 
@@ -55,6 +60,7 @@ public class Player : MonoBehaviour
         Zelda._Common._GameplayEvents._OnGameUnpaused += OnGameUnpaused;
 
         equipmentManager = new EquipmentManager(transform);
+        equipmentManager._OnItemGathered += (x) => _OnItemGathered(x);
 	}
 
     public void Start()

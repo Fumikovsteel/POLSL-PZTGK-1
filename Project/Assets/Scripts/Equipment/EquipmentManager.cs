@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using EquipmentItems;
+using System;
 
 public class EquipmentManager
 {
@@ -9,7 +10,12 @@ public class EquipmentManager
     {
         // All weapons and armors in enum should be sorted from the least importent to most importent. AdvancedSword will change BasicSword in our inventory
         // but not inversely
-        BasicSword, AdvancedSword, HealthMixture, SpeedMixture, BasicShield, AdvancedShield, BasicArmor, AdvancedArmor
+        none, BasicSword, AdvancedSword, HealthMixture, SpeedMixture, BasicShield, AdvancedShield, BasicArmor, AdvancedArmor
+    }
+
+    public enum EEquipmentType
+    {
+        none, weapon, shield, armor, mixture
     }
 
     public class MixtureStock
@@ -30,6 +36,7 @@ public class EquipmentManager
         if (weapon == null || newWeapon._ItemName > weapon._ItemName)
         {
             weapon = newWeapon;
+            _OnItemGathered(newWeapon);
             return true;
         }
         return false;
@@ -41,6 +48,7 @@ public class EquipmentManager
             mixtures[newMixture._ItemName]._Count++;
         else
             mixtures.Add(newMixture._ItemName, new MixtureStock() { _Mixture = newMixture, _Count = 1 });
+        _OnItemGathered(newMixture);
         return true;
     }
 
@@ -49,6 +57,7 @@ public class EquipmentManager
         if (armor == null || newArmor._ItemName > armor._ItemName)
         {
             armor = newArmor;
+            _OnItemGathered(newArmor);
             return true;
         }
         return false;
@@ -59,6 +68,7 @@ public class EquipmentManager
         if (shield == null || newShield._ItemName > shield._ItemName)
         {
             shield = newShield;
+            _OnItemGathered(newShield);
             return true;
         }
         return false;
@@ -69,6 +79,8 @@ public class EquipmentManager
         equipmentParent = new GameObject("Equipment").transform;
         equipmentParent.SetParentResetLocal(player);
     }
+
+    public event Action<EquipmentItem> _OnItemGathered = (x) => { };
 
     public int _ArmorValue
     { get { return (armor != null ? armor._Armor : 0) + (shield != null ? shield._Defence : 0); } }
@@ -109,23 +121,19 @@ public class EquipmentManager
 
     public bool _AddToEquipment(EquipmentItem itemToAdd)
     {
-        Weapon weapon = itemToAdd as Weapon;
-        if (weapon != null)
-            return AddWeapon(weapon);
-
-        Mixture mixture = itemToAdd as Mixture;
-        if (mixture != null)
-            return AddMixture(mixture);
-
-        Armor armor = itemToAdd as Armor;
-        if (armor != null)
-            return AddArmor(armor);
-
-        Shield shield = itemToAdd as Shield;
-        if (shield != null)
-            return AddShield(shield);
-
-        Debug.LogError("Undefined equipment object!");
+        switch (itemToAdd._ItemType)
+        {
+            case EEquipmentType.armor:
+                return AddArmor(itemToAdd as Armor);
+            case EEquipmentType.mixture:
+                return AddMixture(itemToAdd as Mixture);
+            case EEquipmentType.shield:
+                return AddShield(itemToAdd as Shield);
+            case EEquipmentType.weapon:
+                return AddWeapon(itemToAdd as Weapon);
+            default:
+                Debug.Log("Given item type " + itemToAdd._ItemType + " not supported!"); break;
+        }
         return false;
     }
 }

@@ -83,6 +83,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   collectableObject: {fileID: 186554}
+  itemSprite: {fileID: 21295338}
   extraSpeedValue: .5
   boostTime: 3
 --- !u!114 &11432108

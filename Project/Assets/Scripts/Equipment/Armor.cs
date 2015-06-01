@@ -10,5 +10,8 @@ namespace EquipmentItems
 
         public int _Armor
         { get { return armor; } }
+
+        public override EquipmentManager.EEquipmentType _ItemType
+        { get { return EquipmentManager.EEquipmentType.armor; } }
     }
 }

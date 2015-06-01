@@ -475,8 +475,8 @@ MonoBehaviour:
   sword2Image: {fileID: 119008}
   shield1Image: {fileID: 103608}
   shield2Image: {fileID: 114260}
-  armor1Image: {fileID: 154388}
-  armor2Image: {fileID: 183054}
+  armor1Image: {fileID: 11483330}
+  armor2Image: {fileID: 11449120}
 --- !u!114 &11483330
 MonoBehaviour:
   m_ObjectHideFlags: 1

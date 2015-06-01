@@ -83,7 +83,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   collectableObject: {fileID: 186554}
-  armor: 10
+  itemSprite: {fileID: 21295338}
+  defence: 10
 --- !u!114 &11432108
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -120,8 +121,8 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 10911, guid: 0000000000000000f000000000000000, type: 0}
-  m_Color: {r: .0379311442, g: .5, b: 0, a: 1}
+  m_Sprite: {fileID: 21300008, guid: 2e5f947496526bd459c4abdd8a2b922e, type: 3}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
 --- !u!1001 &100100000
 Prefab:
   m_ObjectHideFlags: 1
