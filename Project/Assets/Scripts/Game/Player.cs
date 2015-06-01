@@ -1,6 +1,7 @@
 using UnityEngine;
 using System.Collections;
 using System;
+using System.Collections.Generic;
 
 public class Player : MonoBehaviour
 {
@@ -27,6 +28,9 @@ public class Player : MonoBehaviour
     {
         get { return transform.position; }
     }
+
+    public List<EquipmentManager.Stock> _AllEquipmentItems
+    { get { return equipmentManager._GetEquipmentState(); } }
 
     /// <summary>
     /// When player collect some item from map

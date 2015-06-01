@@ -18,16 +18,16 @@ public class EquipmentManager
         none, weapon, shield, armor, mixture
     }
 
-    public class MixtureStock
+    public class Stock
     {
-        public Mixture _Mixture;
+        public EquipmentItem _EquipmentItem;
         public int _Count;
     }
 
     private Transform equipmentParent;
 
     private Weapon weapon = null;
-    private Dictionary<EEquipmentItem, MixtureStock> mixtures = new Dictionary<EEquipmentItem, MixtureStock>();
+    private Dictionary<EEquipmentItem, Stock> mixtures = new Dictionary<EEquipmentItem, Stock>();
     private Armor armor = null;
     private Shield shield = null;
 
@@ -47,7 +47,7 @@ public class EquipmentManager
         if (mixtures.ContainsKey(newMixture._ItemName))
             mixtures[newMixture._ItemName]._Count++;
         else
-            mixtures.Add(newMixture._ItemName, new MixtureStock() { _Mixture = newMixture, _Count = 1 });
+            mixtures.Add(newMixture._ItemName, new Stock() { _EquipmentItem = newMixture, _Count = 1 });
         _OnItemGathered(newMixture);
         return true;
     }
@@ -85,6 +85,20 @@ public class EquipmentManager
     public int _ArmorValue
     { get { return (armor != null ? armor._Armor : 0) + (shield != null ? shield._Defence : 0); } }
 
+    public List<Stock> _GetEquipmentState()
+    {
+        List<Stock> allItemsInEquipment = new List<Stock>();
+        if (shield != null)
+            allItemsInEquipment.Add(new Stock() { _EquipmentItem = shield, _Count = 1 };
+        if (weapon != null)
+            allItemsInEquipment.Add(new Stock() { _EquipmentItem = weapon, _Count = 1 };
+        if (armor != null)
+            allItemsInEquipment.Add(new Stock() { _EquipmentItem = armor, _Count = 1 };
+        foreach (KeyValuePair<EEquipmentItem, Stock> mixture in this.mixtures)
+            allItemsInEquipment.Add(new Stock() { _EquipmentItem = mixture.Value._EquipmentItem, _Count = mixture.Value._Count });
+        return allItemsInEquipment;
+    }
+
     public void _UseWeapon(Player player)
     {
         if (weapon != null)
@@ -104,19 +118,6 @@ public class EquipmentManager
         }
         else
             Debug.Log("You don't have mixture " + mixtureName + " in equipment!");
-    }
-
-    public Weapon _GetWeapon()
-    {
-        return weapon;
-    }
-
-    public List<MixtureStock> _GetAllAvailableMixtures()
-    {
-        List<MixtureStock> allMixtures = new List<MixtureStock>();
-        foreach (MixtureStock mixture in mixtures.Values)
-            allMixtures.Add(mixture);
-        return allMixtures;
     }
 
     public bool _AddToEquipment(EquipmentItem itemToAdd)
