@@ -1,7 +1,10 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public abstract class Mixture : EquipmentItem
+namespace EquipmentItems
 {
-    public abstract void _Use(Player player);
+    public abstract class Mixture : EquipmentItem
+    {
+        public abstract void _Use(Player player);
+    }
 }

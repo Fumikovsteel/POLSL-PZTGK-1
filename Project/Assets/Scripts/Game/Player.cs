@@ -247,7 +247,7 @@ public class Player : MonoBehaviour
 
     public void CollectSomeItem(ICollectableObject collectableObject)
     {
-        EquipmentItem equipmentItem = collectableObject as EquipmentItem;
+        EquipmentItems.EquipmentItem equipmentItem = collectableObject as EquipmentItems.EquipmentItem;
         if (equipmentItem != null)
         {
             if (equipmentManager._AddToEquipment(equipmentItem))

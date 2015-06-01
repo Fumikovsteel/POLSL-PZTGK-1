@@ -29,7 +29,10 @@ public class DontDestroyOnLoad : MonoBehaviour
             List<Transform> allChilds = new List<Transform>();
             // Take references to all childre
             foreach (Transform child in transform)
-                allChilds.Add(child);
+            {
+                if (child.GetComponent<DontDestroyOnLoad>() != null)
+                    allChilds.Add(child);
+            }
             // Zeroes it's parent (object will be destroyed)
             foreach (Transform child in allChilds)
                 child.parent = null;

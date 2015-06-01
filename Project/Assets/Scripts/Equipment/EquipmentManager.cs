@@ -1,14 +1,15 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using EquipmentItems;
 
 public class EquipmentManager
 {
     public enum EEquipmentItem
     {
-        // All weapons in enum should be sorted from the least importent to most importent. AdvancedSword will change BasicSword in our inventory
+        // All weapons and armors in enum should be sorted from the least importent to most importent. AdvancedSword will change BasicSword in our inventory
         // but not inversely
-        BasicSword, AdvancedSword, HealthMixture, SpeedMixture
+        BasicSword, AdvancedSword, HealthMixture, SpeedMixture, BasicShield, AdvancedShield, BasicArmor, AdvancedArmor
     }
 
     public class MixtureStock
@@ -21,6 +22,8 @@ public class EquipmentManager
 
     private Weapon weapon = null;
     private Dictionary<EEquipmentItem, MixtureStock> mixtures = new Dictionary<EEquipmentItem, MixtureStock>();
+    private Armor armor = null;
+    private Shield shield = null;
 
     private bool AddWeapon(Weapon newWeapon)
     {
@@ -41,11 +44,34 @@ public class EquipmentManager
         return true;
     }
 
+    private bool AddArmor(Armor newArmor)
+    {
+        if (armor == null || newArmor._ItemName > armor._ItemName)
+        {
+            armor = newArmor;
+            return true;
+        }
+        return false;
+    }
+
+    private bool AddShield(Shield newShield)
+    {
+        if (shield == null || newShield._ItemName > shield._ItemName)
+        {
+            shield = newShield;
+            return true;
+        }
+        return false;
+    }
+
     public EquipmentManager(Transform player)
     {
         equipmentParent = new GameObject("Equipment").transform;
         equipmentParent.SetParentResetLocal(player);
     }
+
+    public int _ArmorValue
+    { get { return (armor != null ? armor._Armor : 0) + (shield != null ? shield._Defence : 0); } }
 
     public void _UseWeapon(Player player)
     {
@@ -83,13 +109,21 @@ public class EquipmentManager
 
     public bool _AddToEquipment(EquipmentItem itemToAdd)
     {
-        Weapon weapon = itemToAdd as Weapon;;
+        Weapon weapon = itemToAdd as Weapon;
         if (weapon != null)
             return AddWeapon(weapon);
 
         Mixture mixture = itemToAdd as Mixture;
         if (mixture != null)
             return AddMixture(mixture);
+
+        Armor armor = itemToAdd as Armor;
+        if (armor != null)
+            return AddArmor(armor);
+
+        Shield shield = itemToAdd as Shield;
+        if (shield != null)
+            return AddShield(shield);
 
         Debug.LogError("Undefined equipment object!");
         return false;
