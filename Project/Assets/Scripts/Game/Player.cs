@@ -28,12 +28,18 @@ public class Player : MonoBehaviour
         get { return transform.position; }
     }
 
+	public Vector3 _PlayerDirection
+	{
+		get { return playerRigidbody.velocity.normalized;}
+	}
+
     private const int maxLife = 100;
     private int life = maxLife;
 
     public event Action<int, int> _OnHealthChanged = (x, y) => { };
 
     private EquipmentManager equipmentManager;
+	private PlayerMeleeAttack meleeAttack;
 	
 	#endregion
 	//////////////////////////////////////////////////////////////////////////////////
@@ -45,7 +51,8 @@ public class Player : MonoBehaviour
 		new InputManager.KeyData() { keyCode = KeyCode.W, keyType = InputManager.EKeyUseType.pressedAndReleased },
 		new InputManager.KeyData() { keyCode = KeyCode.S, keyType = InputManager.EKeyUseType.pressedAndReleased },
 		new InputManager.KeyData() { keyCode = KeyCode.A, keyType = InputManager.EKeyUseType.pressedAndReleased },
-		new InputManager.KeyData() { keyCode = KeyCode.D, keyType = InputManager.EKeyUseType.pressedAndReleased });
+		new InputManager.KeyData() { keyCode = KeyCode.D, keyType = InputManager.EKeyUseType.pressedAndReleased },
+		new InputManager.KeyData() { keyCode = KeyCode.Space, keyType = InputManager.EKeyUseType.pressedAndReleased });
 
 		playerRigidbody = this.GetComponent<Rigidbody> ();
 
@@ -61,6 +68,7 @@ public class Player : MonoBehaviour
     {
         gameCameraTransform = Zelda._Game._GameManager._GameCamera.transform;
         _OnHealthChanged(life, maxLife);
+		meleeAttack = GetComponent<PlayerMeleeAttack> ();
     }
 
 	public void Update() 
@@ -121,6 +129,11 @@ public class Player : MonoBehaviour
 		if (inputData.usedKeyType == InputManager.EKeyUseType.pressed) {
 
 			CalculateVelocity (inputData, acceleration, 1);
+			if (inputData.usedKey == KeyCode.Space) {
+				Attack();
+				Debug.Log("space");
+			}
+	
 		}
 		else if(inputData.usedKeyType == InputManager.EKeyUseType.released) {
 
@@ -176,6 +189,8 @@ public class Player : MonoBehaviour
 				isInputXDirty = false;
 			}
 		}
+		Vector3 ads = playerRigidbody.velocity.normalized;
+		Debug.Log (ads);
 	}
 
 	private void UpdateVelocity() {
@@ -212,6 +227,10 @@ public class Player : MonoBehaviour
 
 			playerRigidbody.velocity = playerVelocity;
 		}
+	}
+
+	private void Attack() {
+		meleeAttack.Attack ();
 	}
 	
 	#endregion
