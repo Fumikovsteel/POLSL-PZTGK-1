@@ -29,6 +29,11 @@ public class Player : MonoBehaviour
         get { return transform.position; }
     }
 
+	public Vector3 _PlayerDirection
+	{
+		get { return playerRigidbody.velocity.normalized; }
+	}
+
     public List<EquipmentManager.Stock> _AllEquipmentItems
     { get { return equipmentManager._GetEquipmentState(); } }
 
@@ -136,7 +141,6 @@ public class Player : MonoBehaviour
 			CalculateVelocity (inputData, acceleration, 1);
 			if (inputData.usedKey == KeyCode.Space) {
 				Attack();
-				Debug.Log("space");
 			}
 	
 		}
@@ -194,8 +198,6 @@ public class Player : MonoBehaviour
 				isInputXDirty = false;
 			}
 		}
-		Vector3 ads = playerRigidbody.velocity.normalized;
-		Debug.Log (ads);
 	}
 
 	private void UpdateVelocity() {
