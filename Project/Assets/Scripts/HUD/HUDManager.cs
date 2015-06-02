@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using UnityEngine.UI;
+using System.Collections.Generic;
 
 public class HUDManager : MonoBehaviour
 {
@@ -23,23 +24,29 @@ public class HUDManager : MonoBehaviour
     [SerializeField]
     private GameObject shield2Image;
     [SerializeField]
-    private GameObject armor1Image;
+    private Image armor1Image;
     [SerializeField]
-    private GameObject armor2Image;
+    private Image armor2Image;
 
     private void Awake()
     {
         Zelda._Game._GameManager._Player._OnHealthChanged += OnHealthChanged;
+        Zelda._Game._GameManager._Player._OnItemGathered += OnItemGathered;
         sword2Image.SetActive(false);
         shield2Image.SetActive(false);
-        armor2Image.SetActive(false);
+        //armor2Image.SetActive(false);
         showMessagebox(false);
+
+        List<EquipmentManager.Stock> alItems = Zelda._Game._GameManager._Player._AllEquipmentItems;
     }
 
     private void OnDestroy()
     {
         if (Zelda._Game != null)
+        {
             Zelda._Game._GameManager._Player._OnHealthChanged -= OnHealthChanged;
+            Zelda._Game._GameManager._Player._OnItemGathered -= OnItemGathered;
+        }
     }
 
     private void OnHealthChanged(int life, int maxLife)
@@ -66,6 +73,15 @@ public class HUDManager : MonoBehaviour
         }
     }
 
+    private void OnItemGathered(EquipmentItems.EquipmentItem equipmentItem)
+    {
+        switch (equipmentItem._ItemType)
+        {
+            case EquipmentManager.EEquipmentType.armor:
+                armor1Image.sprite = equipmentItem._ItemSprite; break;
+        }
+    }
+
     private void showAdvancedSword()
     {
         sword1Image.SetActive(false);
@@ -80,8 +96,8 @@ public class HUDManager : MonoBehaviour
 
     private void showAdvancedArmor()
     {
-        armor1Image.SetActive(false);
-        armor2Image.SetActive(true);
+        //armor1Image.SetActive(false);
+        //armor2Image.SetActive(true);
     }
 
     private void showMessagebox(bool value)

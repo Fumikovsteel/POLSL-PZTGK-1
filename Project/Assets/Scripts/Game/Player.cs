@@ -1,6 +1,7 @@
 using UnityEngine;
 using System.Collections;
 using System;
+using System.Collections.Generic;
 
 public class Player : MonoBehaviour
 {
@@ -28,10 +29,13 @@ public class Player : MonoBehaviour
         get { return transform.position; }
     }
 
-	public Vector3 _PlayerDirection
-	{
-		get { return playerRigidbody.velocity.normalized;}
-	}
+    public List<EquipmentManager.Stock> _AllEquipmentItems
+    { get { return equipmentManager._GetEquipmentState(); } }
+
+    /// <summary>
+    /// When player collect some item from map
+    /// </summary>
+    public event Action<EquipmentItems.EquipmentItem> _OnItemGathered;
 
     private const int maxLife = 100;
     private int life = maxLife;
@@ -62,6 +66,7 @@ public class Player : MonoBehaviour
         Zelda._Common._GameplayEvents._OnGameUnpaused += OnGameUnpaused;
 
         equipmentManager = new EquipmentManager(transform);
+        equipmentManager._OnItemGathered += (x) => _OnItemGathered(x);
 	}
 
     public void Start()
@@ -266,7 +271,7 @@ public class Player : MonoBehaviour
 
     public void CollectSomeItem(ICollectableObject collectableObject)
     {
-        EquipmentItem equipmentItem = collectableObject as EquipmentItem;
+        EquipmentItems.EquipmentItem equipmentItem = collectableObject as EquipmentItems.EquipmentItem;
         if (equipmentItem != null)
         {
             if (equipmentManager._AddToEquipment(equipmentItem))

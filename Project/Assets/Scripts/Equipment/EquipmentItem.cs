@@ -1,16 +1,27 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public abstract class EquipmentItem : MonoBehaviour, ICollectableObject
+namespace EquipmentItems
 {
-    [SerializeField]
-    private GameObject collectableObject;
-
-    public abstract EquipmentManager.EEquipmentItem _ItemName
-    { get; }
-
-    public void _Collect()
+    public abstract class EquipmentItem : MonoBehaviour, ICollectableObject
     {
-        Destroy(collectableObject);
+        [SerializeField]
+        private GameObject collectableObject;
+        [SerializeField]
+        private SpriteRenderer itemSprite;
+
+        public abstract EquipmentManager.EEquipmentItem _ItemName
+        { get; }
+
+        public abstract EquipmentManager.EEquipmentType _ItemType
+        { get; }
+
+        public Sprite _ItemSprite
+        { get { return itemSprite.sprite; } }
+
+        public void _Collect()
+        {
+            Destroy(collectableObject);
+        }
     }
 }

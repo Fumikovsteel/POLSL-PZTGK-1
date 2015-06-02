@@ -1,7 +1,19 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public abstract class Weapon : EquipmentItem
+namespace EquipmentItems
 {
-    public abstract void _StartAttack(Player player);
+    public abstract class Weapon : EquipmentItem
+    {
+        [SerializeField]
+        private float strength = 10.0f;
+
+        public override EquipmentManager.EEquipmentType _ItemType
+        { get { return EquipmentManager.EEquipmentType.weapon; } }
+
+        public void _StartAttack(Player player)
+        {
+            player.StartMeleeAttackAnimation(strength);
+        }
+    }
 }

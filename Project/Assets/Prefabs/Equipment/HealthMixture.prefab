@@ -79,10 +79,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 188990}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 74ee537630a48ab46811422cc977a90a, type: 3}
+  m_Script: {fileID: 11500000, guid: c07f29bf88a5fb04ca31512e4903b1b6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   collectableObject: {fileID: 179528}
+  itemSprite: {fileID: 21245364}
   extraHealth: 10
 --- !u!114 &11493946
 MonoBehaviour:

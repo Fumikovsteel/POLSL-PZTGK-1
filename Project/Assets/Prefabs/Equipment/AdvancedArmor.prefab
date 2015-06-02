@@ -28,7 +28,7 @@ GameObject:
   - 4: {fileID: 480430}
   - 114: {fileID: 11477752}
   m_Layer: 0
-  m_Name: AdvancedSword
+  m_Name: AdvancedArmor
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -91,12 +91,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 188296}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 560245efd197fc24caa4b1398d8d27fc, type: 3}
+  m_Script: {fileID: 11500000, guid: deb39ecfcaa410a48a644791a7f4d9d7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   collectableObject: {fileID: 131954}
   itemSprite: {fileID: 21244712}
-  strength: 10
+  armor: 20
 --- !u!212 &21244712
 SpriteRenderer:
   m_ObjectHideFlags: 1
@@ -121,7 +121,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300002, guid: 2e5f947496526bd459c4abdd8a2b922e, type: 3}
+  m_Sprite: {fileID: 21300006, guid: 2e5f947496526bd459c4abdd8a2b922e, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
 --- !u!1001 &100100000
 Prefab:

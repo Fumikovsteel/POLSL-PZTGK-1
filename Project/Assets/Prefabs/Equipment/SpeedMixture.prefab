@@ -79,10 +79,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 195002}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fc031d6f9964c574b9d967337742bec7, type: 3}
+  m_Script: {fileID: 11500000, guid: 82600dec10bc0dd4ab680d0a23d95db5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   collectableObject: {fileID: 186554}
+  itemSprite: {fileID: 21295338}
   extraSpeedValue: .5
   boostTime: 3
 --- !u!114 &11432108
