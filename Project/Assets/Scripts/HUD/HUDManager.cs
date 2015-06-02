@@ -36,8 +36,6 @@ public class HUDManager : MonoBehaviour
         shield2Image.SetActive(false);
         //armor2Image.SetActive(false);
         showMessagebox(false);
-
-        List<EquipmentManager.Stock> alItems = Zelda._Game._GameManager._Player._AllEquipmentItems;
     }
 
     private void OnDestroy()

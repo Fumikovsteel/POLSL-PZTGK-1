@@ -18,6 +18,7 @@ public class EquipmentManager
         none, weapon, shield, armor, mixture
     }
 
+    [Serializable]
     public class Stock
     {
         public EquipmentItem _EquipmentItem;
@@ -42,12 +43,12 @@ public class EquipmentManager
         return false;
     }
 
-    private bool AddMixture(Mixture newMixture)
+    private bool AddMixture(Mixture newMixture, int numberOfMixtures)
     {
         if (mixtures.ContainsKey(newMixture._ItemName))
-            mixtures[newMixture._ItemName]._Count++;
+            mixtures[newMixture._ItemName]._Count += numberOfMixtures;
         else
-            mixtures.Add(newMixture._ItemName, new Stock() { _EquipmentItem = newMixture, _Count = 1 });
+            mixtures.Add(newMixture._ItemName, new Stock() { _EquipmentItem = newMixture, _Count = numberOfMixtures });
         _OnItemGathered(newMixture);
         return true;
     }
@@ -103,8 +104,6 @@ public class EquipmentManager
     {
         if (weapon != null)
             weapon._StartAttack(player);
-        else
-            Debug.Log("You don't have any weapon!");
     }
 
     public void _UseMixture(Player player, EEquipmentItem mixtureName)
@@ -116,18 +115,19 @@ public class EquipmentManager
             if (mixtures[mixtureName]._Count <= 0)
                 mixtures.Remove(mixtureName);
         }
-        else
-            Debug.Log("You don't have mixture " + mixtureName + " in equipment!");
     }
 
-    public bool _AddToEquipment(EquipmentItem itemToAdd)
+    public bool _AddToEquipment(EquipmentItem itemToAdd, int numberOfItems = 1)
     {
+        if (numberOfItems <= 0)
+            return false;
+
         switch (itemToAdd._ItemType)
         {
             case EEquipmentType.armor:
                 return AddArmor(itemToAdd as Armor);
             case EEquipmentType.mixture:
-                return AddMixture(itemToAdd as Mixture);
+                return AddMixture(itemToAdd as Mixture, numberOfItems);
             case EEquipmentType.shield:
                 return AddShield(itemToAdd as Shield);
             case EEquipmentType.weapon:

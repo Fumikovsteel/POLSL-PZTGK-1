@@ -23,6 +23,8 @@ public class Player : MonoBehaviour
 
     [SerializeField]
     private GameObject swordObject;
+    [SerializeField]
+    private EquipmentManager.Stock[] startEquipmentState;
 
     public Vector3 _PlayerPosition
     {
@@ -56,12 +58,7 @@ public class Player : MonoBehaviour
 	
 	public void Awake()
 	{
-		Zelda._Game._InputManager.RegisterOnInput(new InputManager.InputKeyTaker() { _CanTakeInput = () => { return !_Locked; }, _OnInputUsed = OnInputUsed },
-		new InputManager.KeyData() { keyCode = KeyCode.W, keyType = InputManager.EKeyUseType.pressedAndReleased },
-		new InputManager.KeyData() { keyCode = KeyCode.S, keyType = InputManager.EKeyUseType.pressedAndReleased },
-		new InputManager.KeyData() { keyCode = KeyCode.A, keyType = InputManager.EKeyUseType.pressedAndReleased },
-		new InputManager.KeyData() { keyCode = KeyCode.D, keyType = InputManager.EKeyUseType.pressedAndReleased },
-		new InputManager.KeyData() { keyCode = KeyCode.Space, keyType = InputManager.EKeyUseType.pressedAndReleased });
+        RegisterInput();
 
 		playerRigidbody = this.GetComponent<Rigidbody> ();
 
@@ -70,15 +67,19 @@ public class Player : MonoBehaviour
         Zelda._Common._GameplayEvents._OnGamePaused += OnGamePaused;
         Zelda._Common._GameplayEvents._OnGameUnpaused += OnGameUnpaused;
 
-        equipmentManager = new EquipmentManager(transform);
-        equipmentManager._OnItemGathered += (x) => _OnItemGathered(x);
+        meleeAttack = GetComponent<PlayerMeleeAttack>();
 	}
 
     public void Start()
     {
         gameCameraTransform = Zelda._Game._GameManager._GameCamera.transform;
         _OnHealthChanged(life, maxLife);
-		meleeAttack = GetComponent<PlayerMeleeAttack> ();
+
+        equipmentManager = new EquipmentManager(transform);
+        equipmentManager._OnItemGathered += (x) => _OnItemGathered(x);
+
+        for (int i = startEquipmentState.Length - 1; i >= 0; i--)
+            equipmentManager._AddToEquipment(startEquipmentState[i]._EquipmentItem, startEquipmentState[i]._Count);
     }
 
 	public void Update() 
@@ -90,6 +91,46 @@ public class Player : MonoBehaviour
 	#endregion
 	//////////////////////////////////////////////////////////////////////////////////
 	#region InsideMethods
+
+    private void RegisterInput()
+    {
+        Zelda._Game._InputManager.RegisterOnInput(new InputManager.InputKeyTaker()
+            {
+                _CanTakeInput = () => { return !_Locked; },
+                _OnInputUsed = OnInputUsed
+            }, 
+            new InputManager.KeyData() { keyCode = KeyCode.W, keyType = InputManager.EKeyUseType.pressedAndReleased },
+            new InputManager.KeyData() { keyCode = KeyCode.S, keyType = InputManager.EKeyUseType.pressedAndReleased },
+            new InputManager.KeyData() { keyCode = KeyCode.A, keyType = InputManager.EKeyUseType.pressedAndReleased },
+            new InputManager.KeyData() { keyCode = KeyCode.D, keyType = InputManager.EKeyUseType.pressedAndReleased });
+
+        Zelda._Game._InputManager.RegisterOnInput(new InputManager.InputKeyTaker()
+            {
+                _CanTakeInput = () => { return !_Locked; },
+                _OnInputUsed = (x) => equipmentManager._UseWeapon(this)
+            }, new InputManager.KeyData()
+            {
+                keyCode = KeyCode.Space, keyType = InputManager.EKeyUseType.released
+            });
+
+        Zelda._Game._InputManager.RegisterOnInput(new InputManager.InputKeyTaker()
+            {
+                _CanTakeInput = () => { return !_Locked; },
+                _OnInputUsed = (x) => equipmentManager._UseMixture(this, EquipmentManager.EEquipmentItem.SpeedMixture),
+            }, new InputManager.KeyData()
+            {
+                keyCode = KeyCode.Alpha1, keyType = InputManager.EKeyUseType.released
+            });
+
+        Zelda._Game._InputManager.RegisterOnInput(new InputManager.InputKeyTaker()
+            {
+                _CanTakeInput = () => { return !_Locked; },
+                _OnInputUsed = (x) => equipmentManager._UseMixture(this, EquipmentManager.EEquipmentItem.HealthMixture)
+            }, new InputManager.KeyData()
+            {
+                keyCode = KeyCode.Alpha2, keyType = InputManager.EKeyUseType.released
+            });
+    }
 
     private void OnLevelWillChange(SceneManager.ESceneName newScene)
     {
@@ -133,15 +174,20 @@ public class Player : MonoBehaviour
             Zelda._Common._GameplayEvents._OnGameUnpaused -= OnGameUnpaused;
         }
     }
+
+    private IEnumerator RevertSpeedMixture(float waitTime, float defaultMaxSpeed, float defaultAcceleration)
+    {
+        yield return new WaitForSeconds(waitTime);
+
+        maxSpeed = defaultMaxSpeed;
+        acceleration = defaultAcceleration;
+    }
 	
 	private void OnInputUsed(InputManager.InputData inputData)
 	{
 		if (inputData.usedKeyType == InputManager.EKeyUseType.pressed) {
 
 			CalculateVelocity (inputData, acceleration, 1);
-			if (inputData.usedKey == KeyCode.Space) {
-				Attack();
-			}
 	
 		}
 		else if(inputData.usedKeyType == InputManager.EKeyUseType.released) {
@@ -235,10 +281,6 @@ public class Player : MonoBehaviour
 			playerRigidbody.velocity = playerVelocity;
 		}
 	}
-
-	private void Attack() {
-		meleeAttack.Attack ();
-	}
 	
 	#endregion
 
@@ -247,7 +289,7 @@ public class Player : MonoBehaviour
 	public void TakeLife(int amount) {
 		life -= amount;
 		if (life <= 0) {
-			Debug.Log("you are dead");
+			//Debug.Log("you are dead");
 			//TODO DEATH HANDLING
 		}
         _OnHealthChanged(life, maxLife);
@@ -263,12 +305,14 @@ public class Player : MonoBehaviour
 
     public void UseSpeedMixture(float extraSpeedValue, float boostTime)
     {
-        // TODO!!!
+        StartCoroutine(RevertSpeedMixture(boostTime, maxSpeed, acceleration));
+        maxSpeed *= extraSpeedValue;
+        acceleration *= extraSpeedValue;
     }
 
     public void StartMeleeAttackAnimation(float attackStrength)
     {
-        // TODO!!!
+        meleeAttack._StartAttackAnimation(swordObject.transform);
     }
 
     public void CollectSomeItem(ICollectableObject collectableObject)
