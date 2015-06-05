@@ -5,6 +5,10 @@ public class GameMenu : MonoBehaviour
 {
     [SerializeField]
     private GameObject eventSystem;
+    [SerializeField]
+    private GameObject continueButton;
+    [SerializeField]
+    private GameObject gameOverText;
 
     private GameObject instantiatedEventSystem;
 
@@ -17,6 +21,12 @@ public class GameMenu : MonoBehaviour
     {
         if (instantiatedEventSystem != null)
             Destroy(instantiatedEventSystem);
+    }
+
+    public void _Init(bool isGameOverScreen)
+    {
+        continueButton.SetActive(isGameOverScreen ? false : true);
+        gameOverText.SetActive(isGameOverScreen ? true : false);
     }
 
     public void _ContinuePressed()

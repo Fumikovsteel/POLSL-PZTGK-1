@@ -40,8 +40,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enemyPrefab: {fileID: 159498, guid: c5a2f17f69cb47d42bc085dca4e818f8, type: 2}
-  numberOfEnemies: 5
-  spawnWindow: {x: 10, y: 10}
+  defaultEnemiesHealth: 15
+  deathAnimationTime: 1
+  deathAnimationAmount: {x: .100000001, y: .100000001, z: 0}
 --- !u!1001 &100100000
 Prefab:
   m_ObjectHideFlags: 1

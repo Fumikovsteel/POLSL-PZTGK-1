@@ -51,7 +51,7 @@ public class HUDManager : MonoBehaviour
 
     private void OnDestroy()
     {
-        if (Zelda._Game != null)
+        if (Zelda._Game != null && Zelda._Game._GameManager._Player != null)
         {
             Zelda._Game._GameManager._Player._OnHealthChanged -= OnHealthChanged;
             Zelda._Game._GameManager._Player._OnItemGathered -= OnItemGathered;
@@ -74,12 +74,6 @@ public class HUDManager : MonoBehaviour
             pos.x = xPosition;
             
             healthTransform.anchoredPosition = pos;
-        }
-
-        if (life <= 0)
-        {
-            setMessage("You are dead!");
-            showMessagebox(true);
         }
     }
 

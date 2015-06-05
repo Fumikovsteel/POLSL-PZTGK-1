@@ -25,6 +25,10 @@ public class Player : MonoBehaviour
     private SpriteRenderer swordObject;
     [SerializeField]
     private EquipmentManager.Stock[] startEquipmentState;
+    [SerializeField]
+    private float deathAnimationTime;
+    [SerializeField]
+    private Vector3 deathAnimationAmount;
 
     public Vector3 _PlayerPosition
     {
@@ -184,6 +188,23 @@ public class Player : MonoBehaviour
         }
     }
 
+    private void KillPlayerAnimationFinished()
+    {
+        Destroy(gameObject);
+        Zelda._Common._GameplayEvents.RaiseOnPlayerKilled();
+    }
+
+    private void KillPlayer()
+    {
+        // We don't want camera to shake with player
+        enabled = false;
+        OnGamePaused();
+        iTween.ShakePosition(gameObject, iTween.Hash("amount", deathAnimationAmount, "time", deathAnimationTime, "islocal", true,
+                                                     "oncomplete", "KillPlayerAnimationFinished"));
+        iTween.ShakePosition(gameCameraTransform.gameObject, iTween.Hash("amount", deathAnimationAmount / 3.0f, "time", deathAnimationTime, "islocal", true));
+        Zelda._Common._GameplayEvents.RaiseOnPlayerWillBeKilled();
+    }
+
     private void OnEnemyHit(Enemy hittedEnemy, float attackStrength, float attackRecoild)
     {
         Rigidbody enemyBody = hittedEnemy.GetComponent<Rigidbody>();
@@ -192,7 +213,7 @@ public class Player : MonoBehaviour
             Vector3 forceDirection = new Vector3(hittedEnemy.transform.position.x - transform.position.x, hittedEnemy.transform.position.y - transform.position.y, 0.0f);
             enemyBody.AddForce(forceDirection.normalized * attackRecoild, ForceMode.Impulse);
         }
-        hittedEnemy.ChangeHealth(-attackStrength);
+        hittedEnemy._ChangeHealth(-attackStrength);
     }
 
     private void OnItemGathered(EquipmentItems.EquipmentItem newItem)
@@ -314,10 +335,9 @@ public class Player : MonoBehaviour
 
 	public void TakeLife(int amount) {
 		life -= amount;
-		if (life <= 0) {
-			//Debug.Log("you are dead");
-			//TODO DEATH HANDLING
-		}
+        if (life <= 0)
+            // We delay because projectile physics need to change player position
+            Zelda._Common._TimeManager._DelayMethodExecution(0.05f, KillPlayer);
         _OnHealthChanged(life, maxLife);
 	}
 

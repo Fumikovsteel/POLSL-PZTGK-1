@@ -224,6 +224,8 @@ MonoBehaviour:
     _Count: 1
   - _EquipmentItem: {fileID: 11458952, guid: 38d022fca5404c04c88d207a22e11bd1, type: 2}
     _Count: 2
+  deathAnimationTime: 1.5
+  deathAnimationAmount: {x: .100000001, y: .100000001, z: 0}
 --- !u!135 &13503500
 SphereCollider:
   m_ObjectHideFlags: 1

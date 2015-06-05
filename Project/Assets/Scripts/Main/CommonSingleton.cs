@@ -14,6 +14,7 @@ public class CommonSingleton : MonoBehaviour
     public ApplicationManager _ApplicationManager;
     public Transform _ManagersParent;
     public LevelsManager _LevelsManager;
+    public TimeManager _TimeManager;
 
     #endregion
     //////////////////////////////////////////////////////////////////////////////////
@@ -64,6 +65,7 @@ public class CommonSingleton : MonoBehaviour
         _LevelsManager = new LevelsManager();
         _CamerasManager = new CamerasManager();
         _ResourcesManager = new ResourcesManager();
+        _TimeManager = new GameObject("TimeManager", typeof(TimeManager), typeof(DontDestroyOnLoad)).GetComponent<TimeManager>();
 
         _GameplayEvents._OnSceneWillChange += OnSceneWillChange;
     }

@@ -14,6 +14,8 @@ public class GameplayEvents
     public event Action _OnLocationChanged = () => { };
     public event Action _OnGamePaused = () => { };
     public event Action _OnGameUnpaused = () => { };
+    public event Action _OnPlayerKilled = () => { };
+    public event Action _OnPlayerWillBeKilled = () => { };
 
     #endregion
     //////////////////////////////////////////////////////////////////////////////////
@@ -52,6 +54,16 @@ public class GameplayEvents
     public void RaiseOnGameUnpaused()
     {
         _OnGameUnpaused();
+    }
+
+    public void RaiseOnPlayerKilled()
+    {
+        _OnPlayerKilled();
+    }
+
+    public void RaiseOnPlayerWillBeKilled()
+    {
+        _OnPlayerWillBeKilled();
     }
 
     #endregion

@@ -17,9 +17,13 @@ public class RangedEnemy : MonoBehaviour {
 		timeElaspedSinceLastFire = fireCooldown_S;
 		lastUpdate = Time.time;
 		Zelda._Common._GameplayEvents._OnLocationChanged += OnLocationChanged;
-		Zelda._Common._GameplayEvents._OnGamePaused += OnGamePaused;
-		Zelda._Common._GameplayEvents._OnGameUnpaused += OnGameUnpaused;
 	}
+
+    private void OnDestroy()
+    {
+        if (Zelda._Common != null)
+            Zelda._Common._GameplayEvents._OnLocationChanged -= OnLocationChanged;
+    }
 	
 	// Update is called once per frame
 	void Update () {
@@ -52,11 +56,13 @@ public class RangedEnemy : MonoBehaviour {
 		enabled = !enabled;
 	}
 	
-	public void OnGamePaused() {
+	public void _StopFiring()
+    {
 		enabled = false;
 	}
 	
-	public void OnGameUnpaused() {
+	public void _UnstopFiring()
+    {
 		enabled = true;
 	}
 }

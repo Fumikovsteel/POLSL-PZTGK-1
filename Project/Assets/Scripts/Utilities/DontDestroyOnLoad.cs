@@ -30,7 +30,7 @@ public class DontDestroyOnLoad : MonoBehaviour
             // Take references to all childre
             foreach (Transform child in transform)
             {
-                if (child.GetComponent<DontDestroyOnLoad>() != null)
+                if (child.GetComponent<DontDestroyOnLoad>() == null)
                     allChilds.Add(child);
             }
             // Zeroes it's parent (object will be destroyed)
