@@ -82,6 +82,7 @@ public class EquipmentManager
     }
 
     public event Action<EquipmentItem> _OnItemGathered = (x) => { };
+    public event Action<EquipmentItem> _OnMixtureUsed = (x) => { };
 
     public int _ArmorValue
     { get { return (armor != null ? armor._Armor : 0) + (shield != null ? shield._Defence : 0); } }
@@ -110,10 +111,13 @@ public class EquipmentManager
     {
         if (mixtures.ContainsKey(mixtureName))
         {
+            _OnMixtureUsed(mixtures[mixtureName]._EquipmentItem);
+
             (mixtures[mixtureName]._EquipmentItem as Mixture)._Use(player);
             mixtures[mixtureName]._Count--;
             if (mixtures[mixtureName]._Count <= 0)
                 mixtures.Remove(mixtureName);
+
         }
     }
 

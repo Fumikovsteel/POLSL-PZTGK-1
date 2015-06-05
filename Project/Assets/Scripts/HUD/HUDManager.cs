@@ -38,6 +38,7 @@ public class HUDManager : MonoBehaviour
     {
         Zelda._Game._GameManager._Player._OnHealthChanged += OnHealthChanged;
         Zelda._Game._GameManager._Player._OnItemGathered += OnItemGathered;
+        Zelda._Game._GameManager._Player._OnMixtureUsed += OnMixtureUsed;
         showMessagebox(false);
 
         armorImage.gameObject.SetActive(false);
@@ -54,6 +55,7 @@ public class HUDManager : MonoBehaviour
         {
             Zelda._Game._GameManager._Player._OnHealthChanged -= OnHealthChanged;
             Zelda._Game._GameManager._Player._OnItemGathered -= OnItemGathered;
+            Zelda._Game._GameManager._Player._OnMixtureUsed -= OnMixtureUsed;
         }
     }
 
@@ -129,9 +131,8 @@ public class HUDManager : MonoBehaviour
             if (healthMixtures < 1)
             {
                 healthMixtureImage.gameObject.SetActive(false);
-                healthMixturesAmountText.text = "x " + healthMixtures;
-                healthMixtureImage.sprite = equipmentItem._ItemSprite;
             }
+            healthMixturesAmountText.text = "x " + healthMixtures;
         }
         else if (equipmentItem._ItemName == EquipmentManager.EEquipmentItem.SpeedMixture)
         {
@@ -139,9 +140,8 @@ public class HUDManager : MonoBehaviour
             if (speedMixtures < 1)
             {
                 speedMixtureImage.gameObject.SetActive(false);
-                speedMixturesAmountText.text = "x " + speedMixtures;
-                speedMixtureImage.sprite = equipmentItem._ItemSprite;
             }
+            speedMixturesAmountText.text = "x " + speedMixtures;
         }
     }
 

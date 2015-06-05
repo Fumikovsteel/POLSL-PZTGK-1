@@ -44,6 +44,11 @@ public class Player : MonoBehaviour
     /// </summary>
     public event Action<EquipmentItems.EquipmentItem> _OnItemGathered;
 
+    /// <summary>
+    /// When player uses a mixture
+    /// </summary>
+    public event Action<EquipmentItems.EquipmentItem> _OnMixtureUsed;
+
     private const int maxLife = 100;
     private int life = maxLife;
 
@@ -77,6 +82,7 @@ public class Player : MonoBehaviour
 
         equipmentManager = new EquipmentManager(transform);
         equipmentManager._OnItemGathered += (x) => _OnItemGathered(x);
+        equipmentManager._OnMixtureUsed += (x) => _OnMixtureUsed(x);
 
         for (int i = startEquipmentState.Length - 1; i >= 0; i--)
             equipmentManager._AddToEquipment(startEquipmentState[i]._EquipmentItem, startEquipmentState[i]._Count);
