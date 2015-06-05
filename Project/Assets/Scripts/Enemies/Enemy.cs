@@ -10,6 +10,8 @@ public class Enemy : MonoBehaviour {
 	private Rigidbody rb;
 	private Vector3 savedVelocity;
 
+    private float curHealth = 0.0f;
+
 	// Use this for initialization
 	void Start () {
 		rb = GetComponent<Rigidbody> ();
@@ -69,5 +71,17 @@ public class Enemy : MonoBehaviour {
 		rb.AddForce( savedVelocity, ForceMode.VelocityChange );
 		enabled = true;
 	}
+
+    public void Init(float defaultHealth)
+    {
+        curHealth = defaultHealth;
+    }
+
+    public void ChangeHealth(float difference)
+    {
+        curHealth += difference;
+        if (curHealth <= 0.0f)
+            Destroy(gameObject);
+    }
 	
 }

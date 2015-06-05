@@ -97,6 +97,7 @@ MonoBehaviour:
   collectableObject: {fileID: 131954}
   itemSprite: {fileID: 21244712}
   strength: 10
+  recoil: 40
 --- !u!212 &21244712
 SpriteRenderer:
   m_ObjectHideFlags: 1

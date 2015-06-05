@@ -218,7 +218,7 @@ MonoBehaviour:
   _Locked: 0
   isInputXDirty: 0
   isInputYDirty: 0
-  swordObject: {fileID: 122122}
+  swordObject: {fileID: 21264136}
   startEquipmentState:
   - _EquipmentItem: {fileID: 11420896, guid: 10188bbf462ed0d44a9d0fa0df1b0588, type: 2}
     _Count: 1
@@ -286,7 +286,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 2e5f947496526bd459c4abdd8a2b922e, type: 3}
+  m_Sprite: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
 --- !u!1001 &100100000
 Prefab:

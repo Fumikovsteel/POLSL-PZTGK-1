@@ -1,5 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System;
+using System.Collections.Generic;
 
 public class PlayerMeleeAttack : MonoBehaviour
 {
@@ -28,29 +30,24 @@ public class PlayerMeleeAttack : MonoBehaviour
     /// <summary>
     /// How often we will check raycast during sword rotating
     /// </summary>
-    private float checkRaycastStep = 50.0f;
+    private float checkRaycastStep = 59.0f;
+    /// <summary>
+    /// How long sword raycast is
+    /// </summary>
+    private float raycastLength = 0.35f;
+    /// <summary>
+    /// All enemies which were hitted in current attack animation
+    /// </summary>
+    private List<Enemy> hittedEnemies = new List<Enemy>();
 
-    //public float attackAngle = 45;
-    //public float attackRange = 0.1f;
-
-
-    //LayerMask enemyLayerMask = LayerMask.GetMask("Enemies");
-    //// Use this for initialization
-
-    //public void Attack() {
-    //    Collider[] collidersInRange = Physics.OverlapSphere (transform.position, attackRange, enemyLayerMask);
-    //    Vector3 playerDirection = Zelda._Game._GameManager._Player._PlayerDirection;
-    //    Vector3 playerPosition = Zelda._Game._GameManager._Player.transform.position;
-
-    //    foreach(Collider c in collidersInRange) {
-    //        Vector3 playerToEnemyDirection = c.transform.position - playerPosition;
-    //        float angle = Vector3.Angle(playerDirection, playerToEnemyDirection);
-    //        float distance = Vector3.Distance(playerPosition, c.transform.position);
-    //        if(distance <= attackRange && (angle > - attackAngle/2 && angle < attackAngle/2)) {
-    //            Destroy(c.gameObject);
-    //        }
-    //    }
-    //}
+    /// <summary>
+    /// Strength of the currently played attack
+    /// </summary>
+    private float curAttackStrength;
+    /// <summary>
+    /// Recoil of the currently player attack
+    /// </summary>
+    private float curRecoild;
 
     private void FirstStepComplete()
     {
@@ -64,14 +61,23 @@ public class PlayerMeleeAttack : MonoBehaviour
 
     private void UpdateSecondStep(float curValue)
     {
+        RaycastHit raycastHit;
         if (lastRaycastValue + checkRaycastStep < curValue)
         {
-            RaycastHit raycastHit;
             Vector3 direction = new Vector3(sword.position.x - gameObject.transform.position.x, sword.position.y - gameObject.transform.position.y, 0.0f);
-            Physics.Raycast(gameObject.transform.position, direction, out raycastHit, 2.0f, LayerMask.NameToLayer("Enemies"));
-            if (raycastHit.collider != null)
-                Debug.Log(direction);
-            lastRaycastValue = curValue;
+            Physics.Raycast(gameObject.transform.position, direction, out raycastHit, raycastLength, LayerMask.GetMask("Enemies"));
+            if (raycastHit.collider != null )
+            {
+                Enemy hittedEnemy = raycastHit.collider.GetComponent<Enemy>();
+                // We don't want to hit the same enemy twice in one attack animation
+                if (hittedEnemy != null && !hittedEnemies.Contains(hittedEnemy))
+                {
+                    hittedEnemies.Add(hittedEnemy);
+                    _OnEnemyHit(hittedEnemy, curAttackStrength, curRecoild);
+                }
+            }
+            lastRaycastValue = Mathf.Floor(curValue / checkRaycastStep) * checkRaycastStep;
+            Debug.DrawLine(gameObject.transform.position, gameObject.transform.position + (direction.normalized * raycastLength), Color.black, 60.0f);
         }
 
         sword.parent.localRotation = Quaternion.Euler(0.0f, 0.0f, curValue);
@@ -91,6 +97,7 @@ public class PlayerMeleeAttack : MonoBehaviour
 
     private void ThirdMidstepComplete()
     {
+        hittedEnemies.Clear();
         sword.parent.localRotation = Quaternion.identity;
         iTween.ScaleTo(sword.parent.gameObject, iTween.Hash("scale", Vector3.one, "time", thirdStepTime / 2.0f, "islocal", true,
                                                             "easetype", iTween.EaseType.linear));
@@ -101,10 +108,14 @@ public class PlayerMeleeAttack : MonoBehaviour
         isCurrentlyAttacking = false;
     }
 
-    public void _StartAttackAnimation(Transform sword)
+    public event Action<Enemy, float, float> _OnEnemyHit = (x, y, z) => { };
+
+    public void _StartAttackAnimation(Transform sword, float attackStrength, float attackRecoil)
     {
         if (!isCurrentlyAttacking)
         {
+            curAttackStrength = attackStrength;
+            curRecoild = attackRecoil;
             this.sword = sword;
             defaultSwordScale = sword.localScale.x;
             defaultSwordPosition = sword.localPosition.x;

@@ -22,7 +22,7 @@ public class Player : MonoBehaviour
 	public bool isInputYDirty = false;
 
     [SerializeField]
-    private GameObject swordObject;
+    private SpriteRenderer swordObject;
     [SerializeField]
     private EquipmentManager.Stock[] startEquipmentState;
 
@@ -73,6 +73,7 @@ public class Player : MonoBehaviour
         Zelda._Common._GameplayEvents._OnGameUnpaused += OnGameUnpaused;
 
         meleeAttack = GetComponent<PlayerMeleeAttack>();
+        meleeAttack._OnEnemyHit += OnEnemyHit;
 	}
 
     public void Start()
@@ -83,6 +84,8 @@ public class Player : MonoBehaviour
         equipmentManager = new EquipmentManager(transform);
         equipmentManager._OnItemGathered += (x) => _OnItemGathered(x);
         equipmentManager._OnMixtureUsed += (x) => _OnMixtureUsed(x);
+
+        _OnItemGathered += OnItemGathered;
 
         for (int i = startEquipmentState.Length - 1; i >= 0; i--)
             equipmentManager._AddToEquipment(startEquipmentState[i]._EquipmentItem, startEquipmentState[i]._Count);
@@ -179,6 +182,23 @@ public class Player : MonoBehaviour
             Zelda._Common._GameplayEvents._OnGamePaused -= OnGamePaused;
             Zelda._Common._GameplayEvents._OnGameUnpaused -= OnGameUnpaused;
         }
+    }
+
+    private void OnEnemyHit(Enemy hittedEnemy, float attackStrength, float attackRecoild)
+    {
+        Rigidbody enemyBody = hittedEnemy.GetComponent<Rigidbody>();
+        if (enemyBody != null)
+        {
+            Vector3 forceDirection = new Vector3(hittedEnemy.transform.position.x - transform.position.x, hittedEnemy.transform.position.y - transform.position.y, 0.0f);
+            enemyBody.AddForce(forceDirection.normalized * attackRecoild, ForceMode.Impulse);
+        }
+        hittedEnemy.ChangeHealth(-attackStrength);
+    }
+
+    private void OnItemGathered(EquipmentItems.EquipmentItem newItem)
+    {
+        if (newItem._ItemType == EquipmentManager.EEquipmentType.weapon)
+            swordObject.sprite = newItem._ItemSprite;
     }
 
     private IEnumerator RevertSpeedMixture(float waitTime, float defaultMaxSpeed, float defaultAcceleration)
@@ -316,9 +336,9 @@ public class Player : MonoBehaviour
         acceleration *= extraSpeedValue;
     }
 
-    public void StartMeleeAttackAnimation(float attackStrength)
+    public void StartMeleeAttackAnimation(float attackStrength, float recoil)
     {
-        meleeAttack._StartAttackAnimation(swordObject.transform);
+        meleeAttack._StartAttackAnimation(swordObject.transform, attackStrength, recoil);
     }
 
     public void CollectSomeItem(ICollectableObject collectableObject)

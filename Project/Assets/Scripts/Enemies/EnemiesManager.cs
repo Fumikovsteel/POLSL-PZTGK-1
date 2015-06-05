@@ -5,6 +5,8 @@ public class EnemiesManager : MonoBehaviour
 {
     [SerializeField]
     private GameObject enemyPrefab;
+    [SerializeField]
+    private float defaultEnemiesHealth = 15.0f;
 
     private const string enemySpawnPointsParentName = "EnemySpawns";
     private Transform enemiesParent;
@@ -58,6 +60,7 @@ public class EnemiesManager : MonoBehaviour
 				GameObject instantiatedEnemy = (GameObject)Instantiate(enemyPrefab);
 				instantiatedEnemy.transform.SetParent(enemiesParent, false);
 				instantiatedEnemy.transform.position = spawnPoint.transform.position;
+                instantiatedEnemy.GetComponent<Enemy>().Init(defaultEnemiesHealth);
 				allSpawnPoints.RemoveAt(i);
 			}
 		}
