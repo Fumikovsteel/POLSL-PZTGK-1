@@ -371,5 +371,10 @@ public class Player : MonoBehaviour
         }
     }
 
+    public void RotateToNPC(Vector3 targetRotation, float rotateTime)
+    {
+        iTween.RotateTo(gameObject, iTween.Hash("rotation", targetRotation, "time", rotateTime, "easetype", iTween.EaseType.linear));
+    }
+
 	#endregion
 }
