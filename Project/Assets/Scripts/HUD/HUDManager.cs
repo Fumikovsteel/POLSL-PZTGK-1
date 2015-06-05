@@ -16,26 +16,36 @@ public class HUDManager : MonoBehaviour
     private Text messageText;
 
     [SerializeField]
-    private GameObject sword1Image;
+    private Image weaponImage;
     [SerializeField]
-    private GameObject sword2Image;
+    private Image shieldImage;
     [SerializeField]
-    private GameObject shield1Image;
+    private Image armorImage;
     [SerializeField]
-    private GameObject shield2Image;
+    private Image healthMixtureImage;
     [SerializeField]
-    private Image armor1Image;
+    private Image speedMixtureImage;
+
     [SerializeField]
-    private Image armor2Image;
+    private Text healthMixturesAmountText;
+    [SerializeField]
+    private Text speedMixturesAmountText;
+
+    private int healthMixtures = 0;
+    private int speedMixtures = 0;
 
     private void Awake()
     {
         Zelda._Game._GameManager._Player._OnHealthChanged += OnHealthChanged;
         Zelda._Game._GameManager._Player._OnItemGathered += OnItemGathered;
-        sword2Image.SetActive(false);
-        shield2Image.SetActive(false);
-        //armor2Image.SetActive(false);
         showMessagebox(false);
+
+        armorImage.gameObject.SetActive(false);
+        shieldImage.gameObject.SetActive(false);
+        weaponImage.gameObject.SetActive(false);
+
+        healthMixtureImage.gameObject.SetActive(false);
+        speedMixtureImage.gameObject.SetActive(false);
     }
 
     private void OnDestroy()
@@ -76,26 +86,63 @@ public class HUDManager : MonoBehaviour
         switch (equipmentItem._ItemType)
         {
             case EquipmentManager.EEquipmentType.armor:
-                armor1Image.sprite = equipmentItem._ItemSprite; break;
+                {
+                    armorImage.gameObject.SetActive(true);
+                    armorImage.sprite = equipmentItem._ItemSprite; break;
+                }
+            case EquipmentManager.EEquipmentType.shield:
+                {
+                    shieldImage.gameObject.SetActive(true);
+                shieldImage.sprite = equipmentItem._ItemSprite; break;
+                }
+            case EquipmentManager.EEquipmentType.weapon:
+                {
+                    weaponImage.gameObject.SetActive(true);
+                    weaponImage.sprite = equipmentItem._ItemSprite; break;
+                }
+            case EquipmentManager.EEquipmentType.mixture:
+                {
+                    if (equipmentItem._ItemName == EquipmentManager.EEquipmentItem.HealthMixture)
+                    {
+                        healthMixtures++;
+                        healthMixtureImage.gameObject.SetActive(true);
+                        healthMixturesAmountText.text = "x " + healthMixtures;
+                        healthMixtureImage.sprite = equipmentItem._ItemSprite;
+                    }
+                    else if (equipmentItem._ItemName == EquipmentManager.EEquipmentItem.SpeedMixture)
+                    {
+                        speedMixtures++;
+                        speedMixtureImage.gameObject.SetActive(true);
+                        speedMixturesAmountText.text = "x " + speedMixtures;
+                        speedMixtureImage.sprite = equipmentItem._ItemSprite;
+                    }
+                    break;
+                }
         }
     }
 
-    private void showAdvancedSword()
+    private void OnMixtureUsed(EquipmentItems.EquipmentItem equipmentItem)
     {
-        sword1Image.SetActive(false);
-        sword2Image.SetActive(true);
-    }
-
-    private void showAdvancedShield()
-    {
-        shield1Image.SetActive(false);
-        shield2Image.SetActive(true);
-    }
-
-    private void showAdvancedArmor()
-    {
-        //armor1Image.SetActive(false);
-        //armor2Image.SetActive(true);
+        if (equipmentItem._ItemName == EquipmentManager.EEquipmentItem.HealthMixture)
+        {
+            healthMixtures--;
+            if (healthMixtures < 1)
+            {
+                healthMixtureImage.gameObject.SetActive(false);
+                healthMixturesAmountText.text = "x " + healthMixtures;
+                healthMixtureImage.sprite = equipmentItem._ItemSprite;
+            }
+        }
+        else if (equipmentItem._ItemName == EquipmentManager.EEquipmentItem.SpeedMixture)
+        {
+            speedMixtures--;
+            if (speedMixtures < 1)
+            {
+                speedMixtureImage.gameObject.SetActive(false);
+                speedMixturesAmountText.text = "x " + speedMixtures;
+                speedMixtureImage.sprite = equipmentItem._ItemSprite;
+            }
+        }
     }
 
     private void showMessagebox(bool value)
