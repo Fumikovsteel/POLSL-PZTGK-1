@@ -16,6 +16,7 @@ public class Player : MonoBehaviour
 	private Vector3 currentAcceleration = Vector3.zero;
 
     private Transform gameCameraTransform;
+	private Animator animator;
 
     public bool _Locked;
 
@@ -97,11 +98,14 @@ public class Player : MonoBehaviour
 
         for (int i = startEquipmentState.Length - 1; i >= 0; i--)
             equipmentManager._AddToEquipment(startEquipmentState[i]._EquipmentItem, startEquipmentState[i]._Count);
+
+		animator = this.GetComponent<Animator>();
     }
 
 	public void Update() 
 	{
 		UpdateVelocity ();
+		UpdateAnimations ();
         gameCameraTransform.position = new Vector3(transform.position.x, transform.position.y, gameCameraTransform.position.z);
 	}
 	
@@ -250,7 +254,7 @@ public class Player : MonoBehaviour
 	private void CalculateVelocity(InputManager.InputData inputData, float acceleration, int modifier) {
 		
 		if (inputData.usedKey == KeyCode.W) {
-
+			animator.SetInteger("Direction", 2);
 			currentAcceleration.y += acceleration * modifier;
 			rotationReadyCounter = -rotationCounterTime;
 
@@ -263,7 +267,7 @@ public class Player : MonoBehaviour
 		} 
 
 		if (inputData.usedKey == KeyCode.S) {
-
+			animator.SetInteger("Direction", 0);
 			currentAcceleration.y += -acceleration * modifier;
 			rotationReadyCounter = -rotationCounterTime;
 
@@ -276,7 +280,7 @@ public class Player : MonoBehaviour
 		}
 			
 		if (inputData.usedKey == KeyCode.D) {
-
+			animator.SetInteger("Direction", 3);
 			currentAcceleration.x += acceleration * modifier;
 			rotationReadyCounter = -rotationCounterTime;
 
@@ -288,7 +292,7 @@ public class Player : MonoBehaviour
 			}
 		}
 		if (inputData.usedKey == KeyCode.A) {
-
+			animator.SetInteger("Direction", 1);
 			currentAcceleration.x += -acceleration * modifier;
 			rotationReadyCounter = -rotationCounterTime;
 
@@ -318,34 +322,58 @@ public class Player : MonoBehaviour
 			playerRigidbody.drag = maxSpeed * decelerationModifier;
 		}
 
-		// we want to rotate only on user input
 		if (currentAcceleration.magnitude > 0.0f && rotationReadyCounter >= 0) {
-
+			
 			float rotationX = 0.0f;
 			float rotationY = 0.0f;
-
+			
 			if (currentAcceleration.x > 0) {
 				rotationX = 90.0f;
 			} else if (currentAcceleration.x < 0) {
 				rotationX = -90.0f;
 			}
-
+			
 			if (currentAcceleration.y > 0) {
 				rotationY = Mathf.Sign (rotationX) * 180.0f;
 			} else if (currentAcceleration.y < 0) {
 				rotationY = 0.0f;
 			}
 
-
 			float divider = ( (currentAcceleration.x != 0.0f) && (currentAcceleration.y != 0.0f)) ? 2.0f : 1.0f;
 			float rotationZ = (rotationX + rotationY) / divider;
-
-			transform.rotation = Quaternion.Euler (0.0f, 0.0f, rotationZ);
+			
+			swordObject.transform.rotation = Quaternion.Euler (0.0f, 0.0f, -180);
 		}
+
+		animator.speed = currentAcceleration.magnitude > 0 ? 1 : 0;
 
 		playerRigidbody.velocity = playerVelocity;
 	}
-	
+
+	private void UpdateAnimations()
+	{
+		
+		var vertical = Input.GetAxis("Vertical");
+		var horizontal = Input.GetAxis("Horizontal");
+		
+		if (vertical > 0)
+		{
+			animator.SetInteger("Direction", 2);
+		}
+		else if (vertical < 0)
+		{
+			animator.SetInteger("Direction", 0);
+		}
+		else if (horizontal > 0)
+		{
+			animator.SetInteger("Direction", 3);
+		}
+		else if (horizontal < 0)
+		{
+			animator.SetInteger("Direction", 1);
+		}
+	}
+
 	#endregion
 
 	#region OutsideMethods
