@@ -213,11 +213,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b861b65282f2bcd40bdb8669c8de4549, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxSpeed: 5
+  maxSpeed: 3
   acceleration: 1
+  decelerationModifier: 5
   _Locked: 0
-  isInputXDirty: 0
-  isInputYDirty: 0
   swordObject: {fileID: 21264136}
   startEquipmentState:
   - _EquipmentItem: {fileID: 11420896, guid: 10188bbf462ed0d44a9d0fa0df1b0588, type: 2}

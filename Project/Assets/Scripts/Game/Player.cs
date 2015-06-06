@@ -8,8 +8,9 @@ public class Player : MonoBehaviour
 	//////////////////////////////////////////////////////////////////////////////////
 	#region Properties
 
-	public float maxSpeed = 2f;
+	public float maxSpeed = 2.0f;
 	public float acceleration = 0.2f;
+	public float decelerationModifier = 2.0f;
 
     private Rigidbody playerRigidbody = null;
 	private Vector3 currentAcceleration = Vector3.zero;
@@ -18,8 +19,11 @@ public class Player : MonoBehaviour
 
     public bool _Locked;
 
-	public bool isInputXDirty = false;
-	public bool isInputYDirty = false;
+	private bool isInputXDirty = false;
+	private bool isInputYDirty = false;
+
+	private const int rotationCounterTime = 10;
+	private int rotationReadyCounter = -rotationCounterTime;
 
     [SerializeField]
     private SpriteRenderer swordObject;
@@ -248,6 +252,7 @@ public class Player : MonoBehaviour
 		if (inputData.usedKey == KeyCode.W) {
 
 			currentAcceleration.y += acceleration * modifier;
+			rotationReadyCounter = -rotationCounterTime;
 
 			if(isInputYDirty && modifier < 0) {
 				currentAcceleration.y = 0.0f;
@@ -260,6 +265,7 @@ public class Player : MonoBehaviour
 		if (inputData.usedKey == KeyCode.S) {
 
 			currentAcceleration.y += -acceleration * modifier;
+			rotationReadyCounter = -rotationCounterTime;
 
 			if(isInputYDirty && modifier < 0) {
 				currentAcceleration.y = 0.0f;
@@ -272,6 +278,7 @@ public class Player : MonoBehaviour
 		if (inputData.usedKey == KeyCode.D) {
 
 			currentAcceleration.x += acceleration * modifier;
+			rotationReadyCounter = -rotationCounterTime;
 
 			if(isInputXDirty && modifier < 0) {
 				currentAcceleration.x = 0.0f;
@@ -283,6 +290,7 @@ public class Player : MonoBehaviour
 		if (inputData.usedKey == KeyCode.A) {
 
 			currentAcceleration.x += -acceleration * modifier;
+			rotationReadyCounter = -rotationCounterTime;
 
 			if(isInputXDirty && modifier < 0) {
 				currentAcceleration.x = 0.0f;
@@ -294,6 +302,8 @@ public class Player : MonoBehaviour
 	}
 
 	private void UpdateVelocity() {
+
+		++rotationReadyCounter;
 	
 		Vector3 playerVelocity = playerRigidbody.velocity;
 		playerVelocity += currentAcceleration;
@@ -302,8 +312,14 @@ public class Player : MonoBehaviour
 			playerVelocity = (playerVelocity / playerVelocity.magnitude) * maxSpeed;
 		}
 
-		// we want to rotate only on user input
 		if (currentAcceleration.magnitude > 0.0f) {
+			playerRigidbody.drag = 0.0f;
+		} else {
+			playerRigidbody.drag = maxSpeed * decelerationModifier;
+		}
+
+		// we want to rotate only on user input
+		if (currentAcceleration.magnitude > 0.0f && rotationReadyCounter >= 0) {
 
 			float rotationX = 0.0f;
 			float rotationY = 0.0f;
@@ -320,13 +336,14 @@ public class Player : MonoBehaviour
 				rotationY = 0.0f;
 			}
 
-			float divider = (currentAcceleration.x != 0.0f && currentAcceleration.y != 0.0f) ? 2.0f : 1.0f;
+
+			float divider = ( (currentAcceleration.x != 0.0f) && (currentAcceleration.y != 0.0f)) ? 2.0f : 1.0f;
 			float rotationZ = (rotationX + rotationY) / divider;
 
 			transform.rotation = Quaternion.Euler (0.0f, 0.0f, rotationZ);
-
-			playerRigidbody.velocity = playerVelocity;
 		}
+
+		playerRigidbody.velocity = playerVelocity;
 	}
 	
 	#endregion
