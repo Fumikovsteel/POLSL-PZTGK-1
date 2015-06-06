@@ -344,7 +344,7 @@ public class Player : MonoBehaviour
 			float divider = ( (currentAcceleration.x != 0.0f) && (currentAcceleration.y != 0.0f)) ? 2.0f : 1.0f;
 			float rotationZ = (rotationX + rotationY) / divider;
 			
-			transform.rotation = Quaternion.Euler (0.0f, 0.0f, rotationZ);
+			transform.rotation = Quaternion.Euler (0.0f, 0.0f, 0);
 		}
 
 		animator.speed = currentAcceleration.magnitude > 0 ? 1 : 0;
