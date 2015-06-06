@@ -322,6 +322,7 @@ public class Player : MonoBehaviour
 			playerRigidbody.drag = maxSpeed * decelerationModifier;
 		}
 
+		// we want to rotate only on user input
 		if (currentAcceleration.magnitude > 0.0f && rotationReadyCounter >= 0) {
 			
 			float rotationX = 0.0f;
@@ -338,11 +339,12 @@ public class Player : MonoBehaviour
 			} else if (currentAcceleration.y < 0) {
 				rotationY = 0.0f;
 			}
-
+			
+			
 			float divider = ( (currentAcceleration.x != 0.0f) && (currentAcceleration.y != 0.0f)) ? 2.0f : 1.0f;
 			float rotationZ = (rotationX + rotationY) / divider;
 			
-			swordObject.transform.rotation = Quaternion.Euler (0.0f, 0.0f, -180);
+			transform.rotation = Quaternion.Euler (0.0f, 0.0f, rotationZ);
 		}
 
 		animator.speed = currentAcceleration.magnitude > 0 ? 1 : 0;
