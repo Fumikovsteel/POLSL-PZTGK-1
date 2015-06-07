@@ -244,6 +244,8 @@ MonoBehaviour:
   deathAnimationTime: 1.5
   deathAnimationAmount: {x: .100000001, y: .100000001, z: 0}
   playersRotationParent: {fileID: 489132}
+  pressSpaceToAttackPrefab: {fileID: 150070, guid: 2483e2b7daea8f94483d3eff2cf981b4,
+    type: 2}
 --- !u!135 &13503500
 SphereCollider:
   m_ObjectHideFlags: 1

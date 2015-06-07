@@ -40,7 +40,7 @@ Rigidbody:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 159498}
   serializedVersion: 2
-  m_Mass: 1
+  m_Mass: 500
   m_Drag: 0
   m_AngularDrag: .0500000007
   m_UseGravity: 0
@@ -91,7 +91,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   range: 10
   projectile: {fileID: 121088, guid: f0ec301f4d78f455ebfd3880b713c149, type: 2}
-  fireCooldown_S: .5
+  fireCooldown_S: .800000012
   shootForce: 500
 --- !u!135 &13570130
 SphereCollider:

@@ -39,6 +39,8 @@ public class Player : MonoBehaviour
     /// </summary>
     [SerializeField]
     private Transform playersRotationParent;
+    [SerializeField]
+    private GameObject pressSpaceToAttackPrefab;
 
     public Vector3 _PlayerPosition
     {
@@ -230,7 +232,24 @@ public class Player : MonoBehaviour
     private void OnItemGathered(EquipmentItems.EquipmentItem newItem)
     {
         if (newItem._ItemType == EquipmentManager.EEquipmentType.weapon)
+        {
+            // If we have sword first time
+            if (swordObject.sprite == null)
+            {
+                GameObject pressSpaceInstantiatedObject = Instantiate(pressSpaceToAttackPrefab) as GameObject;
+                pressSpaceInstantiatedObject.transform.SetParentResetLocal(transform);
+                pressSpaceInstantiatedObject.transform.position = new Vector3(transform.position.x, transform.position.y + 0.7f,
+                                                                              pressSpaceToAttackPrefab.transform.position.z);
+                Action<EquipmentItems.EquipmentItem> onWeaponUsed = null;
+                onWeaponUsed = (x) =>
+                    {
+                        equipmentManager._OnWeaponUsed -= onWeaponUsed;
+                        Destroy(pressSpaceInstantiatedObject);
+                    };
+                equipmentManager._OnWeaponUsed += onWeaponUsed;
+            }
             swordObject.sprite = newItem._ItemSprite;
+        }
     }
 
     private IEnumerator RevertSpeedMixture(float waitTime, float defaultMaxSpeed, float defaultAcceleration)
@@ -378,11 +397,17 @@ public class Player : MonoBehaviour
 	#region OutsideMethods
 
 	public void TakeLife(int amount) {
-		life -= amount;
-        if (life <= 0)
-            // We delay because projectile physics need to change player position
-            Zelda._Common._TimeManager._DelayMethodExecution(0.05f, KillPlayer);
-        _OnHealthChanged(life, maxLife);
+        // Shield can sometimes bounce projectiles
+        if (UnityEngine.Random.Range(0.0f, 100.0f) > equipmentManager._ShieldValue)
+        {
+            // Armor decrease damage
+            amount = (int)((float)amount * (1.0f - (1.0f * equipmentManager._ArmorValue / 100.0f)));
+            life -= amount;
+            if (life <= 0)
+                // We delay because projectile physics need to change player position
+                Zelda._Common._TimeManager._DelayMethodExecution(0.05f, KillPlayer);
+            _OnHealthChanged(life, maxLife);
+        }
 	}
 
     public void UseHealthMixture(int extraHealth)
