@@ -34,6 +34,11 @@ public class Player : MonoBehaviour
     private float deathAnimationTime;
     [SerializeField]
     private Vector3 deathAnimationAmount;
+    /// <summary>
+    /// Target player rotation (depends on movement direction) is applied to this game object
+    /// </summary>
+    [SerializeField]
+    private Transform playersRotationParent;
 
     public Vector3 _PlayerPosition
     {
@@ -75,6 +80,7 @@ public class Player : MonoBehaviour
         RegisterInput();
 
 		playerRigidbody = this.GetComponent<Rigidbody> ();
+        animator = this.GetComponent<Animator>();
 
         Zelda._Common._GameplayEvents._OnSceneWillChange += OnLevelWillChange;
         Zelda._Common._GameplayEvents._OnLocationChanged += OnLocationChanged;
@@ -98,14 +104,11 @@ public class Player : MonoBehaviour
 
         for (int i = startEquipmentState.Length - 1; i >= 0; i--)
             equipmentManager._AddToEquipment(startEquipmentState[i]._EquipmentItem, startEquipmentState[i]._Count);
-
-		animator = this.GetComponent<Animator>();
     }
 
 	public void Update() 
 	{
 		UpdateVelocity ();
-		UpdateAnimations ();
         gameCameraTransform.position = new Vector3(transform.position.x, transform.position.y, gameCameraTransform.position.z);
 	}
 	
@@ -254,7 +257,6 @@ public class Player : MonoBehaviour
 	private void CalculateVelocity(InputManager.InputData inputData, float acceleration, int modifier) {
 		
 		if (inputData.usedKey == KeyCode.W) {
-			animator.SetInteger("Direction", 2);
 			currentAcceleration.y += acceleration * modifier;
 			rotationReadyCounter = -rotationCounterTime;
 
@@ -267,7 +269,6 @@ public class Player : MonoBehaviour
 		} 
 
 		if (inputData.usedKey == KeyCode.S) {
-			animator.SetInteger("Direction", 0);
 			currentAcceleration.y += -acceleration * modifier;
 			rotationReadyCounter = -rotationCounterTime;
 
@@ -280,7 +281,6 @@ public class Player : MonoBehaviour
 		}
 			
 		if (inputData.usedKey == KeyCode.D) {
-			animator.SetInteger("Direction", 3);
 			currentAcceleration.x += acceleration * modifier;
 			rotationReadyCounter = -rotationCounterTime;
 
@@ -292,7 +292,6 @@ public class Player : MonoBehaviour
 			}
 		}
 		if (inputData.usedKey == KeyCode.A) {
-			animator.SetInteger("Direction", 1);
 			currentAcceleration.x += -acceleration * modifier;
 			rotationReadyCounter = -rotationCounterTime;
 
@@ -340,40 +339,35 @@ public class Player : MonoBehaviour
 				rotationY = 0.0f;
 			}
 			
-			
 			float divider = ( (currentAcceleration.x != 0.0f) && (currentAcceleration.y != 0.0f)) ? 2.0f : 1.0f;
 			float rotationZ = (rotationX + rotationY) / divider;
-			
-			transform.rotation = Quaternion.Euler (0.0f, 0.0f, 0);
+            // rotationZ need to be higher than 0
+            rotationZ = (rotationZ + 360.0f) % 360.0f;
+
+            if (rotationZ >= 314 || rotationZ <= 46)
+            {
+                animator.SetInteger("Direction", 0);
+                playersRotationParent.rotation = Quaternion.Euler(0.0f, 0.0f, 0.0f);
+            }
+            else if (rotationZ >= 134 && rotationZ <= 226)
+            {
+                animator.SetInteger("Direction", 2);
+                playersRotationParent.rotation = Quaternion.Euler(0.0f, 0.0f, 180.0f);
+            }
+            else if (rotationZ >= 89 && rotationZ <= 91)
+            {
+                animator.SetInteger("Direction", 3);
+                playersRotationParent.rotation = Quaternion.Euler(0.0f, 0.0f, 90.0f);
+            }
+            else
+            {
+                animator.SetInteger("Direction", 1);
+                playersRotationParent.rotation = Quaternion.Euler(0.0f, 0.0f, 270.0f);
+            }
 		}
 
-		animator.speed = currentAcceleration.magnitude > 0 ? 1 : 0;
-
+        animator.speed = currentAcceleration.magnitude > 0 ? 1 : 0;
 		playerRigidbody.velocity = playerVelocity;
-	}
-
-	private void UpdateAnimations()
-	{
-		
-		var vertical = Input.GetAxis("Vertical");
-		var horizontal = Input.GetAxis("Horizontal");
-		
-		if (vertical > 0)
-		{
-			animator.SetInteger("Direction", 2);
-		}
-		else if (vertical < 0)
-		{
-			animator.SetInteger("Direction", 0);
-		}
-		else if (horizontal > 0)
-		{
-			animator.SetInteger("Direction", 3);
-		}
-		else if (horizontal < 0)
-		{
-			animator.SetInteger("Direction", 1);
-		}
 	}
 
 	#endregion

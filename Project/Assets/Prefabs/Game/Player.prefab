@@ -26,13 +26,13 @@ GameObject:
   m_IsActive: 1
 --- !u!1 &106266
 GameObject:
-  m_ObjectHideFlags: 0
+  m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   serializedVersion: 4
   m_Component:
   - 4: {fileID: 446020}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: SwordParent
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -48,8 +48,23 @@ GameObject:
   m_Component:
   - 4: {fileID: 456328}
   - 212: {fileID: 21264136}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Sword
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!1 &150680
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 4
+  m_Component:
+  - 4: {fileID: 489132}
+  m_Layer: 10
+  m_Name: PlayersRotation
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -61,12 +76,12 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 106266}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: .126000002, y: -.0860000029, z: .100000001}
+  m_LocalRotation: {x: 0, y: 0, z: .382683456, w: .923879504}
+  m_LocalPosition: {x: 0, y: 0, z: .100000001}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 456328}
-  m_Father: {fileID: 483384}
+  m_Father: {fileID: 489132}
   m_RootOrder: 0
 --- !u!4 &456328
 Transform:
@@ -75,7 +90,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 122122}
   m_LocalRotation: {x: 0, y: 0, z: .382683456, w: .923879504}
-  m_LocalPosition: {x: -.0500000007, y: 0, z: 0}
+  m_LocalPosition: {x: -.150000006, y: 0, z: 0}
   m_LocalScale: {x: .75, y: .75, z: .75}
   m_Children: []
   m_Father: {fileID: 446020}
@@ -87,11 +102,24 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 106258}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 5.85843849, y: -5.02593088, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children:
+  - {fileID: 489132}
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+--- !u!4 &489132
+Transform:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 150680}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 446020}
-  m_Father: {fileID: 0}
+  m_Father: {fileID: 483384}
   m_RootOrder: 0
 --- !u!54 &5459008
 Rigidbody:
@@ -166,9 +194,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxSwordScale: 1
   maxSwordPosition: .159999996
-  firstStepTime: .200000003
-  secondStepTime: .400000006
-  thirdStepTime: .300000012
+  showHideWeaponTime: .100000001
+  hitTime: .150000006
+  hitDelay: .0500000007
 --- !u!114 &11448660
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -215,6 +243,7 @@ MonoBehaviour:
     _Count: 2
   deathAnimationTime: 1.5
   deathAnimationAmount: {x: .100000001, y: .100000001, z: 0}
+  playersRotationParent: {fileID: 489132}
 --- !u!135 &13503500
 SphereCollider:
   m_ObjectHideFlags: 1
@@ -225,7 +254,7 @@ SphereCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: .100000001
+  m_Radius: .170000002
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!212 &21200898
 SpriteRenderer:
