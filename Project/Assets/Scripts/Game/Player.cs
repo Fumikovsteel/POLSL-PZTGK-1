@@ -342,33 +342,36 @@ public class Player : MonoBehaviour
 			float divider = ( (currentAcceleration.x != 0.0f) && (currentAcceleration.y != 0.0f)) ? 2.0f : 1.0f;
 			float rotationZ = (rotationX + rotationY) / divider;
             // rotationZ need to be higher than 0
-            rotationZ = (rotationZ + 360.0f) % 360.0f;
-
-            if (rotationZ >= 314 || rotationZ <= 46)
-            {
-                animator.SetInteger("Direction", 0);
-                playersRotationParent.rotation = Quaternion.Euler(0.0f, 0.0f, 0.0f);
-            }
-            else if (rotationZ >= 134 && rotationZ <= 226)
-            {
-                animator.SetInteger("Direction", 2);
-                playersRotationParent.rotation = Quaternion.Euler(0.0f, 0.0f, 180.0f);
-            }
-            else if (rotationZ >= 89 && rotationZ <= 91)
-            {
-                animator.SetInteger("Direction", 3);
-                playersRotationParent.rotation = Quaternion.Euler(0.0f, 0.0f, 90.0f);
-            }
-            else
-            {
-                animator.SetInteger("Direction", 1);
-                playersRotationParent.rotation = Quaternion.Euler(0.0f, 0.0f, 270.0f);
-            }
+            SetProperlyRotation((rotationZ + 360.0f) % 360.0f);
 		}
 
         animator.speed = currentAcceleration.magnitude > 0 ? 1 : 0;
 		playerRigidbody.velocity = playerVelocity;
 	}
+
+    private void SetProperlyRotation(float targetRotationZ)
+    {
+        if (targetRotationZ >= 314 || targetRotationZ <= 46)
+        {
+            animator.SetInteger("Direction", 0);
+            playersRotationParent.rotation = Quaternion.Euler(0.0f, 0.0f, 0.0f);
+        }
+        else if (targetRotationZ >= 134 && targetRotationZ <= 226)
+        {
+            animator.SetInteger("Direction", 2);
+            playersRotationParent.rotation = Quaternion.Euler(0.0f, 0.0f, 180.0f);
+        }
+        else if (targetRotationZ >= 89 && targetRotationZ <= 91)
+        {
+            animator.SetInteger("Direction", 3);
+            playersRotationParent.rotation = Quaternion.Euler(0.0f, 0.0f, 90.0f);
+        }
+        else
+        {
+            animator.SetInteger("Direction", 1);
+            playersRotationParent.rotation = Quaternion.Euler(0.0f, 0.0f, 270.0f);
+        }
+    }
 
 	#endregion
 
@@ -412,9 +415,23 @@ public class Player : MonoBehaviour
         }
     }
 
-    public void RotateToNPC(Vector3 targetRotation, float rotateTime)
+    public float RotateToNPC(Transform npc)
     {
-        iTween.RotateTo(gameObject, iTween.Hash("rotation", targetRotation, "time", rotateTime, "easetype", iTween.EaseType.linear));
+        float targetRotation;
+
+        float xDifference = transform.position.x - npc.position.x;
+        float yDifference = transform.position.y - npc.position.y;
+        if (npc.position.y > transform.position.y && Mathf.Abs(yDifference) > Mathf.Abs(xDifference))
+            targetRotation = 180.0f;
+        else if (npc.position.y < transform.position.y && Mathf.Abs(yDifference) > Mathf.Abs(xDifference))
+            targetRotation = 0.0f;
+        else if (npc.position.x > transform.position.x && Mathf.Abs(xDifference) >= Mathf.Abs(yDifference))
+            targetRotation = 90.0f;
+        else
+            targetRotation = 270.0f;
+
+        SetProperlyRotation(targetRotation);
+        return targetRotation;
     }
 
 	#endregion

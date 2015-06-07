@@ -13,11 +13,6 @@ public class NPCManager : MonoBehaviour
     private GameObject startTalkMessagePrefab;
     [SerializeField]
     private Vector3 startTalkMessagePosition;
-    /// <summary>
-    /// How long both talking objects will rotate to be face to another one
-    /// </summary>
-    [SerializeField]
-    private float rotateTime = 0.2f;
 
     /// <summary>
     /// If have some value we have message on screen, and we're in range of some NPC to talk
@@ -83,8 +78,9 @@ public class NPCManager : MonoBehaviour
     private void StartTalk()
     {
         Action onRotateFinished = () => { Debug.Log("Show dialogue"); };
-        npcInRange._RotateToPlayer(Zelda._Game._GameManager._Player.transform.rotation.eulerAngles + Vector3.forward * 180.0f, rotateTime, onRotateFinished);
-        Zelda._Game._GameManager._Player.RotateToNPC(npcInRange.transform.rotation.eulerAngles + Vector3.forward * 180.0f, rotateTime);
+        float playerZRotation = Zelda._Game._GameManager._Player.RotateToNPC(npcInRange.transform);
+        playerZRotation = (playerZRotation + 180.0f) / 360.0f;
+        // TODO npc should look at the player here (playerZRotation direction)
     }
 
     public void _ShowCanTalkMessage(NPC curNPC)
