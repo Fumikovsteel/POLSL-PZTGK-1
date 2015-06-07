@@ -180,6 +180,55 @@ Prefab:
       propertyPath: m_RootOrder
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 412548, guid: cc76885c234e84b4eb2b6e85bb4d1775, type: 2}
+      propertyPath: m_LocalScale.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 412548, guid: cc76885c234e84b4eb2b6e85bb4d1775, type: 2}
+      propertyPath: m_LocalScale.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 21231300, guid: cc76885c234e84b4eb2b6e85bb4d1775, type: 2}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 9fae718323173425a836d589e1cb9412,
+        type: 3}
+    - target: {fileID: 21231300, guid: cc76885c234e84b4eb2b6e85bb4d1775, type: 2}
+      propertyPath: m_Color.r
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 21231300, guid: cc76885c234e84b4eb2b6e85bb4d1775, type: 2}
+      propertyPath: m_Color.g
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 21231300, guid: cc76885c234e84b4eb2b6e85bb4d1775, type: 2}
+      propertyPath: m_Color.b
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 11422596, guid: cc76885c234e84b4eb2b6e85bb4d1775, type: 2}
+      propertyPath: spriteRenderer
+      value: 
+      objectReference: {fileID: 283872485}
+    - target: {fileID: 11422596, guid: cc76885c234e84b4eb2b6e85bb4d1775, type: 2}
+      propertyPath: lookDownSprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 9fae718323173425a836d589e1cb9412,
+        type: 3}
+    - target: {fileID: 11422596, guid: cc76885c234e84b4eb2b6e85bb4d1775, type: 2}
+      propertyPath: lookLeftSprite
+      value: 
+      objectReference: {fileID: 21300006, guid: 9fae718323173425a836d589e1cb9412,
+        type: 3}
+    - target: {fileID: 11422596, guid: cc76885c234e84b4eb2b6e85bb4d1775, type: 2}
+      propertyPath: lookRightSprite
+      value: 
+      objectReference: {fileID: 21300012, guid: 9fae718323173425a836d589e1cb9412,
+        type: 3}
+    - target: {fileID: 11422596, guid: cc76885c234e84b4eb2b6e85bb4d1775, type: 2}
+      propertyPath: lookUpSprite
+      value: 
+      objectReference: {fileID: 21300018, guid: 9fae718323173425a836d589e1cb9412,
+        type: 3}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: cc76885c234e84b4eb2b6e85bb4d1775, type: 2}
   m_IsPrefabParent: 0
@@ -383,6 +432,11 @@ Prefab:
 Transform:
   m_PrefabParentObject: {fileID: 402816, guid: 10188bbf462ed0d44a9d0fa0df1b0588, type: 2}
   m_PrefabInternal: {fileID: 281002953}
+--- !u!212 &283872485
+SpriteRenderer:
+  m_PrefabParentObject: {fileID: 21231300, guid: cc76885c234e84b4eb2b6e85bb4d1775,
+    type: 2}
+  m_PrefabInternal: {fileID: 67642267}
 --- !u!1001 &290821163
 Prefab:
   m_ObjectHideFlags: 0

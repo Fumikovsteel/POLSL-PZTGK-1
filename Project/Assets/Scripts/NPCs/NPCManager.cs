@@ -79,8 +79,8 @@ public class NPCManager : MonoBehaviour
     {
         Action onRotateFinished = () => { Debug.Log("Show dialogue"); };
         float playerZRotation = Zelda._Game._GameManager._Player.RotateToNPC(npcInRange.transform);
-        playerZRotation = (playerZRotation + 180.0f) / 360.0f;
-        // TODO npc should look at the player here (playerZRotation direction)
+        playerZRotation = (playerZRotation + 180.0f) % 360.0f;
+        npcInRange._ChangeLookDirection(playerZRotation);
     }
 
     public void _ShowCanTalkMessage(NPC curNPC)

@@ -43,7 +43,9 @@ public class RangedEnemy : MonoBehaviour {
 			GameObject newProjectile = (GameObject) Instantiate(projectile, transform.position, transform.rotation);
 			Rigidbody rb = (newProjectile).GetComponent<Rigidbody>();
 			Physics.IgnoreCollision(GetComponent<Collider>(), rb.gameObject.GetComponent<Collider>());
-			Vector3 strikeVector = playerTransform.position - transform.position;
+            // We add some random to projectile direction
+            Vector3 strikeVector = playerTransform.position - transform.position +
+                                   new Vector3(UnityEngine.Random.Range(-0.35f, 0.35f), UnityEngine.Random.Range(-0.35f, 0.35f), 0.0f);
 			strikeVector.Normalize ();
 			rb.AddForce(strikeVector*shootForce);
 			float angle = Mathf.Atan2(strikeVector.y, strikeVector.x) * Mathf.Rad2Deg - 90;
