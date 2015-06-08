@@ -420,6 +420,7 @@ public class Player : MonoBehaviour
         life = Mathf.Clamp(life + extraHealth, 0, maxLife);
         if (prevLife != life)
             _OnHealthChanged(life, maxLife);
+		Zelda._Common._SoundManager.PlaySound(SoundManager.SoundName.PotionUse);
     }
 
     public void UseSpeedMixture(float extraSpeedValue, float boostTime)
@@ -427,6 +428,7 @@ public class Player : MonoBehaviour
         StartCoroutine(RevertSpeedMixture(boostTime, maxSpeed, acceleration));
         maxSpeed *= extraSpeedValue;
         acceleration *= extraSpeedValue;
+		Zelda._Common._SoundManager.PlaySound(SoundManager.SoundName.PotionUse);
     }
 
     public void StartMeleeAttackAnimation(float attackStrength, float recoil)

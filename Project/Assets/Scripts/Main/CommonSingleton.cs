@@ -15,7 +15,7 @@ public class CommonSingleton : MonoBehaviour
     public Transform _ManagersParent;
     public LevelsManager _LevelsManager;
 	public SoundManager _SoundManager;
-	//public MusicManager _MusicManager;
+	public MusicManager _MusicManager;
     public TimeManager _TimeManager;
 
     #endregion
@@ -69,7 +69,8 @@ public class CommonSingleton : MonoBehaviour
         _ResourcesManager = new ResourcesManager();
         _TimeManager = new GameObject("TimeManager", typeof(TimeManager), typeof(DontDestroyOnLoad)).GetComponent<TimeManager>();
 
-		_SoundManager = Zelda._Common._ResourcesManager.GetAndInstantiatePrefab<SoundManager>(ResourcesManager.EPrefabName.SoundManager, Zelda._Common._ManagersParent);
+		_SoundManager = Zelda._Common._ResourcesManager.GetAndInstantiatePrefab<SoundManager> (ResourcesManager.EPrefabName.SoundManager, Zelda._Common._ManagersParent);
+		_MusicManager = Zelda._Common._ResourcesManager.GetAndInstantiatePrefab<MusicManager> (ResourcesManager.EPrefabName.MusicManager, Zelda._Common._ManagersParent);
 
         _GameplayEvents._OnSceneWillChange += OnSceneWillChange;
     }

@@ -3,7 +3,11 @@ using System.Collections;
 
 public class SoundManager : MonoBehaviour {
 	
-	public AudioClip[] BGMClipArray;
+	public AudioClip[] SoundsClipArray;
+	public enum SoundName
+	{
+		PlayerAttack, PotionUse
+	}
 
 	// Use this for initialization
 	void Awake () {
@@ -28,41 +32,15 @@ public class SoundManager : MonoBehaviour {
 			Zelda._Common._GameplayEvents._OnSceneWillChange -= OnSceneWillChange;
 	}
 
-	public void PlaySound(AudioClip clip)
+	public void PlaySound(SoundName enumClip)
 	{
-		//efxSource.clip = clip;
-		//efxSource.Play();
-	}
-
-	public void PlayMusic(Collider zone)
-	{
-		for (int i = 0; i < BGMClipArray.Length; i++) 
+		for (int i = 0; i < SoundsClipArray.Length; i++)
 		{
-			if (zone.gameObject.name == BGMClipArray[i].name)
+			if (enumClip.ToString() == SoundsClipArray[i].name)
 			{
-				AudioSource musicSource = gameObject.AddComponent<AudioSource>();
-				musicSource.volume = 1;
-				musicSource.loop = true;
-				musicSource.clip = BGMClipArray[i];
-				musicSource.Play ();
-			}
-		}
-	}
-
-	public void MusicFadeOut(Collider zone)
-	{
-		AudioSource[] audioSourceArray =  GetComponents<AudioSource>();
-		for (int i = 0; i < audioSourceArray.Length; i++) 
-		{
-			if (zone.gameObject.name == audioSourceArray[i].clip.name)
-			{
-				iTween.AudioTo(gameObject, iTween.Hash(
-					"audiosource", audioSourceArray[i],
-					"volume", 0,
-					"time", 2f,
-					"easetype", iTween.EaseType.easeOutQuad
-					));
-				Destroy(audioSourceArray[i], 3);
+				AudioSource soundSource = gameObject.AddComponent<AudioSource>();
+				soundSource.PlayOneShot (SoundsClipArray[i]);
+				Destroy (soundSource, SoundsClipArray[i].length);
 			}
 		}
 	}
