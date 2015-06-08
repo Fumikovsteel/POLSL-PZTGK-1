@@ -142,6 +142,8 @@ public class PlayerMeleeAttack : MonoBehaviour
             iTween.MoveTo(sword.gameObject, iTween.Hash("position", new Vector3(-maxSwordPosition, 0.0f, 0.0f), "time", showHideWeaponTime,
                                                         "islocal", true, "oncomplete", "FirstStepComplete", "oncompletetarget", gameObject));
             isCurrentlyAttacking = true;
+
+			Zelda._Common._SoundManager.PlaySound(SoundManager.SoundName.PlayerAttack);
         }
     }
 }

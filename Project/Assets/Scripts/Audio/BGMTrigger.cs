@@ -5,13 +5,11 @@ public class BGMTrigger : MonoBehaviour {
 
 	void OnTriggerEnter(Collider zone)
 	{
-        if (SoundManager.instance != null)
-		    SoundManager.instance.PlayMusic(zone);
+		Zelda._Common._MusicManager.PlayMusic(zone);
 	}
 
 	void OnTriggerExit(Collider zone)
 	{
-        if (SoundManager.instance != null)
-		    SoundManager.instance.MusicFadeOut(zone);
+		Zelda._Common._MusicManager.MusicFadeOut(zone);
 	}
 }
