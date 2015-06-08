@@ -12,8 +12,14 @@ public class SoundManager : MonoBehaviour {
 
 	private void OnSceneWillChange(SceneManager.ESceneName newScene)
 	{
-		if (newScene != SceneManager.ESceneName.Game)
-			Destroy(gameObject);
+		if (newScene != SceneManager.ESceneName.Game) 
+		{
+			AudioSource[] audioSourceArray = GetComponents<AudioSource>();
+			foreach (AudioSource source in audioSourceArray)
+			{
+				Destroy(source);
+			}
+		}
 	}
 	
 	private void OnDestroy()
@@ -45,8 +51,7 @@ public class SoundManager : MonoBehaviour {
 
 	public void MusicFadeOut(Collider zone)
 	{
-		AudioSource[] audioSourceArray;
-		audioSourceArray = GetComponents<AudioSource>();
+		AudioSource[] audioSourceArray =  GetComponents<AudioSource>();
 		for (int i = 0; i < audioSourceArray.Length; i++) 
 		{
 			if (zone.gameObject.name == audioSourceArray[i].clip.name)

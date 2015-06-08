@@ -15,6 +15,7 @@ public class CommonSingleton : MonoBehaviour
     public Transform _ManagersParent;
     public LevelsManager _LevelsManager;
 	public SoundManager _SoundManager;
+	//public MusicManager _MusicManager;
     public TimeManager _TimeManager;
 
     #endregion
