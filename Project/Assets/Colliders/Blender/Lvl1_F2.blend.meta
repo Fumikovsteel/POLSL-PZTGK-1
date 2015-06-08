@@ -13,6 +13,7 @@ ModelImporter:
     100010: Template_vertices_003
     100012: Template_vertices_005
     100014: Tree
+    100016: Template_vertices_004
     400000: //RootNode
     400002: Plane
     400004: Template_vertices
@@ -21,6 +22,7 @@ ModelImporter:
     400010: Template_vertices_003
     400012: Template_vertices_005
     400014: Tree
+    400016: Template_vertices_004
     2300000: Plane
     2300002: Template_vertices
     2300004: Template_vertices_001
@@ -28,6 +30,7 @@ ModelImporter:
     2300008: Template_vertices_003
     2300010: Template_vertices_005
     2300012: Tree
+    2300014: Template_vertices_004
     3300000: Plane
     3300002: Template_vertices
     3300004: Template_vertices_001
@@ -35,6 +38,7 @@ ModelImporter:
     3300008: Template_vertices_003
     3300010: Template_vertices_005
     3300012: Tree
+    3300014: Template_vertices_004
     4300000: Template_vertices_005
     4300002: Template_vertices_003
     4300004: Template_vertices_002
@@ -42,6 +46,7 @@ ModelImporter:
     4300008: Tree
     4300010: Template_vertices
     4300012: Plane
+    4300014: Template_vertices_004
     7400000: Default Take
     9500000: //RootNode
   materials:
