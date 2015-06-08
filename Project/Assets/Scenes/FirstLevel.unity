@@ -1463,11 +1463,11 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 136916, guid: 2b83f145937f57842988b524d724425b, type: 2}
       propertyPath: m_Name
-      value: CatacombEntranceAudioTrigger
+      value: CatacombEntranceTheme
       objectReference: {fileID: 0}
     - target: {fileID: 136916, guid: 2b83f145937f57842988b524d724425b, type: 2}
       propertyPath: m_TagString
-      value: CatacombEntranceAudioTrigger
+      value: Untagged
       objectReference: {fileID: 0}
     - target: {fileID: 406326, guid: 2b83f145937f57842988b524d724425b, type: 2}
       propertyPath: m_LocalScale.y
@@ -1587,7 +1587,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 136916, guid: 2b83f145937f57842988b524d724425b, type: 2}
       propertyPath: m_Name
-      value: VillageAudioTrigger
+      value: VillageTheme
       objectReference: {fileID: 0}
     - target: {fileID: 406326, guid: 2b83f145937f57842988b524d724425b, type: 2}
       propertyPath: m_LocalScale.z
@@ -1595,7 +1595,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 136916, guid: 2b83f145937f57842988b524d724425b, type: 2}
       propertyPath: m_TagString
-      value: VillageAudioTrigger
+      value: Untagged
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 2b83f145937f57842988b524d724425b, type: 2}
@@ -3247,11 +3247,11 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 136916, guid: 2b83f145937f57842988b524d724425b, type: 2}
       propertyPath: m_Name
-      value: ForestAudioTrigger
+      value: ForestTheme
       objectReference: {fileID: 0}
     - target: {fileID: 136916, guid: 2b83f145937f57842988b524d724425b, type: 2}
       propertyPath: m_TagString
-      value: ForestAudioTrigger
+      value: Untagged
       objectReference: {fileID: 0}
     - target: {fileID: 406326, guid: 2b83f145937f57842988b524d724425b, type: 2}
       propertyPath: m_LocalScale.x

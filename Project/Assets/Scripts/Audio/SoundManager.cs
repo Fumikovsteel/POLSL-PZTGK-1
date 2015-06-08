@@ -2,87 +2,46 @@
 using System.Collections;
 
 public class SoundManager : MonoBehaviour {
-
-
-	public AudioSource musicSource;
-	public AudioSource musicSource2;
-	public AudioSource efxSource;
-	public static SoundManager instance = null;
-	public bool fading1 = false;
-	public bool fading2 = false;
-	public AudioClip VillageBGM;
-	public AudioClip ForestBGM;
-	public AudioClip CatacombEntranceBGM;
+	
+	public AudioClip[] SoundsClipArray;
+	public enum SoundName
+	{
+		PlayerAttack, PotionUse
+	}
 
 	// Use this for initialization
 	void Awake () {
-		if (instance == null)
-			instance = this;
-		else if (instance != this)
-			Destroy (gameObject);
-
-		DontDestroyOnLoad (gameObject);
+		Zelda._Common._GameplayEvents._OnSceneWillChange += OnSceneWillChange;
 	}
 
-	public void PlaySound(AudioClip clip)
+	private void OnSceneWillChange(SceneManager.ESceneName newScene)
 	{
-		efxSource.clip = clip;
-		efxSource.Play();
-	}
-
-	public void PlayMusic(Collider zone)
-	{
-		if (zone.CompareTag("VillageAudioTrigger"))
+		if (newScene != SceneManager.ESceneName.Game) 
 		{
-			musicSource.volume = 0;
-			musicSource.clip = VillageBGM;
-			musicSource.Play ();
-			fading1 = false;
-		}
-		if (zone.CompareTag("ForestAudioTrigger"))
-		{
-			musicSource2.volume = 0;
-			musicSource2.clip = ForestBGM;
-			musicSource2.Play ();
-			fading2 = false;
-		}
-		if (zone.CompareTag("CatacombEntranceAudioTrigger"))
-		{
-			musicSource.volume = 0;
-			musicSource.clip = CatacombEntranceBGM;
-			musicSource.Play ();
-			fading1 = false;
+			AudioSource[] audioSourceArray = GetComponents<AudioSource>();
+			foreach (AudioSource source in audioSourceArray)
+			{
+				Destroy(source);
+			}
 		}
 	}
-
-	public void MusicFadeOut(Collider zone)
+	
+	private void OnDestroy()
 	{
-		if (zone.CompareTag("ForestAudioTrigger"))
-			fading2 = true;
-		else
-			fading1 = true;
+		if (Zelda._Common != null)
+			Zelda._Common._GameplayEvents._OnSceneWillChange -= OnSceneWillChange;
 	}
 
-	void Update()
+	public void PlaySound(SoundName enumClip)
 	{
-		if (!fading1 && musicSource.volume < 1)
+		for (int i = 0; i < SoundsClipArray.Length; i++)
 		{
-			musicSource.volume += 0.5f * Time.deltaTime;
-		}
-
-		if (fading1 && musicSource.volume > 0)
-		{
-			musicSource.volume -= 0.5f * Time.deltaTime;
-		}
-
-		if (!fading2 && musicSource2.volume < 1)
-		{
-			musicSource2.volume += 0.5f * Time.deltaTime;
-		}
-		
-		if (fading2 && musicSource2.volume > 0)
-		{
-			musicSource2.volume -= 0.5f * Time.deltaTime;
+			if (enumClip.ToString() == SoundsClipArray[i].name)
+			{
+				AudioSource soundSource = gameObject.AddComponent<AudioSource>();
+				soundSource.PlayOneShot (SoundsClipArray[i]);
+				Destroy (soundSource, SoundsClipArray[i].length);
+			}
 		}
 	}
 }
