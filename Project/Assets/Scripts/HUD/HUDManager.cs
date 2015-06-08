@@ -61,7 +61,7 @@ public class HUDManager : MonoBehaviour
 
     private void OnHealthChanged(int life, int maxLife)
     {
-        healthText.text = life.ToString() + '/' + maxLife.ToString();
+        healthText.text = "Health: " + life.ToString();
         float fMaxLife = (float)maxLife;
         float fLife = (float)life;
 
@@ -102,14 +102,14 @@ public class HUDManager : MonoBehaviour
                     {
                         healthMixtures++;
                         healthMixtureImage.gameObject.SetActive(true);
-                        healthMixturesAmountText.text = "x " + healthMixtures;
+                        healthMixturesAmountText.text = "x " + healthMixtures + " (press 2 to use)";
                         healthMixtureImage.sprite = equipmentItem._ItemSprite;
                     }
                     else if (equipmentItem._ItemName == EquipmentManager.EEquipmentItem.SpeedMixture)
                     {
                         speedMixtures++;
                         speedMixtureImage.gameObject.SetActive(true);
-                        speedMixturesAmountText.text = "x " + speedMixtures;
+                        speedMixturesAmountText.text = "x " + speedMixtures + " (press 1 to use)";
                         speedMixtureImage.sprite = equipmentItem._ItemSprite;
                     }
                     break;
@@ -126,7 +126,7 @@ public class HUDManager : MonoBehaviour
             {
                 healthMixtureImage.gameObject.SetActive(false);
             }
-            healthMixturesAmountText.text = "x " + healthMixtures;
+            healthMixturesAmountText.text = "x " + healthMixtures + " (press 2 to use)";
         }
         else if (equipmentItem._ItemName == EquipmentManager.EEquipmentItem.SpeedMixture)
         {
@@ -135,7 +135,7 @@ public class HUDManager : MonoBehaviour
             {
                 speedMixtureImage.gameObject.SetActive(false);
             }
-            speedMixturesAmountText.text = "x " + speedMixtures;
+            speedMixturesAmountText.text = "x " + speedMixtures + " (press 1 to use)";
         }
     }
 
