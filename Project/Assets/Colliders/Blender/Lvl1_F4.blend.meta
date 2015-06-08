@@ -1,0 +1,169 @@
+fileFormatVersion: 2
+guid: 39971c5427040744588f752321da2868
+timeCreated: 1433799112
+licenseType: Free
+ModelImporter:
+  serializedVersion: 18
+  fileIDToRecycleName:
+    100000: //RootNode
+    100002: Plane
+    100004: Rock_Stump
+    100006: Rock_Stump_001
+    100008: Rock_Stump_002
+    100010: Rock_Stump_003
+    100012: Rock_Stump_004
+    100014: Rock_Stump_005
+    100016: Rock_Stump_006
+    100018: Rock_Stump_007
+    100020: Template_vertices
+    100022: Template_vertices_001
+    100024: Template_vertices_002
+    100026: Template_vertices_003
+    100028: Template_vertices_004
+    100030: Template_vertices_005
+    100032: Tree
+    100034: Tree_001
+    100036: Tree_002
+    100038: Tree_003
+    100040: Tree_004
+    400000: //RootNode
+    400002: Plane
+    400004: Rock_Stump
+    400006: Rock_Stump_001
+    400008: Rock_Stump_002
+    400010: Rock_Stump_003
+    400012: Rock_Stump_004
+    400014: Rock_Stump_005
+    400016: Rock_Stump_006
+    400018: Rock_Stump_007
+    400020: Template_vertices
+    400022: Template_vertices_001
+    400024: Template_vertices_002
+    400026: Template_vertices_003
+    400028: Template_vertices_004
+    400030: Template_vertices_005
+    400032: Tree
+    400034: Tree_001
+    400036: Tree_002
+    400038: Tree_003
+    400040: Tree_004
+    2300000: Plane
+    2300002: Rock_Stump
+    2300004: Rock_Stump_001
+    2300006: Rock_Stump_002
+    2300008: Rock_Stump_003
+    2300010: Rock_Stump_004
+    2300012: Rock_Stump_005
+    2300014: Rock_Stump_006
+    2300016: Rock_Stump_007
+    2300018: Template_vertices
+    2300020: Template_vertices_001
+    2300022: Template_vertices_002
+    2300024: Template_vertices_003
+    2300026: Template_vertices_004
+    2300028: Template_vertices_005
+    2300030: Tree
+    2300032: Tree_001
+    2300034: Tree_002
+    2300036: Tree_003
+    2300038: Tree_004
+    3300000: Plane
+    3300002: Rock_Stump
+    3300004: Rock_Stump_001
+    3300006: Rock_Stump_002
+    3300008: Rock_Stump_003
+    3300010: Rock_Stump_004
+    3300012: Rock_Stump_005
+    3300014: Rock_Stump_006
+    3300016: Rock_Stump_007
+    3300018: Template_vertices
+    3300020: Template_vertices_001
+    3300022: Template_vertices_002
+    3300024: Template_vertices_003
+    3300026: Template_vertices_004
+    3300028: Template_vertices_005
+    3300030: Tree
+    3300032: Tree_001
+    3300034: Tree_002
+    3300036: Tree_003
+    3300038: Tree_004
+    4300000: Template_vertices_005
+    4300002: Template_vertices_004
+    4300004: Template_vertices_003
+    4300006: Template_vertices_002
+    4300008: Rock_Stump_007
+    4300010: Rock_Stump_006
+    4300012: Rock_Stump_005
+    4300014: Rock_Stump_004
+    4300016: Rock_Stump_003
+    4300018: Rock_Stump_002
+    4300020: Rock_Stump_001
+    4300022: Tree_004
+    4300024: Tree_003
+    4300026: Tree_002
+    4300028: Tree_001
+    4300030: Rock_Stump
+    4300032: Template_vertices_001
+    4300034: Tree
+    4300036: Template_vertices
+    4300038: Plane
+    7400000: Default Take
+    9500000: //RootNode
+  materials:
+    importMaterials: 1
+    materialName: 0
+    materialSearch: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    optimizeGameObjects: 0
+    motionNodeName: 
+    animationCompression: 1
+    animationRotationError: .5
+    animationPositionError: .5
+    animationScaleError: .5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    clipAnimations: []
+    isReadable: 1
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 1
+    meshCompression: 0
+    addColliders: 0
+    importBlendShapes: 1
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    optimizeMeshForGPU: 1
+    keepQuads: 0
+    weldVertices: 1
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+    useFileScale: 1
+  tangentSpace:
+    normalSmoothAngle: 60
+    splitTangentsAcrossUV: 1
+    normalImportMode: 0
+    tangentImportMode: 1
+  importAnimation: 1
+  copyAvatar: 0
+  humanDescription:
+    human: []
+    skeleton: []
+    armTwist: .5
+    foreArmTwist: .5
+    upperLegTwist: .5
+    legTwist: .5
+    armStretch: .0500000007
+    legStretch: .0500000007
+    feetSpacing: 0
+    rootMotionBoneName: 
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  animationType: 2
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

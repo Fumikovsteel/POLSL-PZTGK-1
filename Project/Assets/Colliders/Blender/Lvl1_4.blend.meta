@@ -1,0 +1,154 @@
+fileFormatVersion: 2
+guid: 5d61b18d1164c094fb65dcbcfb5fcc3a
+timeCreated: 1433784904
+licenseType: Free
+ModelImporter:
+  serializedVersion: 18
+  fileIDToRecycleName:
+    100000: //RootNode
+    100002: Plane
+    100004: Template_vertices
+    100006: Template_vertices_001
+    100008: Template_vertices_002
+    100010: Template_vertices_003
+    100012: Template_vertices_004
+    100014: Template_vertices_005
+    100016: Template_vertices_006
+    100018: Template_vertices_007
+    100020: Template_vertices_008
+    100022: Tree
+    100024: Tree_001
+    100026: Tree_002
+    100028: Tree_003
+    100030: Tree_004
+    100032: Tree_005
+    100034: Tree_006
+    400000: //RootNode
+    400002: Plane
+    400004: Template_vertices
+    400006: Template_vertices_001
+    400008: Template_vertices_002
+    400010: Template_vertices_003
+    400012: Template_vertices_004
+    400014: Template_vertices_005
+    400016: Template_vertices_006
+    400018: Template_vertices_007
+    400020: Template_vertices_008
+    400022: Tree
+    400024: Tree_001
+    400026: Tree_002
+    400028: Tree_003
+    400030: Tree_004
+    400032: Tree_005
+    400034: Tree_006
+    2300000: Plane
+    2300002: Template_vertices
+    2300004: Template_vertices_001
+    2300006: Template_vertices_002
+    2300008: Template_vertices_003
+    2300010: Template_vertices_004
+    2300012: Template_vertices_005
+    2300014: Template_vertices_006
+    2300016: Template_vertices_007
+    2300018: Template_vertices_008
+    2300020: Tree
+    2300022: Tree_001
+    2300024: Tree_002
+    2300026: Tree_003
+    2300028: Tree_004
+    2300030: Tree_005
+    2300032: Tree_006
+    3300000: Plane
+    3300002: Template_vertices
+    3300004: Template_vertices_001
+    3300006: Template_vertices_002
+    3300008: Template_vertices_003
+    3300010: Template_vertices_004
+    3300012: Template_vertices_005
+    3300014: Template_vertices_006
+    3300016: Template_vertices_007
+    3300018: Template_vertices_008
+    3300020: Tree
+    3300022: Tree_001
+    3300024: Tree_002
+    3300026: Tree_003
+    3300028: Tree_004
+    3300030: Tree_005
+    3300032: Tree_006
+    4300000: Template_vertices_008
+    4300002: Tree_006
+    4300004: Tree_005
+    4300006: Tree_004
+    4300008: Tree_003
+    4300010: Tree_002
+    4300012: Tree_001
+    4300014: Template_vertices_007
+    4300016: Template_vertices_006
+    4300018: Template_vertices_005
+    4300020: Template_vertices_004
+    4300022: Template_vertices_003
+    4300024: Template_vertices_002
+    4300026: Template_vertices_001
+    4300028: Tree
+    4300030: Template_vertices
+    4300032: Plane
+    7400000: Default Take
+    9500000: //RootNode
+  materials:
+    importMaterials: 1
+    materialName: 0
+    materialSearch: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    optimizeGameObjects: 0
+    motionNodeName: 
+    animationCompression: 1
+    animationRotationError: .5
+    animationPositionError: .5
+    animationScaleError: .5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    clipAnimations: []
+    isReadable: 1
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 1
+    meshCompression: 0
+    addColliders: 0
+    importBlendShapes: 1
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    optimizeMeshForGPU: 1
+    keepQuads: 0
+    weldVertices: 1
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+    useFileScale: 1
+  tangentSpace:
+    normalSmoothAngle: 60
+    splitTangentsAcrossUV: 1
+    normalImportMode: 0
+    tangentImportMode: 1
+  importAnimation: 1
+  copyAvatar: 0
+  humanDescription:
+    human: []
+    skeleton: []
+    armTwist: .5
+    foreArmTwist: .5
+    upperLegTwist: .5
+    legTwist: .5
+    armStretch: .0500000007
+    legStretch: .0500000007
+    feetSpacing: 0
+    rootMotionBoneName: 
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  animationType: 2
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
