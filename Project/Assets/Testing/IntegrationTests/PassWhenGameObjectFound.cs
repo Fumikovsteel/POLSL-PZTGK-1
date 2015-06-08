@@ -2,12 +2,8 @@
 using System.Collections;
 using UnityEngine;
 
-[IntegrationTest.DynamicTestAttribute("ExampleIntegrationTests")]
-// [IntegrationTest.Ignore]
-[IntegrationTest.ExpectExceptions(false, typeof(ArgumentException))]
+[IntegrationTest.DynamicTestAttribute("PlayerEnemyTests")]
 [IntegrationTest.SucceedWithAssertions]
-[IntegrationTest.TimeoutAttribute(1)]
-[IntegrationTest.ExcludePlatformAttribute(RuntimePlatform.Android, RuntimePlatform.LinuxPlayer)]
 public class PassWhenGameObjectFound : MonoBehaviour {
 
 	public string gameObjectName = "";
