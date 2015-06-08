@@ -2,87 +2,63 @@
 using System.Collections;
 
 public class SoundManager : MonoBehaviour {
-
-
-	public AudioSource musicSource;
-	public AudioSource musicSource2;
-	public AudioSource efxSource;
-	public static SoundManager instance = null;
-	public bool fading1 = false;
-	public bool fading2 = false;
-	public AudioClip VillageBGM;
-	public AudioClip ForestBGM;
-	public AudioClip CatacombEntranceBGM;
+	
+	public AudioClip[] BGMClipArray;
 
 	// Use this for initialization
 	void Awake () {
-		if (instance == null)
-			instance = this;
-		else if (instance != this)
-			Destroy (gameObject);
+		Zelda._Common._GameplayEvents._OnSceneWillChange += OnSceneWillChange;
+	}
 
-		DontDestroyOnLoad (gameObject);
+	private void OnSceneWillChange(SceneManager.ESceneName newScene)
+	{
+		if (newScene != SceneManager.ESceneName.Game)
+			Destroy(gameObject);
+	}
+	
+	private void OnDestroy()
+	{
+		if (Zelda._Common != null)
+			Zelda._Common._GameplayEvents._OnSceneWillChange -= OnSceneWillChange;
 	}
 
 	public void PlaySound(AudioClip clip)
 	{
-		efxSource.clip = clip;
-		efxSource.Play();
+		//efxSource.clip = clip;
+		//efxSource.Play();
 	}
 
 	public void PlayMusic(Collider zone)
 	{
-		if (zone.CompareTag("VillageAudioTrigger"))
+		for (int i = 0; i < BGMClipArray.Length; i++) 
 		{
-			musicSource.volume = 0;
-			musicSource.clip = VillageBGM;
-			musicSource.Play ();
-			fading1 = false;
-		}
-		if (zone.CompareTag("ForestAudioTrigger"))
-		{
-			musicSource2.volume = 0;
-			musicSource2.clip = ForestBGM;
-			musicSource2.Play ();
-			fading2 = false;
-		}
-		if (zone.CompareTag("CatacombEntranceAudioTrigger"))
-		{
-			musicSource.volume = 0;
-			musicSource.clip = CatacombEntranceBGM;
-			musicSource.Play ();
-			fading1 = false;
+			if (zone.gameObject.name == BGMClipArray[i].name)
+			{
+				AudioSource musicSource = gameObject.AddComponent<AudioSource>();
+				musicSource.volume = 1;
+				musicSource.loop = true;
+				musicSource.clip = BGMClipArray[i];
+				musicSource.Play ();
+			}
 		}
 	}
 
 	public void MusicFadeOut(Collider zone)
 	{
-		if (zone.CompareTag("ForestAudioTrigger"))
-			fading2 = true;
-		else
-			fading1 = true;
-	}
-
-	void Update()
-	{
-		if (!fading1 && musicSource.volume < 1)
+		AudioSource[] audioSourceArray;
+		audioSourceArray = GetComponents<AudioSource>();
+		for (int i = 0; i < audioSourceArray.Length; i++) 
 		{
-			musicSource.volume += 0.5f * Time.deltaTime;
-		}
-
-		if (fading1 && musicSource.volume > 0)
-		{
-			musicSource.volume -= 0.5f * Time.deltaTime;
-		}
-
-		if (!fading2 && musicSource2.volume < 1)
-		{
-			musicSource2.volume += 0.5f * Time.deltaTime;
-		}
-		
-		if (fading2 && musicSource2.volume > 0)
-		{
-			musicSource2.volume -= 0.5f * Time.deltaTime;
+			if (zone.gameObject.name == audioSourceArray[i].clip.name)
+			{
+				iTween.AudioTo(gameObject, iTween.Hash(
+					"audiosource", audioSourceArray[i],
+					"volume", 0,
+					"time", 2f,
+					"easetype", iTween.EaseType.easeOutQuad
+					));
+				Destroy(audioSourceArray[i], 3);
+			}
 		}
 	}
 }

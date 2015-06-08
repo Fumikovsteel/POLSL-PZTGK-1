@@ -1,0 +1,72 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &183540
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 4
+  m_Component:
+  - 4: {fileID: 405974}
+  - 114: {fileID: 11416476}
+  - 114: {fileID: 11419436}
+  m_Layer: 0
+  m_Name: SoundManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &405974
+Transform:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 183540}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 13.5586929, y: 9.05563831, z: -2.34375}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+--- !u!114 &11416476
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 183540}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 54b439d5505759d4d998fef2b9ae00d1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  VillageBGM: {fileID: 8300000, guid: 6e6ed1df1ccc75541b0e38127772fde2, type: 3}
+  ForestBGM: {fileID: 8300000, guid: ac5d2255edf9ddd43bc921a3d19b63d2, type: 3}
+  CatacombEntranceBGM: {fileID: 8300000, guid: e61c346a0be913243af5a3224ab6eb73, type: 3}
+  BGMClipArray:
+  - {fileID: 8300000, guid: 6e6ed1df1ccc75541b0e38127772fde2, type: 3}
+  - {fileID: 8300000, guid: ac5d2255edf9ddd43bc921a3d19b63d2, type: 3}
+  - {fileID: 8300000, guid: e61c346a0be913243af5a3224ab6eb73, type: 3}
+--- !u!114 &11419436
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 183540}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 41f96d669b7c4aa4cbf4b645af247584, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _ShouldUnparentOnSceneChange: 0
+--- !u!1001 &100100000
+Prefab:
+  m_ObjectHideFlags: 1
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications: []
+    m_RemovedComponents: []
+  m_ParentPrefab: {fileID: 0}
+  m_RootGameObject: {fileID: 183540}
+  m_IsPrefabParent: 1
