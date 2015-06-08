@@ -23,8 +23,10 @@ public class Player : MonoBehaviour
 	private bool isInputXDirty = false;
 	private bool isInputYDirty = false;
 
-	private const int rotationCounterTime = 10;
-	private int rotationReadyCounter = -rotationCounterTime;
+	// how long the player has to go in given direction before he actually rotates
+	// set 0 for instant rotation
+	public int rotationDelay = 5;
+	private int rotationReadyCounter = 0;
 
     [SerializeField]
     private SpriteRenderer swordObject;
@@ -277,7 +279,7 @@ public class Player : MonoBehaviour
 		
 		if (inputData.usedKey == KeyCode.W) {
 			currentAcceleration.y += acceleration * modifier;
-			rotationReadyCounter = -rotationCounterTime;
+			rotationReadyCounter = -rotationDelay;
 
 			if(isInputYDirty && modifier < 0) {
 				currentAcceleration.y = 0.0f;
@@ -289,7 +291,7 @@ public class Player : MonoBehaviour
 
 		if (inputData.usedKey == KeyCode.S) {
 			currentAcceleration.y += -acceleration * modifier;
-			rotationReadyCounter = -rotationCounterTime;
+			rotationReadyCounter = -rotationDelay;
 
 			if(isInputYDirty && modifier < 0) {
 				currentAcceleration.y = 0.0f;
@@ -301,7 +303,7 @@ public class Player : MonoBehaviour
 			
 		if (inputData.usedKey == KeyCode.D) {
 			currentAcceleration.x += acceleration * modifier;
-			rotationReadyCounter = -rotationCounterTime;
+			rotationReadyCounter = -rotationDelay;
 
 			if(isInputXDirty && modifier < 0) {
 				currentAcceleration.x = 0.0f;
@@ -312,7 +314,7 @@ public class Player : MonoBehaviour
 		}
 		if (inputData.usedKey == KeyCode.A) {
 			currentAcceleration.x += -acceleration * modifier;
-			rotationReadyCounter = -rotationCounterTime;
+			rotationReadyCounter = -rotationDelay;
 
 			if(isInputXDirty && modifier < 0) {
 				currentAcceleration.x = 0.0f;
@@ -325,7 +327,9 @@ public class Player : MonoBehaviour
 
 	private void UpdateVelocity() {
 
-		++rotationReadyCounter;
+		if(rotationReadyCounter < 0) {
+			++rotationReadyCounter;
+		}
 	
 		Vector3 playerVelocity = playerRigidbody.velocity;
 		playerVelocity += currentAcceleration;
