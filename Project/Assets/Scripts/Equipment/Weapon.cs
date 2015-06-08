@@ -7,13 +7,15 @@ namespace EquipmentItems
     {
         [SerializeField]
         private float strength = 10.0f;
+        [SerializeField]
+        private float recoil = 5.0f;
 
         public override EquipmentManager.EEquipmentType _ItemType
         { get { return EquipmentManager.EEquipmentType.weapon; } }
 
         public void _StartAttack(Player player)
         {
-            player.StartMeleeAttackAnimation(strength);
+            player.StartMeleeAttackAnimation(strength, recoil);
         }
     }
 }

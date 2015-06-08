@@ -1,5 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System;
+using System.Collections.Generic;
 
 public class PlayerMeleeAttack : MonoBehaviour
 {
@@ -8,11 +10,11 @@ public class PlayerMeleeAttack : MonoBehaviour
     [SerializeField]
     private float maxSwordPosition = 0.15f;
     [SerializeField]
-    private float firstStepTime = 0.3f;
+    private float showHideWeaponTime = 0.2f;
     [SerializeField]
-    private float secondStepTime = 0.6f;
+    private float hitTime = 0.3f;
     [SerializeField]
-    private float thirdStepTime = 0.3f;
+    private float hitDelay = 0.1f;
 
     private Transform sword;
     private float defaultSwordScale;
@@ -28,35 +30,30 @@ public class PlayerMeleeAttack : MonoBehaviour
     /// <summary>
     /// How often we will check raycast during sword rotating
     /// </summary>
-    private float checkRaycastStep = 50.0f;
+    private float checkRaycastStep = 44.0f;
+    /// <summary>
+    /// How long sword raycast is
+    /// </summary>
+    private float raycastLength = 0.35f;
+    /// <summary>
+    /// All enemies which were hitted in current attack animation
+    /// </summary>
+    private List<Enemy> hittedEnemies = new List<Enemy>();
 
-    //public float attackAngle = 45;
-    //public float attackRange = 0.1f;
-
-
-    //LayerMask enemyLayerMask = LayerMask.GetMask("Enemies");
-    //// Use this for initialization
-
-    //public void Attack() {
-    //    Collider[] collidersInRange = Physics.OverlapSphere (transform.position, attackRange, enemyLayerMask);
-    //    Vector3 playerDirection = Zelda._Game._GameManager._Player._PlayerDirection;
-    //    Vector3 playerPosition = Zelda._Game._GameManager._Player.transform.position;
-
-    //    foreach(Collider c in collidersInRange) {
-    //        Vector3 playerToEnemyDirection = c.transform.position - playerPosition;
-    //        float angle = Vector3.Angle(playerDirection, playerToEnemyDirection);
-    //        float distance = Vector3.Distance(playerPosition, c.transform.position);
-    //        if(distance <= attackRange && (angle > - attackAngle/2 && angle < attackAngle/2)) {
-    //            Destroy(c.gameObject);
-    //        }
-    //    }
-    //}
+    /// <summary>
+    /// Strength of the currently played attack
+    /// </summary>
+    private float curAttackStrength;
+    /// <summary>
+    /// Recoil of the currently player attack
+    /// </summary>
+    private float curRecoild;
 
     private void FirstStepComplete()
     {
         // Thanks to that we're sure we'll check raycast in first step
         lastRaycastValue = -180.0f;
-        iTween.ValueTo(sword.parent.gameObject, iTween.Hash("from", 0.0f, "to", 180.0f, "time", secondStepTime,
+        iTween.ValueTo(sword.parent.gameObject, iTween.Hash("from", 45.0f, "to", 135.0f, "time", hitTime,
                                                             "easetype", iTween.EaseType.easeInQuad, "onupdate", "UpdateSecondStep",
                                                             "onupdatetarget", gameObject, "oncomplete", "SecondStepComplete",
                                                             "oncompletetarget", gameObject));
@@ -66,51 +63,83 @@ public class PlayerMeleeAttack : MonoBehaviour
     {
         if (lastRaycastValue + checkRaycastStep < curValue)
         {
-            RaycastHit raycastHit;
-            Vector3 direction = new Vector3(sword.position.x - gameObject.transform.position.x, sword.position.y - gameObject.transform.position.y, 0.0f);
-            Physics.Raycast(gameObject.transform.position, direction, out raycastHit, 2.0f, LayerMask.NameToLayer("Enemies"));
-            if (raycastHit.collider != null)
-                Debug.Log(direction);
-            lastRaycastValue = curValue;
+            CheckSwordRaycast();
+            lastRaycastValue = Mathf.Floor(curValue / checkRaycastStep) * checkRaycastStep;
         }
 
         sword.parent.localRotation = Quaternion.Euler(0.0f, 0.0f, curValue);
     }
 
-    private void SecondStepComplete()
+    private void CheckSwordRaycast()
     {
-        iTween.ScaleTo(sword.gameObject, iTween.Hash("scale", new Vector3(defaultSwordScale, defaultSwordScale, sword.localScale.z), "time", thirdStepTime,
-                                                     "islocal", true));
-        iTween.ScaleTo(sword.parent.gameObject, iTween.Hash("scale", new Vector3(0.4f, 1.0f, 1.0f), "time", thirdStepTime/2.0f, "islocal", true,
-                                                            "easetype", iTween.EaseType.linear, "oncomplete", "ThirdMidstepComplete",
-                                                            "oncompletetarget", gameObject));
-        iTween.MoveTo(sword.gameObject, iTween.Hash("position", new Vector3(defaultSwordPosition, sword.localPosition.y, sword.localPosition.z),
-                                                    "time", thirdStepTime, "islocal", true, "oncomplete", "ThirdStepComplete",
-                                                    "oncompletetarget", gameObject));
+        RaycastHit raycastHit;
+        Vector3 direction = new Vector3(sword.position.x - gameObject.transform.position.x, sword.position.y - gameObject.transform.position.y, 0.0f);
+        Physics.Raycast(gameObject.transform.position, direction, out raycastHit, raycastLength, LayerMask.GetMask("Enemies"));
+        if (raycastHit.collider != null)
+        {
+            Enemy hittedEnemy = raycastHit.collider.GetComponent<Enemy>();
+            // We don't want to hit the same enemy twice in one attack animation
+            if (hittedEnemy != null && !hittedEnemies.Contains(hittedEnemy))
+            {
+                hittedEnemies.Add(hittedEnemy);
+                _OnEnemyHit(hittedEnemy, curAttackStrength, curRecoild);
+            }
+        }
+        Debug.DrawLine(gameObject.transform.position, gameObject.transform.position + (direction.normalized * raycastLength), Color.black, 60.0f);
     }
 
-    private void ThirdMidstepComplete()
+    private void SecondStepComplete()
     {
-        sword.parent.localRotation = Quaternion.identity;
-        iTween.ScaleTo(sword.parent.gameObject, iTween.Hash("scale", Vector3.one, "time", thirdStepTime / 2.0f, "islocal", true,
-                                                            "easetype", iTween.EaseType.linear));
+        hittedEnemies.Clear();
+        // Thanks to that we're sure we'll check raycast in first step
+        lastRaycastValue = 270.0f;
+        sword.localRotation = Quaternion.Euler(sword.localRotation.eulerAngles.x + 180.0f, sword.localRotation.eulerAngles.y, sword.localRotation.eulerAngles.z);
+        iTween.ValueTo(sword.parent.gameObject, iTween.Hash("from", 135.0f, "to", 45.0f, "time", hitTime, "delay", hitDelay,
+                                                            "easetype", iTween.EaseType.easeInQuad, "onupdate", "UpdateThirdStep",
+                                                            "onupdatetarget", gameObject, "oncomplete", "ThirdStepComplete",
+                                                            "oncompletetarget", gameObject));
+    }
+
+    private void UpdateThirdStep(float curValue)
+    {
+        if (lastRaycastValue - checkRaycastStep > curValue)
+        {
+            CheckSwordRaycast();
+            lastRaycastValue = Mathf.Floor(curValue / checkRaycastStep) * checkRaycastStep;
+        }
+
+        sword.parent.localRotation = Quaternion.Euler(0.0f, 0.0f, curValue);
     }
 
     private void ThirdStepComplete()
     {
+        hittedEnemies.Clear();
+        sword.localRotation = Quaternion.Euler(sword.localRotation.eulerAngles.x + 180.0f, sword.localRotation.eulerAngles.y, sword.localRotation.eulerAngles.z);
+        iTween.ScaleTo(sword.gameObject, iTween.Hash("scale", new Vector3(defaultSwordScale, defaultSwordScale, sword.localScale.z), "time", showHideWeaponTime,
+                                                     "islocal", true));
+        iTween.MoveTo(sword.gameObject, iTween.Hash("position", new Vector3(defaultSwordPosition, 0.0f, 0.0f), "time", showHideWeaponTime,
+                                                    "islocal", true, "oncomplete", "FourthStepComplete", "oncompletetarget", gameObject));
+    }
+
+    private void FourthStepComplete()
+    {
         isCurrentlyAttacking = false;
     }
 
-    public void _StartAttackAnimation(Transform sword)
+    public event Action<Enemy, float, float> _OnEnemyHit = (x, y, z) => { };
+
+    public void _StartAttackAnimation(Transform sword, float attackStrength, float attackRecoil)
     {
         if (!isCurrentlyAttacking)
         {
+            curAttackStrength = attackStrength;
+            curRecoild = attackRecoil;
             this.sword = sword;
             defaultSwordScale = sword.localScale.x;
             defaultSwordPosition = sword.localPosition.x;
-            iTween.ScaleTo(sword.gameObject, iTween.Hash("scale", new Vector3(maxSwordScale, maxSwordScale, sword.localScale.z), "time", firstStepTime,
+            iTween.ScaleTo(sword.gameObject, iTween.Hash("scale", new Vector3(maxSwordScale, maxSwordScale, sword.localScale.z), "time", showHideWeaponTime,
                                                          "islocal", true));
-            iTween.MoveTo(sword.gameObject, iTween.Hash("position", new Vector3(-maxSwordPosition, 0.0f, 0.0f), "time", firstStepTime,
+            iTween.MoveTo(sword.gameObject, iTween.Hash("position", new Vector3(-maxSwordPosition, 0.0f, 0.0f), "time", showHideWeaponTime,
                                                         "islocal", true, "oncomplete", "FirstStepComplete", "oncompletetarget", gameObject));
             isCurrentlyAttacking = true;
         }

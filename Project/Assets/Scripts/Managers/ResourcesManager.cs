@@ -8,7 +8,11 @@ public class ResourcesManager
 
     public enum EPrefabName
     {
+<<<<<<< HEAD
         MainMenuManager, GameManager, GameMenuManager, EnemiesManager, GameCamera, HUDManager, CreditsManager, SoundManager, MusicManager
+=======
+        MainMenuManager, GameManager, GameMenuManager, EnemiesManager, GameCamera, HUDManager, CreditsManager, NPCManager
+>>>>>>> origin/master
     }
 
     #endregion

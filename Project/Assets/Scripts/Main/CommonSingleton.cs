@@ -14,7 +14,11 @@ public class CommonSingleton : MonoBehaviour
     public ApplicationManager _ApplicationManager;
     public Transform _ManagersParent;
     public LevelsManager _LevelsManager;
+<<<<<<< HEAD
 	public SoundManager _SoundManager;
+=======
+    public TimeManager _TimeManager;
+>>>>>>> origin/master
 
     #endregion
     //////////////////////////////////////////////////////////////////////////////////
@@ -65,6 +69,7 @@ public class CommonSingleton : MonoBehaviour
         _LevelsManager = new LevelsManager();
         _CamerasManager = new CamerasManager();
         _ResourcesManager = new ResourcesManager();
+        _TimeManager = new GameObject("TimeManager", typeof(TimeManager), typeof(DontDestroyOnLoad)).GetComponent<TimeManager>();
 
 		_SoundManager = Zelda._Common._ResourcesManager.GetAndInstantiatePrefab<SoundManager>(ResourcesManager.EPrefabName.SoundManager, Zelda._Common._ManagersParent);
 

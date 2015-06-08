@@ -17,9 +17,13 @@ public class RangedEnemy : MonoBehaviour {
 		timeElaspedSinceLastFire = fireCooldown_S;
 		lastUpdate = Time.time;
 		Zelda._Common._GameplayEvents._OnLocationChanged += OnLocationChanged;
-		Zelda._Common._GameplayEvents._OnGamePaused += OnGamePaused;
-		Zelda._Common._GameplayEvents._OnGameUnpaused += OnGameUnpaused;
 	}
+
+    private void OnDestroy()
+    {
+        if (Zelda._Common != null)
+            Zelda._Common._GameplayEvents._OnLocationChanged -= OnLocationChanged;
+    }
 	
 	// Update is called once per frame
 	void Update () {
@@ -39,7 +43,9 @@ public class RangedEnemy : MonoBehaviour {
 			GameObject newProjectile = (GameObject) Instantiate(projectile, transform.position, transform.rotation);
 			Rigidbody rb = (newProjectile).GetComponent<Rigidbody>();
 			Physics.IgnoreCollision(GetComponent<Collider>(), rb.gameObject.GetComponent<Collider>());
-			Vector3 strikeVector = playerTransform.position - transform.position;
+            // We add some random to projectile direction
+            Vector3 strikeVector = playerTransform.position - transform.position +
+                                   new Vector3(UnityEngine.Random.Range(-0.35f, 0.35f), UnityEngine.Random.Range(-0.35f, 0.35f), 0.0f);
 			strikeVector.Normalize ();
 			rb.AddForce(strikeVector*shootForce);
 			float angle = Mathf.Atan2(strikeVector.y, strikeVector.x) * Mathf.Rad2Deg - 90;
@@ -52,11 +58,13 @@ public class RangedEnemy : MonoBehaviour {
 		enabled = !enabled;
 	}
 	
-	public void OnGamePaused() {
+	public void _StopFiring()
+    {
 		enabled = false;
 	}
 	
-	public void OnGameUnpaused() {
+	public void _UnstopFiring()
+    {
 		enabled = true;
 	}
 }

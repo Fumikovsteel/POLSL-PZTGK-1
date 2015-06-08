@@ -1,10 +1,17 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System;
 
 public class EnemiesManager : MonoBehaviour
 {
     [SerializeField]
     private GameObject enemyPrefab;
+    [SerializeField]
+    private float defaultEnemiesHealth = 15.0f;
+    [SerializeField]
+    private float deathAnimationTime;
+    [SerializeField]
+    private Vector3 deathAnimationAmount = new Vector3(0.5f, 0.5f, 0.0f);
 
     private const string enemySpawnPointsParentName = "EnemySpawns";
     private Transform enemiesParent;
@@ -16,6 +23,7 @@ public class EnemiesManager : MonoBehaviour
 
         Zelda._Common._GameplayEvents._OnSceneWillChange += OnSceneWillChange;
         Zelda._Common._GameplayEvents._OnLevelWasLoaded += OnLevelWasLoaded;
+        Zelda._Common._GameplayEvents._OnPlayerWillBeKilled += OnPlayerWillBeKilled;
     }
 
     private void OnDestroy()
@@ -24,7 +32,13 @@ public class EnemiesManager : MonoBehaviour
         {
             Zelda._Common._GameplayEvents._OnSceneWillChange -= OnSceneWillChange;
             Zelda._Common._GameplayEvents._OnLevelWasLoaded -= OnLevelWasLoaded;
+            Zelda._Common._GameplayEvents._OnPlayerWillBeKilled -= OnPlayerWillBeKilled;
         }
+    }
+
+    private void OnPlayerWillBeKilled()
+    {
+        enabled = false;
     }
 
 	private void Update() 
@@ -58,6 +72,7 @@ public class EnemiesManager : MonoBehaviour
 				GameObject instantiatedEnemy = (GameObject)Instantiate(enemyPrefab);
 				instantiatedEnemy.transform.SetParent(enemiesParent, false);
 				instantiatedEnemy.transform.position = spawnPoint.transform.position;
+                instantiatedEnemy.GetComponent<Enemy>()._Init(defaultEnemiesHealth);
 				allSpawnPoints.RemoveAt(i);
 			}
 		}
@@ -70,4 +85,22 @@ public class EnemiesManager : MonoBehaviour
 			Debug.LogError("You need to have " + enemySpawnPointsParentName + " object on the scene!");
 		allSpawnPoints = new ArrayList(enemySpawnPointsParent.GetComponentsInChildren<EnemySpawnPoint>());
 	}
+
+    private void DestroyEnemy(Enemy enemyToDestroy)
+    {
+        Destroy(enemyToDestroy.gameObject);
+    }
+
+    public void _KillEnemy(Enemy enemyToKill)
+    {
+        enemyToKill._StopEnemyMovement();
+        Action killAnimation = () =>
+            {
+                iTween.ShakePosition(enemyToKill.gameObject, iTween.Hash("amount", deathAnimationAmount, "time", deathAnimationTime, "islocal", true,
+                                                                         "oncomplete", "DestroyEnemy", "oncompleteparams", enemyToKill,
+                                                                         "oncompletetarget", gameObject));
+            };
+        // We delay because sword attack force need to change enemy position
+        Zelda._Common._TimeManager._DelayMethodExecution(0.05f, killAnimation);
+    }
 }
