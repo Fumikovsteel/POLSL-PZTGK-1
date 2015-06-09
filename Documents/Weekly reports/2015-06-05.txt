@@ -1,0 +1,12 @@
+Podsumowanie spotkania 2015-06-05
+
+Zrobione:
+- dodano muzykę i dźwięki w grze
+- dodano przedmioty ekwipunku
+- połączono HUD ze stanem gracza
+- naprawiono błędy kompilacji
+- poprawki ataku
+- dodano animację ataku
+- poprawki HUDa
+- dodano funkcjonalność używania mikstur
+- dodano możliwość prowadzenia dialogu z postaciami niezależnymi

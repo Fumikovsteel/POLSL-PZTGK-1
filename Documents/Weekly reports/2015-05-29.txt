@@ -1,0 +1,8 @@
+Podsumowanie spotkania 2015-05-29
+
+Zrobione:
+- nowa wersja graficznego interfejsu użytkownika
+- dodano customowe eventy dotyczące stanu gry
+- dodano atak z odległości
+- naprawiono błąd z przeciwnikami po wznowieniu gry
+- dodano grafikę ekranu dialogu
