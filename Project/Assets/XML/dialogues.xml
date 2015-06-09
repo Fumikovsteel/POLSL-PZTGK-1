@@ -1,0 +1,21 @@
+<dialogues>
+	<dialogue id="0">
+		<statement person="Tidius" text="Master, what needs to be done to become the mightiest warrior in the whole world?" />
+		<statement person="Mistrz" text="You have to become the mage! In order to do this, you must go to all four directions of the world and find all fragments of your first spell." />
+	</dialogue>
+	<dialogue id="1">
+		<statement person="Röl Nikt" text="My lord, please help us with the zombie problem." />
+		<statement person="Tidius" text="Why I am suppose to help you?" />
+		<statement person="Röl Nikt" text="The Witch knows magic, we are defensless..." />
+		<statement person="Tidius" text="Magic... Lead me to her crypt!" />
+	</dialogue>
+	<dialogue id="2">
+		<statement person="Tidius" text="Your eye must fell of!" />
+		<statement person="Mało ogarnięty nieumarły dozorca" text="Where?!" />
+		<statement person="Tidius" text="Here, next to the cell." />
+	</dialogue>
+	<dialogue id="3">
+		<statement person="Wiedźma" text="You came to early. I haven't even prepare meal with you as main ingredient! AHA-HAHHAHA!" />
+		<statement person="Tidius" text="You want to cook me in this cauldron? That's a relief. I thought you want a bath with me..." />
+	</dialogue>
+</dialogues>
