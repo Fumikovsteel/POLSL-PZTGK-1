@@ -1,0 +1,149 @@
+fileFormatVersion: 2
+guid: 273959f54394ff04ca7a64e0718a7af7
+timeCreated: 1433869838
+licenseType: Free
+ModelImporter:
+  serializedVersion: 18
+  fileIDToRecycleName:
+    100000: Box
+    100002: Box_001
+    100004: Box_002
+    100006: Box_003
+    100008: Box_004
+    100010: Box_005
+    100012: Box_006
+    100014: Box_007
+    100016: Box_008
+    100018: //RootNode
+    100020: Plane
+    100022: Template_vertices
+    100024: Template_vertices_001
+    100026: Template_vertices_002
+    100028: Template_vertices_003
+    100030: Tombstone
+    100032: Tombstone_001
+    400000: Box
+    400002: Box_001
+    400004: Box_002
+    400006: Box_003
+    400008: Box_004
+    400010: Box_005
+    400012: Box_006
+    400014: Box_007
+    400016: Box_008
+    400018: //RootNode
+    400020: Plane
+    400022: Template_vertices
+    400024: Template_vertices_001
+    400026: Template_vertices_002
+    400028: Template_vertices_003
+    400030: Tombstone
+    400032: Tombstone_001
+    2300000: Box
+    2300002: Box_001
+    2300004: Box_002
+    2300006: Box_003
+    2300008: Box_004
+    2300010: Box_005
+    2300012: Box_006
+    2300014: Box_007
+    2300016: Box_008
+    2300018: Plane
+    2300020: Template_vertices
+    2300022: Template_vertices_001
+    2300024: Template_vertices_002
+    2300026: Template_vertices_003
+    2300028: Tombstone
+    2300030: Tombstone_001
+    3300000: Box
+    3300002: Box_001
+    3300004: Box_002
+    3300006: Box_003
+    3300008: Box_004
+    3300010: Box_005
+    3300012: Box_006
+    3300014: Box_007
+    3300016: Box_008
+    3300018: Plane
+    3300020: Template_vertices
+    3300022: Template_vertices_001
+    3300024: Template_vertices_002
+    3300026: Template_vertices_003
+    3300028: Tombstone
+    3300030: Tombstone_001
+    4300000: Template_vertices_003
+    4300002: Template_vertices_002
+    4300004: Template_vertices_001
+    4300006: Box_008
+    4300008: Box_007
+    4300010: Box_006
+    4300012: Box_005
+    4300014: Box_004
+    4300016: Box_003
+    4300018: Box_002
+    4300020: Box_001
+    4300022: Tombstone_001
+    4300024: Tombstone
+    4300026: Box
+    4300028: Template_vertices
+    4300030: Plane
+    7400000: Default Take
+    9500000: //RootNode
+  materials:
+    importMaterials: 1
+    materialName: 0
+    materialSearch: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    optimizeGameObjects: 0
+    motionNodeName: 
+    animationCompression: 1
+    animationRotationError: .5
+    animationPositionError: .5
+    animationScaleError: .5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    clipAnimations: []
+    isReadable: 1
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 1
+    meshCompression: 0
+    addColliders: 0
+    importBlendShapes: 1
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    optimizeMeshForGPU: 1
+    keepQuads: 0
+    weldVertices: 1
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+    useFileScale: 1
+  tangentSpace:
+    normalSmoothAngle: 60
+    splitTangentsAcrossUV: 1
+    normalImportMode: 0
+    tangentImportMode: 1
+  importAnimation: 1
+  copyAvatar: 0
+  humanDescription:
+    human: []
+    skeleton: []
+    armTwist: .5
+    foreArmTwist: .5
+    upperLegTwist: .5
+    legTwist: .5
+    armStretch: .0500000007
+    legStretch: .0500000007
+    feetSpacing: 0
+    rootMotionBoneName: 
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  animationType: 2
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

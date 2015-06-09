@@ -1,0 +1,114 @@
+fileFormatVersion: 2
+guid: ff2c89d5105d72842af793d96f119add
+timeCreated: 1433869942
+licenseType: Free
+ModelImporter:
+  serializedVersion: 18
+  fileIDToRecycleName:
+    100000: Box
+    100002: Box_001
+    100004: Box_002
+    100006: //RootNode
+    100008: Plane
+    100010: Template_vertices
+    100012: Template_vertices_001
+    100014: Template_vertices_002
+    100016: Template_vertices_003
+    100018: Tombstone
+    400000: Box
+    400002: Box_001
+    400004: Box_002
+    400006: //RootNode
+    400008: Plane
+    400010: Template_vertices
+    400012: Template_vertices_001
+    400014: Template_vertices_002
+    400016: Template_vertices_003
+    400018: Tombstone
+    2300000: Box
+    2300002: Box_001
+    2300004: Box_002
+    2300006: Plane
+    2300008: Template_vertices
+    2300010: Template_vertices_001
+    2300012: Template_vertices_002
+    2300014: Template_vertices_003
+    2300016: Tombstone
+    3300000: Box
+    3300002: Box_001
+    3300004: Box_002
+    3300006: Plane
+    3300008: Template_vertices
+    3300010: Template_vertices_001
+    3300012: Template_vertices_002
+    3300014: Template_vertices_003
+    3300016: Tombstone
+    4300000: Box_002
+    4300002: Box_001
+    4300004: Template_vertices_003
+    4300006: Template_vertices_002
+    4300008: Template_vertices_001
+    4300010: Tombstone
+    4300012: Box
+    4300014: Template_vertices
+    4300016: Plane
+    7400000: Default Take
+    9500000: //RootNode
+  materials:
+    importMaterials: 1
+    materialName: 0
+    materialSearch: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    optimizeGameObjects: 0
+    motionNodeName: 
+    animationCompression: 1
+    animationRotationError: .5
+    animationPositionError: .5
+    animationScaleError: .5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    clipAnimations: []
+    isReadable: 1
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 1
+    meshCompression: 0
+    addColliders: 0
+    importBlendShapes: 1
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    optimizeMeshForGPU: 1
+    keepQuads: 0
+    weldVertices: 1
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+    useFileScale: 1
+  tangentSpace:
+    normalSmoothAngle: 60
+    splitTangentsAcrossUV: 1
+    normalImportMode: 0
+    tangentImportMode: 1
+  importAnimation: 1
+  copyAvatar: 0
+  humanDescription:
+    human: []
+    skeleton: []
+    armTwist: .5
+    foreArmTwist: .5
+    upperLegTwist: .5
+    legTwist: .5
+    armStretch: .0500000007
+    legStretch: .0500000007
+    feetSpacing: 0
+    rootMotionBoneName: 
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  animationType: 2
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
