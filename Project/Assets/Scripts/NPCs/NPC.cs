@@ -31,6 +31,7 @@ public class NPC : MonoBehaviour
 
     private void OnTriggerExit(Collider curCollider)
     {
+        Zelda._Game._DialogueManager.CloseDialogues();
         npcManager._HideCanTalkMessage();
     }
 

@@ -79,6 +79,11 @@ public class DialogueManager : MonoBehaviour
 			showMessage ();
 	}
 
+    public void CloseDialogues()
+    {
+        closeDialog();
+    }
+
 	private void closeDialog ()
 	{
 		Locked = true;

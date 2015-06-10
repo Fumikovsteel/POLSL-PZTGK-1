@@ -80,13 +80,11 @@ public class NPCManager : MonoBehaviour
 
 	private void StartTalk ()
 	{
-		Action onRotateFinished = () => {
-			// TODO: to nie dziaua :-(;
-		};
 		Zelda._Game._DialogueManager.ShowDialogues (1);
 		float playerZRotation = Zelda._Game._GameManager._Player.RotateToNPC (npcInRange.transform);
 		playerZRotation = (playerZRotation + 180.0f) % 360.0f;
 		npcInRange._ChangeLookDirection (playerZRotation);
+        _HideCanTalkMessage();
 	}
 
 	public void _ShowCanTalkMessage (NPC curNPC)
@@ -101,9 +99,10 @@ public class NPCManager : MonoBehaviour
 
 	public void _HideCanTalkMessage ()
 	{
-		if (npcInRange == null)
-			Debug.LogWarning ("There is no active NPC!");
-		npcInRange = null;
-		Destroy (startTalkMessage);
+        if (npcInRange != null)
+        {
+            npcInRange = null;
+            Destroy(startTalkMessage);
+        }
 	}
 }
