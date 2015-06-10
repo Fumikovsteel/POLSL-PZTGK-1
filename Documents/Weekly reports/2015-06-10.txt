@@ -1,0 +1,19 @@
+Podsumowanie spotkania 2015-06-10
+
+Zrobione:
+- dodano animacje wrogów
+- animacja i ruchu bohatera obrotu bohatera
+- poprawki kontrolera gracza
+- dodano brakujące pliki wroga drugiego
+- poprawki w systemie dialogu
+- poprawki dźwięku
+- dodano collidery
+- poprawki pliku sceny
+- dodano system dialogów
+- dodano brakujące tygodniowe raporty
+- dodano kryptę
+- poprawki przedmiotów
+- poprawki colliderów
+- dodano spawnpointy wrogów
+- poprawki linii dialogowych
+
