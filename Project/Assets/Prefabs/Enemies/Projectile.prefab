@@ -57,7 +57,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 633396b3168b84f7aaef0ae9d9e86c44, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  dmg: 10
+  dmg: 4
   projectileLifetime_S: 5
 --- !u!135 &13568284
 SphereCollider:

@@ -147,7 +147,7 @@ public class Player : MonoBehaviour
                 _OnInputUsed = (x) => equipmentManager._UseMixture(this, EquipmentManager.EEquipmentItem.SpeedMixture),
             }, new InputManager.KeyData()
             {
-                keyCode = KeyCode.Alpha1, keyType = InputManager.EKeyUseType.released
+                keyCode = KeyCode.Alpha2, keyType = InputManager.EKeyUseType.released
             });
 
         Zelda._Game._InputManager.RegisterOnInput(new InputManager.InputKeyTaker()
@@ -156,7 +156,7 @@ public class Player : MonoBehaviour
                 _OnInputUsed = (x) => equipmentManager._UseMixture(this, EquipmentManager.EEquipmentItem.HealthMixture)
             }, new InputManager.KeyData()
             {
-                keyCode = KeyCode.Alpha2, keyType = InputManager.EKeyUseType.released
+                keyCode = KeyCode.Alpha1, keyType = InputManager.EKeyUseType.released
             });
     }
 

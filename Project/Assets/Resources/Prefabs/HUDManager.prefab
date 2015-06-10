@@ -294,7 +294,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: x 0 (press 1 to use)
+  m_Text: x 0 (press "2" to use)
 --- !u!114 &11410116
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -482,7 +482,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: x 0 (press 2 to use)
+  m_Text: x 0 (press "1" to use)
 --- !u!114 &11466890
 MonoBehaviour:
   m_ObjectHideFlags: 1

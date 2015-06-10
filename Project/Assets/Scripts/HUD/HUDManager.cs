@@ -112,12 +112,12 @@ public class HUDManager : MonoBehaviour
 				if (equipmentItem._ItemName == EquipmentManager.EEquipmentItem.HealthMixture) {
 					healthMixtures++;
 					healthMixtureImage.gameObject.SetActive (true);
-					healthMixturesAmountText.text = "x " + healthMixtures + " (press 2 to use)";
+					healthMixturesAmountText.text = "x " + healthMixtures + " (press \"1\" to use)";
 					healthMixtureImage.sprite = equipmentItem._ItemSprite;
 				} else if (equipmentItem._ItemName == EquipmentManager.EEquipmentItem.SpeedMixture) {
 					speedMixtures++;
 					speedMixtureImage.gameObject.SetActive (true);
-					speedMixturesAmountText.text = "x " + speedMixtures + " (press 1 to use)";
+					speedMixturesAmountText.text = "x " + speedMixtures + " (press \"2\" to use)";
 					speedMixtureImage.sprite = equipmentItem._ItemSprite;
 				}
 				break;
@@ -132,13 +132,13 @@ public class HUDManager : MonoBehaviour
 			if (healthMixtures < 1) {
 				healthMixtureImage.gameObject.SetActive (false);
 			}
-			healthMixturesAmountText.text = "x " + healthMixtures + " (press 2 to use)";
+			healthMixturesAmountText.text = "x " + healthMixtures + " (press \"1\" to use)";
 		} else if (equipmentItem._ItemName == EquipmentManager.EEquipmentItem.SpeedMixture) {
 			speedMixtures--;
 			if (speedMixtures < 1) {
 				speedMixtureImage.gameObject.SetActive (false);
 			}
-			speedMixturesAmountText.text = "x " + speedMixtures + " (press 1 to use)";
+			speedMixturesAmountText.text = "x " + speedMixtures + " (press \"2\" to use)";
 		}
 	}
 
