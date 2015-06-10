@@ -259,7 +259,7 @@ public class Player : MonoBehaviour
         yield return new WaitForSeconds(waitTime);
 
         maxSpeed = defaultMaxSpeed;
-        acceleration = defaultAcceleration;
+        //acceleration = defaultAcceleration;
     }
 	
 	private void OnInputUsed(InputManager.InputData inputData)
@@ -427,7 +427,7 @@ public class Player : MonoBehaviour
     {
         StartCoroutine(RevertSpeedMixture(boostTime, maxSpeed, acceleration));
         maxSpeed *= extraSpeedValue;
-        acceleration *= extraSpeedValue;
+        //acceleration *= extraSpeedValue;
 		Zelda._Common._SoundManager.PlaySound(SoundManager.SoundName.PotionUse);
     }
 

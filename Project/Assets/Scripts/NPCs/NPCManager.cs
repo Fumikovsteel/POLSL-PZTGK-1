@@ -85,6 +85,7 @@ public class NPCManager : MonoBehaviour
 		playerZRotation = (playerZRotation + 180.0f) % 360.0f;
 		npcInRange._ChangeLookDirection (playerZRotation);
         _HideCanTalkMessage();
+        Zelda._Game._GameManager._Player._Locked = true;
 	}
 
 	public void _ShowCanTalkMessage (NPC curNPC)
@@ -104,5 +105,6 @@ public class NPCManager : MonoBehaviour
             npcInRange = null;
             Destroy(startTalkMessage);
         }
+        Zelda._Game._GameManager._Player._Locked = false;
 	}
 }

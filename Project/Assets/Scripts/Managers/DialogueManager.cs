@@ -90,6 +90,7 @@ public class DialogueManager : MonoBehaviour
 		showMessagebox (false);
 		currentDialog = -1;
 		currentStatement = 0;
+        Zelda._Game._GameManager._Player._Locked = false;
 	}
 
 	private void showMessage ()
