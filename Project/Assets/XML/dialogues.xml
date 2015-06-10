@@ -8,6 +8,10 @@
 		<statement person="Tidius" text="Why I am suppose to help you?" />
 		<statement person="Röl Nikt" text="The Witch knows magic, we are defensless..." />
 		<statement person="Tidius" text="Magic... Lead me to her crypt!" />
+		<statement person="Röl Nikt" text="I... I can't move. It's the witch magic - it comsumes my legs!!!" />
+		<statement person="Tidius" text="Then tell me directions." />
+		<statement person="Röl Nikt" text="Go to the forest to the north and then turn east" />
+		<statement person="Tidius" text="North-East then. Farewell!" />
 	</dialogue>
 	<dialogue id="2">
 		<statement person="Tidius" text="Your eye must fell of!" />
