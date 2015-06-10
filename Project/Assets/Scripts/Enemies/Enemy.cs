@@ -16,6 +16,7 @@ public class Enemy : MonoBehaviour {
 	private Animator animator;
 
     private float curHealth = 0.0f;
+    private int curDirection = 0;
 
     private void Awake()
     {
@@ -58,25 +59,32 @@ public class Enemy : MonoBehaviour {
 
 	private void UpdateAnimations()
 	{
-		Vector3 curVel = rb.velocity;
-		if (curVel.y > 0.5)
-		{
-			animator.SetInteger("Direction", 2);
-		}
-		else if (curVel.y < -0.5)
-		{
-			animator.SetInteger("Direction", 0);
-		}
-		else if (curVel.x > 0)
-		{
-			animator.SetInteger("Direction", 3);
-		}
-		else if (curVel.x < 0)
-		{
-			animator.SetInteger("Direction", 1);
-		}
+        Vector3 playersPosition = Zelda._Game._GameManager._Player._PlayerPosition;
+        float xDifference = transform.position.x - playersPosition.x;
+        float yDifference = transform.position.y - playersPosition.y;
+        int targetDirection;
+        if (playersPosition.y > transform.position.y && Mathf.Abs(yDifference) > Mathf.Abs(xDifference))
+            targetDirection = 2;
+        else if (playersPosition.y < transform.position.y && Mathf.Abs(yDifference) > Mathf.Abs(xDifference))
+            targetDirection = 0;
+        else if (playersPosition.x > transform.position.x && Mathf.Abs(xDifference) >= Mathf.Abs(yDifference))
+            targetDirection = 3;
+        else
+            targetDirection = 1;
 
-		animator.speed = rb.velocity.magnitude > 0 ? 1 : 0;
+        if (rb.velocity.magnitude <= 0)
+        {
+            if (animator.GetInteger("Direction") != targetDirection)
+            {
+                animator.SetInteger("Direction", targetDirection);
+                animator.speed = 1.0f;
+            }
+        }
+        else
+        {
+            animator.SetInteger("Direction", targetDirection);
+            animator.speed = 1.0f;
+        }
 	}
 
 	void OnCollisionEnter(Collision collision) {
@@ -143,6 +151,11 @@ public class Enemy : MonoBehaviour {
         rb.AddForce(savedVelocity, ForceMode.VelocityChange);
         enabled = true;
         rangedEnemyComponent._UnstopFiring();
+    }
+
+    private void AnimationFinished()
+    {
+        animator.speed = 0.0f;
     }
 	
 }
